@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//カレンダー表示：FullCalendar採用
+//名前はまだ
+Route::get('/calendar', function () {
+    return view('calendar');
+});
