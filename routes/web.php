@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CalendarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,46 +27,12 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-
-//ログインしないと見れない
-Route::middleware(['auth', 'verified'])->group(function (){
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-})->name('dashboard');
-
+//ログインしないと見れないところに後でいれる
 //カレンダー表示：FullCalendar採用
 //名前はまだ
 Route::get('/calendar', function () {
-    return view('calendar');
+    return view('calendar.edit');
 });
-
-/**
-*パスワード確認画面へ遷移する
-*/
-
-/**
-*パスワード確認画面へ遷移する
-*/
-
-/**
-*パスワード再設定画面へ遷移する
-*/
-
-/**
-*パスワード登録完了画面へ遷移する
-*/
-
-/**
-*新規作成画面へ遷移する
-*/
-
-/**
-*新規作成完了画面へ遷移する
-*/
-
-/**
-*個人イベント登録画面へ遷移する
-*/
 
 /**
 *個人イベント登録完了画面へ遷移する
@@ -94,6 +61,17 @@ Route::get('/calendar', function () {
 /**
 *公開リスト画面へ遷移する
 */
+
+/**
+*個人イベント登録画面へ遷移する
+*/
+
+//ログインしないと見れない
+Route::middleware(['auth', 'verified'])->group(function (){
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+})->name('dashboard');
+
 
 
 });
