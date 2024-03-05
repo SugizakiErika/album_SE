@@ -1,3 +1,4 @@
+//使ってないです
 import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -15,6 +16,7 @@ let calendar = new Calendar(calendarEl, {
     },
     //日本語にする
     locale: 'ja',
+
     //土日の色付け
     //businessHours: true,
     //日付ごとの初期化処理
@@ -32,7 +34,13 @@ let calendar = new Calendar(calendarEl, {
         
         //url:'/Normal_event.php',//データベースの内容を表示する
     },
-
+     dateClick: function(info) {
+    alert('Clicked on: ' + info.dateStr);
+    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    alert('Current view: ' + info.view.type);
+    // change the day's background color just for fun
+    info.dayEl.style.backgroundColor = 'red';
+  }
     
     //イベントの設定
     //events: [{
