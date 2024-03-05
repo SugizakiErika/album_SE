@@ -34,6 +34,9 @@ Route::get('/calendar', function () {
     return view('calendar.edit');
 });
 
+Route::get('/create', function () {
+    return view('calendar.create');
+});
 /**
 *個人イベント登録完了画面へ遷移する
 */

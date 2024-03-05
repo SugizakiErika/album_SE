@@ -5,33 +5,54 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src='fullcalendar/dist/index.global.js'></script>
     <script>
-
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
+        initialView: 'dayGridMonth',
         headerToolbar: {
         left: "prevYear,prev,next,nextYear",
         center: "title",
         right: "",
         },
         locale: 'ja',
-    events: 
-    {
-
-        
+        editable: true,
+        googleCalendarApiKey: "AIzaSyBDga4kCA9YIcwNhLnfW1jHlDbPSK4u4O8",
+        eventSources: [
+          {
+            googleCalendarId: "japanese__ja@holiday.calendar.google.com", //祝日の予定を取得
+            rendering: "background",
+            color: "#FF6666",
+          },
+        ],
+        events: [{
         //url:'/Normal_event.php',//データベースの内容を表示する
-    },
-    dateClick: function(info) {
-    alert('Clicked on: ' + info.dateStr);
-    //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-    //alert('Current view: ' + info.view.type);
-    // change the day's background color just for fun
-    info.dayEl.style.backgroundColor = 'red';
-  },
-    
+        title: 'ひな祭り',
+        start: '2024-03-03',
+        url: '/create'
+        }],
+
+        dateClick: function(info) {
+        if(window.confirm(info.dateStr + 'の日付で日記を記載しますか？？'))
+        {
+        //ここから
+        $.ajax({
+        type: "post",
+        url: "/create/",
+        dataType: "json",
+        scriptCharset: "utf-8"
+        data: {'date': info.dateStr},
+          }).then((res) => {
+          console.log(res);
+          });
+          //ここまで
+        //location.href ='/create/'+info.dateStr
+        }else{
+        //何もしない
+        }
+        },
         });
         calendar.render();
+          
       });
 
     </script>
