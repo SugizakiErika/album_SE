@@ -8,7 +8,7 @@
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+        //initialView: 'dayGridMonth',
         headerToolbar: {
         left: "prevYear,prev,next,nextYear",
         center: "title",
@@ -30,21 +30,24 @@
         start: '2024-03-03',
         url: '/create'
         }],
-
+        
         dateClick: function(info) {
         if(window.confirm(info.dateStr + 'の日付で日記を記載しますか？？'))
         {
-        //ここから
+        $.ajaxSetup({
+        headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        });
         $.ajax({
         type: "post",
-        url: "/create/",
+        url: "/create",
         dataType: "json",
-        scriptCharset: "utf-8"
+        scriptCharset: "utf-8",
         data: {'date': info.dateStr},
           }).then((res) => {
           console.log(res);
           });
-          //ここまで
         //location.href ='/create/'+info.dateStr
         }else{
         //何もしない
