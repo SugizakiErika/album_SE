@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('normal_events', function (Blueprint $table) {
-            $table->bigIncrements(id);//自動増分カラムで0か正の数しか生成できない主キー
+            $table->bigIncrements('id');//自動増分カラムで0か正の数しか生成できない主キー
             $table->string('title',30);
             $table->date('start');
             //$table->date('end')->nullable();

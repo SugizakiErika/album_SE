@@ -20,7 +20,9 @@
         },
         locale: 'ja',
         editable: true,
-        googleCalendarApiKey: 'GOOGLE_CALENDAR_API_KEY',
+
+        googleCalendarApiKey: "GOOGLE_CALENDAR_API_KEY",
+
         eventSources: [
           {
             googleCalendarId: "japanese__ja@holiday.calendar.google.com", //祝日の予定を取得
