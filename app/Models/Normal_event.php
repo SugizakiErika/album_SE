@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Normal_event extends Model
 {
     use HasFactory;
+    
+   
 }
