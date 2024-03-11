@@ -31,7 +31,9 @@ Route::get('/', function () {
 //カレンダー表示：FullCalendar採用
 //名前はまだ
 Route::get('/calendar', [CalendarController::class, 'index']);
-Route::post('/create', [CalendarController::class, 'create']);
+Route::get('/create', [DiaryController::class, 'create']);
+Route::post('/create', [DiaryController::class, 'create']);
+
 /**
 *個人イベント登録完了画面へ遷移する
 */
