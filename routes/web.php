@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\DiaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::get('/calendar', [CalendarController::class, 'index']);
 
 
 Route::get('/create', [DiaryController::class, 'create']);
-Route::post('/create', [DiaryController::class, 'create']);
+Route::post('/create', [DiaryController::class, 'store']);
 
 /**
 *個人イベント登録完了画面へ遷移する

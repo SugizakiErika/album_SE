@@ -8,7 +8,7 @@
     
     <!--日付クリック時create.blade.phpに飛べるようにする-->
     <!--日付も一緒に送れるようにする-->
-<html lang="{{ str_replace('_','-',app()->getLocale()) }}">
+<html lang="en">
   <head>
     <meta charset='utf-8' />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,7 +17,7 @@
     
     <!--fullCalendar用CDN-->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-    <script src='fullcalendar/dist/index.global.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/dist/index.global.js'></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -31,16 +31,15 @@
         locale: 'ja',
         editable: true,
         
-        //var array = @json($data);
+        var array = @json($data,JSON_UNESCAPED_UNICODE);
         
-        //console.log(array);
+        console.log(array);
         
         events: [
         array.forEach(event =>{
         {
         title : event[title],
         start : event[start]
-        //url:
         //color:
         },
         })
@@ -62,7 +61,7 @@
         dataType: "json",
         scriptCharset: "utf-8",
         data: {
-        'date': info.dateStr.format("YYYY-MM-DD"),
+        'date': info.dateStr,
         'title':title
         },
           }).done(function (results) {
