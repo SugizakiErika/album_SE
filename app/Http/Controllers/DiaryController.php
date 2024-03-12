@@ -24,7 +24,7 @@ class DiaryController extends Controller
      */
     public function create()
     {
-        //
+        return view('diary.create');
     }
 
     /**
