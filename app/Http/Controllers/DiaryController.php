@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Diary_image;
 
 class DiaryController extends Controller
 {
@@ -32,16 +33,19 @@ class DiaryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Diary_image $diary_image,Request $request)
     {
         $files = $request->file('file');
         
         foreach($files as $file){
             $file_name = $file->getClientOriginalName();
-            $file->storeAS('public',$file_name);
-            dd($file);
+            $file->storeAS('public/',$file_name);
             
+            $diary_image->path = 'storge/app/public/' .$file_name;
+            $diary_image->name = $file_name;
+            $diary_image->save();
         }
+        return redirect('/create');
     }
 
     /**
