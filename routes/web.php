@@ -31,6 +31,9 @@ Route::get('/', function () {
 //カレンダー表示：FullCalendar採用
 //名前はまだ
 Route::get('/calendar', [CalendarController::class, 'index']);
+
+
+
 Route::get('/create', [DiaryController::class, 'create']);
 Route::post('/create', [DiaryController::class, 'create']);
 

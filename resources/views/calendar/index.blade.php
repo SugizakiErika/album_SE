@@ -31,15 +31,15 @@
         locale: 'ja',
         editable: true,
         
-        var array = @json($data);
+        //var array = @json($data);
         
-        events:
-        [
-        array.forEach(vent =>{
+        //console.log(array);
+        
+        events: [
+        array.forEach(event =>{
         {
-        
-        title: event[title],
-        start: event[start],
+        title : event[title],
+        start : event[start]
         //url:
         //color:
         },

@@ -12,7 +12,7 @@ class CalendarController extends Controller
   public function index(Normal_event $normal_event)
   {
     //dd($normal_event->get());
-    $data = json_encode($normal_event->get());
+    $data = $normal_event->get();
     return view('calendar.index')->with(['data'=> $data]);
     //return view('calendar.index');
   }
