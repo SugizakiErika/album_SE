@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Diary_image;
+use Illuminate\Support\Facades\Storage;
 
 class DiaryController extends Controller
 {
@@ -22,9 +23,11 @@ class DiaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Diary_image $diary_image,Request $request)
     {
-        return view('diary.create');
+        $input = $request->all();
+        
+        return view('diary.create')->with(['diary_images' => $diary_image->get(),'calender_input' => $input]);
     }
 
     /**
@@ -41,7 +44,7 @@ class DiaryController extends Controller
             $file_name = $file->getClientOriginalName();
             $file->storeAS('public/',$file_name);
             
-            $diary_image->path = 'storge/app/public/' .$file_name;
+            $diary_image->path = 'storage/app/public/' .$file_name;
             $diary_image->name = $file_name;
             $diary_image->save();
         }
