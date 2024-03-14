@@ -35,7 +35,7 @@ Route::get('/calendar', [CalendarController::class, 'index']);
 
 
 
-Route::get('/create', [DiaryController::class, 'create']);
+Route::get('/create', [DiaryController::class, 'create'])->name('create.diary');
 Route::post('/create', [DiaryController::class, 'store']);
 
 /**

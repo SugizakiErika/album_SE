@@ -43,34 +43,9 @@
         
           dateClick: function(info) {
             if(window.confirm(info.dateStr + 'の日付で日記を記載しますか？？')){
-              let title = prompt('タイトルを入力してください');
-              $.ajaxSetup({
-              headers: {
-              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-              },
-              });
-        
-              $.ajax({
-                type: "get",
-                url: "/create",
-                dataType: "text",
-                scriptCharset: "utf-8",
-                data: {
-                 "date": info.dateStr,
-                 "title":title
-                },
-              }).done(function (results) {
-                // 通信成功時の処理
-                alert('送信成功');
-                location.href ='/create'
-              }).fail(function (jqXHR, textStatus, errorThrown) {
-                // 通信失敗時の処理
-                alert('ファイルの取得に失敗しました。');
-                console.log("ajax通信に失敗しました");
-                console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
-                console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
-                console.log("errorThrown    : " + errorThrown.message); // 例外情報
-              });
+              // /create/?date=2024-03-01
+              var url = "{{ route('create.diary') }}";
+              location.href = url + '?date=' + info.dateStr;
             }else{
              //何もしない
             }

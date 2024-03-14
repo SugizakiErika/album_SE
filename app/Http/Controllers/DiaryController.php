@@ -25,9 +25,9 @@ class DiaryController extends Controller
      */
     public function create(Diary_image $diary_image,Request $request)
     {
-        $input = $request->all();
+        $date = $request->input('date');
         
-        return view('diary.create')->with(['diary_images' => $diary_image->get(),'calender_input' => $input]);
+        return view('diary.create')->with(['diary_images' => $diary_image->get()])->with(['date' => $date]);
     }
 
     /**
@@ -44,7 +44,7 @@ class DiaryController extends Controller
             $file_name = $file->getClientOriginalName();
             $file->storeAS('public/',$file_name);
             
-            $diary_image->path = 'storage/app/public/' .$file_name;
+            $diary_image->path = 'storage/' .$file_name;
             $diary_image->name = $file_name;
             $diary_image->save();
         }
