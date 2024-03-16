@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->timestamps();
-            //$table->foreignId('diaries_id')->constrained();
+            $table->softDeletes();
+            $table->foreignId('diaries_id')->constrained();
         });
     }
 

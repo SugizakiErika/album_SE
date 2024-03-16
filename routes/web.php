@@ -31,44 +31,16 @@ Route::get('/', function () {
 //ログインしないと見れないところに後でいれる
 //カレンダー表示：FullCalendar採用
 //名前はまだ
-Route::get('/calendar', [CalendarController::class, 'index']);
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
 
 
 Route::get('/create', [DiaryController::class, 'create'])->name('create.diary');
-Route::post('/create', [DiaryController::class, 'store']);
+Route::post('/create', [DiaryController::class, 'store'])->name('store.diary');
+Route::get('/show/{diary}',[DiaryController::class, 'show'])->name('show.diary');
 
-/**
-*個人イベント登録完了画面へ遷移する
-*/
-
-/**
-*通常行事登録画面へ遷移する
-*/
-
-/**
-*通常行事登録完了画面へ遷移する
-*/
-
-/**
-*メイン画面へ遷移する
-*/
-
-/**
-*投稿画面へ遷移する
-*/
-
-/**
-*問い合わせ画面へ遷移する
-*/
-
-/**
-*公開リスト画面へ遷移する
-*/
-
-/**
-*個人イベント登録画面へ遷移する
-*/
+Route::get('/edit/{diary}',[DiaryController::class, 'edit'])->name('edit.diary');
+Route::put('/edit/{diary}',[DiaryController::class, 'update'])->name('update.diary');
 
 //ログインしないと見れない
 Route::middleware(['auth', 'verified'])->group(function (){

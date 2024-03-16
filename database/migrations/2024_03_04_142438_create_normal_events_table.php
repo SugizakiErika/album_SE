@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');//自動増分カラムで0か正の数しか生成できない主キー
             $table->string('title',30);
             $table->string('start');
+            $table->string('color');
             //$table->date('end')->nullable();
             $table->timestamps();
         });

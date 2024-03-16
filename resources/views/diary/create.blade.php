@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang = "{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset = "UTF-8">
         <title>日記登録画面</title>
@@ -7,12 +7,14 @@
     <body>
         <form method = "POST" action = "/create" enctype = "multipart/form-data">
             @csrf
-            <p>{{ $date }}</p>
+            <input type = "text" name = "diary[start]" value = "{{ $date }}" readonly>
+            <input type = "text" name = "diary[title]" placeholder = "タイトルを入力してください"/>
             <input type = "file" name = "file[]" class = "form-control" multiple>
-            <textarea name="comment" placeholder="コメントを記入してください"></textarea>
+            <textarea name="diary[comment]" placeholder="コメントを入力してください"></textarea>
             <button type = "submit">登録</button>
         </form>
         
+        <!--画像確認用-->
         @foreach($diary_images as $diary_image)
         
         <img src = "{{ asset($diary_image->path) }}">
