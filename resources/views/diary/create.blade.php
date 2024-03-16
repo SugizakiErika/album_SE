@@ -7,8 +7,9 @@
     <body>
         <form method = "POST" action = "/create" enctype = "multipart/form-data">
             @csrf
-            <input type = "text" name = "date" value="{{ $date }}">
-            <input type = "file" name = "file[]" class = "form-control">
+            <p>{{ $date }}</p>
+            <input type = "file" name = "file[]" class = "form-control" multiple>
+            <textarea name="comment" placeholder="コメントを記入してください"></textarea>
             <button type = "submit">登録</button>
         </form>
         

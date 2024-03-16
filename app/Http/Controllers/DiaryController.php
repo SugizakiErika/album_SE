@@ -36,18 +36,27 @@ class DiaryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+     //日記の登録
     public function store(Diary_image $diary_image,Request $request)
     {
+    
         $files = $request->file('file');
         
         foreach($files as $file){
+            //ファイル名の取得
             $file_name = $file->getClientOriginalName();
+            //ファイルの保存
             $file->storeAS('public/',$file_name);
-            
+            //DBへのファイル名とパスの保存
             $diary_image->path = 'storage/' .$file_name;
             $diary_image->name = $file_name;
             $diary_image->save();
         }
+        
+        //title,date,comment,color,users_idの保存
+        
+        
+        
         return redirect('/create');
     }
 
@@ -96,11 +105,11 @@ class DiaryController extends Controller
         //
     }
     
-  //削除
- public function delete(Diary $diary,Diary_image $diary_image)
- {
-   $diary->delete();
-   $diary_image->delete();
-   return redirect('/Calendar/edit/' . $user->id);
+    //削除
+    public function delete(Diary $diary,Diary_image $diary_image)
+   {
+       $diary->delete();
+       $diary_image->delete();
+       return redirect('/Calendar/edit/' . $user->id);
  }
 }
