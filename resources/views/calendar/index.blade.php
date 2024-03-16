@@ -26,7 +26,9 @@
         array.forEach(event => {
           event_vals.push({
             title: event['title'],
-            start: event['start']
+            start: event['start'],
+            color: event['color'],
+            url: event['url'],
           });
         })
       

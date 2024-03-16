@@ -18,7 +18,7 @@ class Normal_eventSeeder extends Seeder
                 DB::table('normal_events')->insert([
                 'title' => 'ひな祭り',
                 'start' => '2024-03-03',
-        
+                'color' => '#CCCCFF',
               
          ]);
     }

@@ -18,12 +18,13 @@ return new class extends Migration
             //一時保存用
             //$table->boolean('is_keep')->default(0);
             $table->string('title',30);
-            $table->string('date');
+            $table->string('start');
             $table->string('comment',200);
             $table->string('color');
+            $table->string('url');
             $table->timestamps();
             $table->softDeletes();
-            //$table->foreignId('users_id')->constrained();
+            $table->foreignId('users_id')->constrained();
         });
     }
 
