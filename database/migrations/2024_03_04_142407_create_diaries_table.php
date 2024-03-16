@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('diaries', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_keep')->default(0);
-            $table->string('comment',100);
-            $table->date('dairy_date');
+            //一時保存用
+            //$table->boolean('is_keep')->default(0);
+            $table->string('title',30);
+            $table->string('date');
+            $table->string('comment',200);
+            $table->string('color');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('user_id')->constrained();
+            //$table->foreignId('users_id')->constrained();
         });
     }
 

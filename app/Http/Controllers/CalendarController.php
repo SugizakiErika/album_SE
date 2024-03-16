@@ -14,8 +14,8 @@ class CalendarController extends Controller
     //dd($normal_event->get());
     $data = $normal_event->get();
     return view('calendar.index')->with(['data'=> $data]);
-    //return view('calendar.index');
   }
+  
   public function send(Request $request)
   {
     return view('calendar.create')->with($request);

@@ -19,6 +19,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+      
         //カレンダーに設定するイベントの値リストを作成する
         var array = @json($data,JSON_UNESCAPED_UNICODE);
         var event_vals = [];
@@ -41,6 +42,7 @@
           editable: true,
           events: event_vals,
         
+          //日付送信用
           dateClick: function(info) {
             if(window.confirm(info.dateStr + 'の日付で日記を記載しますか？？')){
               // /create/?date=2024-03-01
