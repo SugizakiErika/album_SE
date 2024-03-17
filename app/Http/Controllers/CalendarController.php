@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Normal_event;
 use App\Models\Diary;
+use Carbon\Carbon;
 
 class CalendarController extends Controller
 {
@@ -12,12 +13,28 @@ class CalendarController extends Controller
   //各タイトルと日付を持ってきたい
   public function index(Normal_event $normal_event,Diary $diary)
   {
-    $data = $diary->get();
-    //$data_diary = $diary->get();
-    //$data_normal_event = $normal_event->get();
+    $data_diary = $diary->get();
+    $data_normal_events = $normal_event->get();
+    
+    $data_normal_events_vals = [];
+    //通常行事(normal_event)に現在の年を結合する
+    foreach($data_normal_events as $value)
+    {
+      $data_normal_events_vals = collect($data_normal_events)->map(function ($data_normal_events) {
+        //○○年の取得きっとあんまりよくない取り方
+        $now = Carbon::now();
+        $now_year = $now->year;
+        //○○年を結合する
+        $data_normal_events['start'] = $now_year."-".$data_normal_events->start;
+        
+        return $data_normal_events;
+      });
+      
+    }
     
     //concatにて各テーブルの配列を結合する
-    //$data = $data_diary->concat($data_normal_event);
+    $data = $data_diary->concat($data_normal_events_vals);
+    //dd($data);
     return view('calendar.index')->with(['data'=> $data]);
   }
   
