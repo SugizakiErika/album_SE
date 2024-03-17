@@ -11,5 +11,7 @@
         
         <img src = "{{ asset($diary->diary_image->path) }}" width="200" height="150">
         
+        <a href="/edit/{{ $diary->id }}">編集する</a>
+        <a href="{{ route('calendar') }}">カレンダーに戻る</a>
     </body>
 </html>

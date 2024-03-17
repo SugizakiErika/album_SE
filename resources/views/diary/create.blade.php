@@ -5,7 +5,7 @@
         <title>日記登録画面</title>
     </head>
     <body>
-        <form method = "POST" action = "/create" enctype = "multipart/form-data">
+        <form method = "POST" action = "{{ route('store.diary') }}" enctype = "multipart/form-data">
             @csrf
             <input type = "text" name = "diary[start]" value = "{{ $date }}" readonly>
             <input type = "text" name = "diary[title]" placeholder = "タイトルを入力してください"/>
@@ -17,8 +17,10 @@
         <!--画像確認用-->
         @foreach($diary_images as $diary_image)
         
-        <img src = "{{ asset($diary_image->path) }}">
+        <img src = "{{ asset($diary_image->path) }}" width="200" height="150">
         
         @endforeach
+        
+        <a href="{{ route('calendar') }}">カレンダーに戻る</a>
     </body>
 </html>

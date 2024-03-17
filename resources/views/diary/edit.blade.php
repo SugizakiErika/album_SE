@@ -15,5 +15,7 @@
             <textarea name="diary[comment]" >{{ $diary->comment }}</textarea>
             <button type = "submit">保存</button>
         </form>
+        <a href="/show/{{ $diary->id }}">戻る</a>
+        <a href="{{ route('calendar') }}">カレンダーに戻る</a>
     </body>
 </html>
