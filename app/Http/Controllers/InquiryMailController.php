@@ -5,15 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InquiryMail;
+use App\Models\Inquiry_list;
+use Carbon\Carbon;
 
 class InquiryMailController extends Controller
 {
-    public function send(Request $request)
+    public function create()
     {
-        $name = 'テストユーザー';
-        $email = '';
+        return view('inquiry.create');
+    }
+    
+    public function store(Inquiry_list $inquiry_list,Request $request)
+    {
+        //title,date,comment,color,users_idの保存
+        $input = $request['inquiry'];
+        $inquiry_list->date = Carbon::now();
+        $inquiry_list->title = $input["title"];
+        $inquiry_list->comment = $input["comment"];
+        $inquiry_list->user_id = $input["user_id"];
+        $inquiry_list->email = $input["email"];
+        $inquiry_list->save();
         
-        Mail::send(new InquiryMail($name,$email));
-         return view('inquiry.send');
+        $name = $input["user_id"];
+        $email = $input["email"];
+        $comment = $input["comment"];
+        
+        Mail::send(new InquiryMail($name,$email,$comment));
+         return view('inquiry.send_fin')->with(['name' => $name])->with(['comment' => $comment]);
     }
 }

@@ -18,10 +18,11 @@ class InquiryMail extends Mailable
      *
      * @return void
      */
-    public function __construct($name,$email)
+    public function __construct($name,$email,$comment)
     {
         $this->name = $name;
         $this->email = $email;
+        $this->comment = $comment;
     }
     
     /**
@@ -32,10 +33,12 @@ class InquiryMail extends Mailable
     public function build()
     {
         return $this->to($this->email)
+                    ->bcc('MAIL_USERNAME')
                     ->subject('問い合わせ完了')
                     ->view('inquiry.send')
                     ->with([
                         'name' => $this->name,
+                        'comment' => $this->comment,
                         ]);
     }
     
