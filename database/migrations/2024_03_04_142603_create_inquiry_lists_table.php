@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('inquiry_lists', function (Blueprint $table) {
             $table->id();
+            $table->string('title',30);
+            $table->date('date');
+            $table->string('comment',400);
+            $table->string('user_id',100);
+            $table->string('email',100);
             $table->timestamps();
         });
     }
