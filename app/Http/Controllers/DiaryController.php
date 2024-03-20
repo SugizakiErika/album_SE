@@ -46,7 +46,8 @@ class DiaryController extends Controller
         $diary->title = $input["title"];
         $diary->comment = $input["comment"];
         $diary->color = "#FFCCFF";
-        
+        $diary->url = '/show/' .$diary->id;
+        $diary->save();
         $diary->url = '/show/' .$diary->id;
         $diary->save();
         
