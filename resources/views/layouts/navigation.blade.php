@@ -15,6 +15,15 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('calendar')" :active="request()->routeIs('index')">
+                        {{ __('カレンダー') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('create.myevent')" :active="request()->routeIs('create')">
+                        {{ __('個人行事登録') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('inquiry.create')" :active="request()->routeIs('create')">
+                        {{ __('問い合わせ') }}
+                    </x-nav-link>
                 </div>
             </div>
 
