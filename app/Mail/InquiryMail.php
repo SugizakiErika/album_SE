@@ -33,7 +33,7 @@ class InquiryMail extends Mailable
     public function build()
     {
         return $this->to($this->email)
-                    ->bcc('MAIL_USERNAME')
+                    ->bcc(env('MAIL_USERNAME'))
                     ->subject('問い合わせ完了')
                     ->view('inquiry.send')
                     ->with([

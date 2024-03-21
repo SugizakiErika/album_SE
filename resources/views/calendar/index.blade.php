@@ -62,5 +62,8 @@
   </head>
     <body>
       <div id='calendar'></div>
+      <a href="{{ route('create.myevent') }}">個人行事登録</a>
+      <a href="{{ route('calendar') }}">カレンダーに戻る</a>
+      <a href="{{ route('inquiry.create') }}">問い合わせ</a>
     </body>
 </html>

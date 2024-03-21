@@ -30,30 +30,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-//ログインしないと見れないところに後でいれる
-//カレンダー表示：FullCalendar採用
-Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
-
-//DiaryController
-//日記作成
-Route::get('/create', [DiaryController::class, 'create'])->name('create.diary');
-Route::post('/create', [DiaryController::class, 'store'])->name('store.diary');
-//日記内容閲覧
-Route::get('/show/{diary}',[DiaryController::class, 'show'])->name('show.diary');
-//日記編集
-Route::get('/edit/{diary}',[DiaryController::class, 'edit'])->name('edit.diary');
-Route::put('/edit/{diary}',[DiaryController::class, 'update'])->name('update.diary');
-
-
-//MyEventController
-Route::get('/myevent/create',[MyEventController::class,'create'])->name('create.myevent');
-Route::post('/myevent/create',[MyEventController::class,'store'])->name('store.myevent');
-
-
-//InquiryMailController
-Route::get('/mail/create',[InquiryMailController::class,'create'])->name('inquiry.create');
-Route::post('/mail/create',[InquiryMailController::class,'store'])->name('inquiry.store');
 
 
 //ログインしないと見れない
@@ -63,9 +40,37 @@ Route::middleware(['auth', 'verified'])->group(function (){
 })->name('dashboard');
 
 //ここに上のやつ全部いれる
-
+//ログインしないと見れないところに後でいれる
+//カレンダー表示：FullCalendar採用
+Route::controller(CalendarController::class)->middleware(['auth'])->group(function(){
+    Route::get('/calendar', 'index')->name('calendar');
 });
 
+//DiaryController
+//日記作成
+Route::controller(DiaryController::class)->middleware(['auth'])->group(function(){
+    Route::get('/create', 'create')->name('create.diary');
+    Route::post('/create', 'store')->name('store.diary');
+    //日記内容閲覧
+    Route::get('/show/{diary}','show')->name('show.diary');
+    //日記編集
+    Route::get('/edit/{diary}', 'edit')->name('edit.diary');
+    Route::put('/edit/{diary}', 'update')->name('update.diary');
+});
+
+//MyEventController
+Route::controller(MyEventController::class)->middleware(['auth'])->group(function(){
+    Route::get('/myevent/create', 'create')->name('create.myevent');
+    Route::post('/myevent/create', 'store')->name('store.myevent');
+});
+
+//InquiryMailController
+Route::controller(InquiryMailController::class)->middleware(['auth'])->group(function(){
+    Route::get('/mail/create', 'create')->name('inquiry.create');
+    Route::post('/mail/create', 'store')->name('inquiry.store');
+});
+
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
