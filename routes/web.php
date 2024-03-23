@@ -65,6 +65,9 @@ Route::controller(MyEventController::class)->middleware(['auth'])->group(functio
 Route::controller(NormalEventController::class)->middleware(['auth'])->group(function(){
     Route::get('/normalevent/create', 'create')->name('create.normalevent');
     Route::put('/normalevent/create', 'store')->name('store.normalevent');
+    
+    
+    Route::put('/normalevent/update', 'update')->name('update.normalevent');
 });
 
 

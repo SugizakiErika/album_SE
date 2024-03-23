@@ -37,8 +37,8 @@ class NoticeMyAnniversary extends Command
         $my_events = MY_event::where('start',$data)->where('category','anniversary')->get();
         //dd($my_events);
         foreach($my_events as $my_event){
-         $name = 'pelican';
-         $email = 'pelican01101996@gmail.com';
+         $name = '';
+         $email = '';
          $subject = "もうすぐ".$my_event->title."です！";
          }
          
