@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\InquiryMail;
 use App\Models\Inquiry_list;
 use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class InquiryMailController extends Controller
 {
@@ -24,6 +26,8 @@ class InquiryMailController extends Controller
         $inquiry_list->comment = $input["comment"];
         $inquiry_list->user_id = $input["user_id"];
         $inquiry_list->email = $input["email"];
+        $inquiry_list->users_id = Auth::user()->id;
+        
         $inquiry_list->save();
         
         $name = $input["user_id"];

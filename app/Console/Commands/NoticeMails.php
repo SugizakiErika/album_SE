@@ -9,6 +9,10 @@ use App\Mail\MailNormal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\Normal_event;
+use App\Models\NormaleventUser;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Log;
 
 class NoticeMails extends Command
 {
@@ -33,16 +37,38 @@ class NoticeMails extends Command
      */
     public function handle()
     {
-         $data = Carbon::now()->format('m-d');
-         $normal_events = Normal_event::where('start',$data)->get();
-         //dd($normal_events);
-         foreach($normal_events as $normal_event){
-         $name = 'pelican';
-         $email = '';
-         $subject = "もうすぐ".$normal_event->title."です！";
-         $comment = $normal_event->comment;
-         }
+        //今日の日付を取得する
+        $data = Carbon::now(); //ex.03-20
+        $data_date = Carbon::now()->format('m-d');
+        $data_month = Carbon::now()->format('m');
+        $data_day = Carbon::now()->format('d');
+        
+        $normalevent_users = NormaleventUser::all();
+        
          
-         Mail::send(new MailNormal($name,$email,$subject,$comment));
+        //通常行事で今日当てはまるものがあれば実行する
+        foreach($normalevent_users as $normalevent_user)
+        {
+            //日付の調整
+            $data_notice_later = $data->addDays((int)$normalevent_user->day)->format('m-d');
+            
+            //各テーブルの取得
+            $user = User::find($normalevent_user->user_id);
+            $normal_event = Normal_event::find($normalevent_user->normal_event_id);
+        
+        if($normal_event->start == $data_notice_later)
+        {
+            Log::info("成功");
+            $name = $user->name;
+            $email = $user->email;
+            $subject = "もうすぐ".json_encode($normal_event->title,JSON_UNESCAPED_UNICODE)."です！";
+            $comment = json_encode($normal_event->comment,JSON_UNESCAPED_UNICODE);
+        
+            Mail::send(new MailNormal($name,$email,$subject,$comment));
+         
+        }else{
+            Log::info("失敗");
+        }
+        }
     }
 }

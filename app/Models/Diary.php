@@ -14,10 +14,10 @@ class Diary extends Model
         return $this->hasOne(Diary_image::class,'diaries_id');
     }
     
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
     
     protected $casts = [
         //'is_keep' => 'boolean',

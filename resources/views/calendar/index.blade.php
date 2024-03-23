@@ -8,7 +8,10 @@
     
     <!--日付クリック時create.blade.phpに飛べるようにする-->
     <!--日付も一緒に送れるようにする-->
-<html lang="en">
+
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <x-app-layout>
+  <x-slot name="header">
   <head>
     <meta charset='utf-8' />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -60,10 +63,9 @@
       });
   </script>
   </head>
+  </x-slot>
     <body>
       <div id='calendar'></div>
-      <a href="{{ route('create.myevent') }}">個人行事登録</a>
-      <a href="{{ route('calendar') }}">カレンダーに戻る</a>
-      <a href="{{ route('inquiry.create') }}">問い合わせ</a>
     </body>
+    </x-app-layout>
 </html>

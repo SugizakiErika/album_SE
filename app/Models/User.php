@@ -8,15 +8,28 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     
-    public function diary()
+    // public function diary()
+    // {
+    //     return $this->belongsTo(diary::class);
+    // }
+    
+    public function normal_events()
     {
-        return $this->belongsTo(diary::class);
+        return $this->belongsToMany(Normal_event::class,'normal_event_users')
+        ->withPivot('notice','day_num');
     }
-
+    
+    
+    public function my_event()
+    {
+        return $this->belongsTo(my_event::class);
+    }
     /**
      * The attributes that are mass assignable.
      *

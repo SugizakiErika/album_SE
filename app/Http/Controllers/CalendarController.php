@@ -6,17 +6,25 @@ use Illuminate\Http\Request;
 use App\Models\Normal_event;
 use App\Models\Diary;
 use App\Models\My_event;
+use App\Models\NormaleventUser;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+
+use Illuminate\Support\Facades\Log;
 
 class CalendarController extends Controller
 {
   // メイン画面を表示するために各テーブルデータを持ってくる
   //各タイトルと日付を持ってきたい
-  public function index(Normal_event $normal_event,Diary $diary,My_event $my_event)
+  public function index(Normal_event $normal_event,Diary $diary,My_event $my_event,NormaleventUser $normaleventuser)
   {
-    $data_diary = $diary->get();
+    $id = Auth::user()->id;
+    
+    $data_diary = $diary->where('users_id',$id)->get();
     $data_normal_events = $normal_event->get();
-    $data_my_events = $my_event->get();
+    $data_my_events = $my_event->where('users_id',$id)->get();
     
     //通常行事(normal_event)に現在の年を結合する
     $data_normal_events_vals = [];
@@ -41,6 +49,18 @@ class CalendarController extends Controller
       $now_year = $now->year;
       //○○年を結合する
       $data_my_events['start'] = $now_year."-".$data_my_events->start;
+      
+      if($data_my_events->category == "birthday"){
+      
+      $data_my_events['title'] =$data_my_events->title."の誕生日";
+        
+      }elseif($data_my_events->category == "anniversary"){
+      
+      $data_my_events['title'] =$data_my_events->title."記念日";
+        
+      }else{
+        Log::info("カレンダー通常行事のタイトル失敗");
+      }
       
       return $data_my_events;
     });

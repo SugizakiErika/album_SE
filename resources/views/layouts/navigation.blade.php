@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('create.myevent')" :active="request()->routeIs('create')">
                         {{ __('個人行事登録') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('create.normalevent')" :active="request()->routeIs('create')">
+                        {{ __('通常行事登録') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('inquiry.create')" :active="request()->routeIs('create')">
                         {{ __('問い合わせ') }}
                     </x-nav-link>

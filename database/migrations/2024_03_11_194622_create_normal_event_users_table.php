@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use App\Models\Normal_event;
+use App\Models\User;
+
 return new class extends Migration
 {
     /**
@@ -13,15 +16,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('inquiry_lists', function (Blueprint $table) {
+        Schema::create('normal_event_users', function (Blueprint $table) {
             $table->id();
-            $table->string('title',30);
-            $table->date('date');
-            $table->string('comment',400);
-            $table->string('user_id',100);
-            $table->string('email',100);
-            $table->timestamps();
-            $table->foreignId('users_id')->constrained();
+            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Normal_event::class)->constrained();
+            $table->boolean('notice')->default(false);
+            $table->integer('day_num')->default(5);
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inquiry_lists');
+        Schema::dropIfExists('normalevent_users');
     }
 };

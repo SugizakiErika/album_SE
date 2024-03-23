@@ -31,6 +31,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('normalevent_users');
+        Schema::dropIfExists('personal_access_tokens');
+    
         Schema::dropIfExists('users');
     }
 };
