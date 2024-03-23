@@ -1,3 +1,4 @@
+<!--使わなくなったやつ-->
 <!DOCTYPE html>
 <html lang = "{{ str_replace('_', '-', app()->getLocale()) }}">
     <x-app-layout>
@@ -18,7 +19,7 @@
                 @method('PUT')
                 <p>{{ $normal_event->title }}</p>
                 <p>{{ $normal_event->start }}</p>
-                <input type="text" id="ajax_input_id" name="n_event[id]" value="{{ $normal_event->id }}"/>
+                <input type="hidden" id="ajax_input_id" name="n_event[id]" value="{{ $normal_event->id }}"/>
                 
                 <select id="ajax_input_notice" name="n_event[notice]">
                     <option value="0">OFF</option>

@@ -32,7 +32,7 @@ class NormalEventController extends Controller
         
         $id = Auth::user()->id;
         $user = User::find($id);
-        return view('normal_event.create')->with(['users' => $user]);
+        return view('normal_event.edit')->with(['users' => $user]);
     }
 
     /**
@@ -57,27 +57,27 @@ class NormalEventController extends Controller
         return redirect('/normalevent/create');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function show($id)
+    // {
+    //     //
+    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit($id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -86,9 +86,15 @@ class NormalEventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $result = $request->all();
+        
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $user->normal_events()->syncWithPivotValues($result["ajax_input_id"],['notice'=>$result["ajax_input_notice"],'day_num'=>$result["ajax_input_day_num"]],false);
+        
+        return $result;
     }
 
     /**
