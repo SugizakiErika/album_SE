@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+
+use App\Models\Normal_event;
+use App\Models\NormaleventUser;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -45,7 +49,15 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
+        
+        //通常行事登録
+        $id = Auth::user()->id;
+        $users = User::find($id);
+        $events = Normal_event::all();
+        //dd($id);
+        foreach($events as $event){
+        $user->normal_events()->syncWithoutDetaching($event->id,['notice'=>0,'day_num'=>5]);
+        }
         return redirect(RouteServiceProvider::HOME);
     }
 }

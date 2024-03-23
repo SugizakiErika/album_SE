@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\My_event;
-use Carbon\Carbon;
+
+use App\Models\Normal_event;
 use App\Models\User;
+use App\Models\NormaleventUser;
+
 use Illuminate\Support\Facades\Auth;
 
-class MyEventController extends Controller
+class NormalEventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,11 +27,12 @@ class MyEventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(My_event $my_event)
+    public function create(Normal_event $normal_event)
     {
+        
         $id = Auth::user()->id;
-        //dd($my_event->where('users_id',$id)->get());
-        return view('myevent.create')->with(['my_events' => $my_event->where('users_id',$id)->get()]);
+        $user = User::find($id);
+        return view('normal_event.create')->with(['users' => $user]);
     }
 
     /**
@@ -38,22 +41,20 @@ class MyEventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(My_event $my_event,Request $request)
+    public function store(Request $request)
     {
-        $input = $request['myevent'];
-        $my_event->start = Carbon::parse($input["start"])->format('m-d');
-        $my_event->title = $input["title"];
-        $my_event->category = $input["category"];
-        $my_event->day = $input["day"];
-        $my_event->color = "#9999FF";
-        $my_event->url = '/myevent/edit/' .$my_event->id;
-        $my_event->users_id = Auth::user()->id;
-        $my_event->save();
+        $input = $request["n_event"];
+        //dd($input);
         
-        $my_event->url = '/myevent/edit/' .$my_event->id;
-        $my_event->save();
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        //$user->normal_events()->syncWithPivotValues(1,['notice'=>1,'day_num'=>8],false);
+        $user->normal_events()->syncWithPivotValues($input["id"],['notice'=>$input["notice"],'day_num'=>$input["day_num"]],false);
         
-        return redirect('/myevent/create');
+        //$normal_event->url = '/myevent/edit/' .$my_event->id;
+        
+        
+        return redirect('/normalevent/create');
     }
 
     /**

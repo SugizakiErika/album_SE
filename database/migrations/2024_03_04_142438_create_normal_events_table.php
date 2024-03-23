@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title',30);
             $table->string('start');
             $table->string('color');
+            $table->String('url');
             $table->string('comment',500);
-            //$table->date('end')->nullable();
             $table->timestamps();
         });
     }

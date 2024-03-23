@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DiaryController;
 use App\Http\Controllers\MyEventController;
+use App\Http\Controllers\NormalEventController;
 use App\Http\Controllers\InquiryMailController;
 
 /*
@@ -18,19 +19,12 @@ use App\Http\Controllers\InquiryMailController;
 |
 */
 
-
-/**
-*ホーム画面へ遷移する
-*/
-
 /**
 *ログイン画面へ遷移する
 */
 Route::get('/', function () {
     return redirect('/login');
 });
-
-
 
 
 //ログインしないと見れない
@@ -62,7 +56,17 @@ Route::controller(DiaryController::class)->middleware(['auth'])->group(function(
 Route::controller(MyEventController::class)->middleware(['auth'])->group(function(){
     Route::get('/myevent/create', 'create')->name('create.myevent');
     Route::post('/myevent/create', 'store')->name('store.myevent');
+    //個人行事編集
+    Route::get('/myevent/edit/{my_event}', 'edit')->name('edit.myevent');
+    Route::put('/myevent/edit/{my_event}', 'update')->name('update.myevent');
 });
+
+//NromalEventController
+Route::controller(NormalEventController::class)->middleware(['auth'])->group(function(){
+    Route::get('/normalevent/create', 'create')->name('create.normalevent');
+    Route::put('/normalevent/create', 'store')->name('store.normalevent');
+});
+
 
 //InquiryMailController
 Route::controller(InquiryMailController::class)->middleware(['auth'])->group(function(){
