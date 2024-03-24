@@ -63,10 +63,10 @@ class NormalEventController extends Controller
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
+     public function show(Normal_event $normal_event)
+     {
+         return view('normal_event.show')->with(['normal_event' => $normal_event]);
+     }
 
     // /**
     //  * Show the form for editing the specified resource.

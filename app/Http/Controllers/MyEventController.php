@@ -73,24 +73,6 @@ class MyEventController extends Controller
         //dd($diaries);
         return view('myevent.show')->with(['my_event' => $my_event])->with(['diaries' => $diaries]);
         
-        // $id = Auth::user()->id;
-        // $year = "2022";
-        // $now_year = Carbon::now()->format('Y');
-        // $diary_my_events = [];
-        
-        // for($i= $year; $i<=$now_year; $i++){
-        // $diary_my_events = $diary->where('users_id',$id)->where('start',$i."-".$my_event->start)->get();
-        // $diary_id = $diary->where('users_id',$id)->where('start',$i."-".$my_event->start)->find('id');
-        
-        
-        // //dd($diaries);
-        // $diary_my_events['path'] = $diary_image->where('diaries_id',$diary_id)->find('path');
-        
-        // }   
-        // dd($diary_my_events);
-        // return view('myevent.show')
-        // ->with(['my_event' => $my_event])
-        // ->with(['diary_my_events' => $diary_my_events]);
     }
 
     /**

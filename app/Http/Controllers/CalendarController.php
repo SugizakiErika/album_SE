@@ -38,7 +38,8 @@ class CalendarController extends Controller
         
       return $data_normal_events;
     });
-      
+    
+    
     
     //個人行事(my_event)に現在の年を結合する
     $data_my_events_vals = [];
