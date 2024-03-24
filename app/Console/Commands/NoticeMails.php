@@ -39,9 +39,9 @@ class NoticeMails extends Command
     {
         //今日の日付を取得する
         $data = Carbon::now(); //ex.03-20
-        $data_date = Carbon::now()->format('m-d');
-        $data_month = Carbon::now()->format('m');
-        $data_day = Carbon::now()->format('d');
+        // $data_date = Carbon::now()->format('m-d');
+        // $data_month = Carbon::now()->format('m');
+        // $data_day = Carbon::now()->format('d');
         
         $normalevent_users = NormaleventUser::all();
         

@@ -92,7 +92,10 @@ class NormalEventController extends Controller
         
         $id = Auth::user()->id;
         $user = User::find($id);
-        $user->normal_events()->syncWithPivotValues($result["ajax_input_id"],['notice'=>$result["ajax_input_notice"],'day_num'=>$result["ajax_input_day_num"]],false);
+        $user->normal_events()
+             ->syncWithPivotValues($result["ajax_input_id"],
+                                  ['notice'=>$result["ajax_input_notice"],
+                                  'day_num'=>$result["ajax_input_day_num"]],false);
         
         return $result;
     }
