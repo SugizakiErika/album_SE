@@ -65,7 +65,7 @@ Route::controller(NormalEventController::class)->middleware(['auth'])->group(fun
     Route::get('/normalevent/create', 'create')->name('create.normalevent');
     //Route::put('/normalevent/create', 'store')->name('store.normalevent');
     Route::put('/normalevent/update', 'update')->name('update.normalevent');
-    Route::get('/normalevent/show{normal_event}', 'show')->name('show.normalevent');
+    Route::get('/normalevent/show/{normal_event}', 'show')->name('show.normalevent');
 });
 
 
