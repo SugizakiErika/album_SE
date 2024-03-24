@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\My_event;
+
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Diary;
+use App\Models\Diary_image;
 use Illuminate\Support\Facades\Auth;
 
 class MyEventController extends Controller
@@ -46,11 +49,11 @@ class MyEventController extends Controller
         $my_event->category = $input["category"];
         $my_event->day = $input["day"];
         $my_event->color = "#9999FF";
-        $my_event->url = '/myevent/edit/' .$my_event->id;
+        $my_event->url = '/myevent/show/' .$my_event->id;
         $my_event->users_id = Auth::user()->id;
         $my_event->save();
         
-        $my_event->url = '/myevent/edit/' .$my_event->id;
+        $my_event->url = '/myevent/show/' .$my_event->id;
         $my_event->save();
         
         return redirect('/myevent/create');
@@ -62,9 +65,32 @@ class MyEventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(My_event $my_event)
     {
-        //
+        $id = Auth::user()->id;
+        $diaries = Diary::with('diary_image')->where('users_id',$id)->get();
+        
+        //dd($diaries);
+        return view('myevent.show')->with(['my_event' => $my_event])->with(['diaries' => $diaries]);
+        
+        // $id = Auth::user()->id;
+        // $year = "2022";
+        // $now_year = Carbon::now()->format('Y');
+        // $diary_my_events = [];
+        
+        // for($i= $year; $i<=$now_year; $i++){
+        // $diary_my_events = $diary->where('users_id',$id)->where('start',$i."-".$my_event->start)->get();
+        // $diary_id = $diary->where('users_id',$id)->where('start',$i."-".$my_event->start)->find('id');
+        
+        
+        // //dd($diaries);
+        // $diary_my_events['path'] = $diary_image->where('diaries_id',$diary_id)->find('path');
+        
+        // }   
+        // dd($diary_my_events);
+        // return view('myevent.show')
+        // ->with(['my_event' => $my_event])
+        // ->with(['diary_my_events' => $diary_my_events]);
     }
 
     /**
@@ -85,9 +111,23 @@ class MyEventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $result = $request->all();
+        
+        $my_event = MY_event::find($result["ajax_input_id"]);
+        $title = json_encode($result["ajax_input_title"],JSON_UNESCAPED_UNICODE);
+    
+        $my_event->start = Carbon::parse($result["ajax_input_start"])->format('m-d');
+        $my_event->title = json_decode($title); //""が付いてしまうのでdecodeする
+        $my_event->category = $result["ajax_input_category"];
+        $my_event->day = $result["ajax_input_day"];
+        $my_event->color = "#9999FF";
+        $my_event->url = '/myevent/show/' .$result["ajax_input_id"];
+        $my_event->users_id = Auth::user()->id;
+        $my_event->save();
+        
+        return $result;
     }
 
     /**

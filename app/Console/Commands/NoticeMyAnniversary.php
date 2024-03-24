@@ -9,6 +9,9 @@ use App\Mail\MailMyAnniversary;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\My_event;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Log;
 
 class NoticeMyAnniversary extends Command
 {
@@ -33,15 +36,35 @@ class NoticeMyAnniversary extends Command
      */
     public function handle()
     {
-        $data = Carbon::now()->format('m-d');
-        $my_events = MY_event::where('start',$data)->where('category','anniversary')->get();
-        //dd($my_events);
-        foreach($my_events as $my_event){
-         $name = '';
-         $email = '';
-         $subject = "もうすぐ".$my_event->title."です！";
-         }
+        //今日の日付を取得する
+        $data = Carbon::now(); //ex.03-20
+        // $data_date = Carbon::now()->format('m-d');
+        // $data_month = Carbon::now()->format('m');
+        // $data_day = Carbon::now()->format('d');
+        
+        $my_events = MY_event::all();
+        
+        foreach($my_events as $my_event)
+        {
+            //日付調整
+            $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
+            
+            $my_anniversaries = MY_event::where('start',$data_notice_later)->where('category','anniversary')->get();
+            //dd($my_anniversaries);            
+            
+            foreach($my_anniversaries as $my_anniversary){
+
+            //各テーブルの取得
+            $user = User::find($my_anniversary->users_id);
+            
+            $name = $user->name;
+            $email = $user->email;
+            $subject = "もうすぐ".json_encode($my_anniversary->title,JSON_UNESCAPED_UNICODE)."です！";
+            $comment = json_encode($my_anniversary->comment,JSON_UNESCAPED_UNICODE);
+            
+            Mail::send(new MailMyAnniversary($name,$email,$subject));
+            }
+        }
          
-         Mail::send(new MailMyAnniversary($name,$email,$subject));
     }
 }

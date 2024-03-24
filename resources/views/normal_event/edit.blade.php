@@ -18,14 +18,14 @@
                 <input type="hidden" name="n_id" value="{{ $normal_event->id }}"/>
                 
                 <select  name="n_notice">
-                    <option value="0">OFF</option>
-                    <option value="1">ON</option>
+                    <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
+                    <option value="1" @if($normal_event->pivot->notice == "0") selected @endif>ON</option>
                 </select>
             
                 <input type="number" inputmode="numeric" name="n_day_num" value = "{{ $normal_event->pivot->day_num }}"/>
                 
             @endforeach
-                <button type = "submit">[登録]</button>
+                <button type = "submit">[変更]</button>
             <script>
                 $(function(){
                     $(":submit").on('click', function(){
@@ -34,7 +34,7 @@
                         var input_notice = document.getElementsByName('n_notice');
                         var input_day_num = document.getElementsByName('n_day_num');
                         
-                        for(let i=0; i<=input_id.length; i++){
+                        for(let i=0; i<input_id.length; i++){
                     
                             $.ajax({
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  // CSRFトークンの設定
@@ -49,8 +49,12 @@
                                 },
                             }).done(function (results) {
                                 // 通信成功時の処理
-                                //alert('送信成功');
                                 console.log(results);
+                                if(i == input_id.length-1){
+                                alert('通常行事の登録内容を変更しました');
+                                }else{
+                                console.log(i);
+                                }
                             }).fail(function (jqXHR, textStatus, errorThrown) {
                                 // 通信失敗時の処理
                                 alert('ファイルの取得に失敗しました。');

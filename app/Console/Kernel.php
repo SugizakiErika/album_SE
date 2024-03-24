@@ -47,12 +47,12 @@ class Kernel extends ConsoleKernel
     {
         //今日の日付を取得する
         $data = Carbon::now(); //ex.03-20
-        $data_date = Carbon::now()->format('m-d');
-        $data_month = Carbon::now()->format('m');
-        $data_day = Carbon::now()->format('d');
+        //$data_date = Carbon::now()->format('m-d');
+        //$data_month = Carbon::now()->format('m');
+        //$data_day = Carbon::now()->format('d');
         
         $normalevent_users = NormaleventUser::all();
-        
+        $my_events = MY_event::all();
          
         //通常行事で今日当てはまるものがあれば実行する
         foreach($normalevent_users as $normalevent_user)
@@ -61,40 +61,76 @@ class Kernel extends ConsoleKernel
             $data_notice_later = $data->addDays((int)$normalevent_user->day)->format('m-d');
             
             $normal_event = Normal_event::find($normalevent_user->normal_event_id);
-        
-        if($normal_event->start == $data_notice_later)
-        {
-            $schedule->command('command:notice_normal_event')
-            ->yearlyOn($data_month,$data_notice_ago,'06:00');
-            //->everyMinute();
+            
+            if($normal_event->start == $data_notice_later)
+            {
+                $schedule->command('command:notice_normal_event')
+                ->dailyAt('06:00');
+                //->yearlyOn($data_month,$data_notice_later,'06:00');
+                //->everyMinute();
             }else{
                     Log::info('失敗kernel');
             }
         }
         
-        if(MY_event::where('start',$data)->where('category','birthday')){
+        foreach($my_events as $my_event)
+        {
+            //日付調整
+            $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
-             $schedule->command('command:notice_my_event_birthday')->yearly($data,'6:00');
-    
+        
+        if(MY_event::where('start',$data_notice_later)->where('category','anniversary'))
+        {
+            Log::info("成功：anniversary");
+             $schedule->command('command:notice_my_event_anniversary')
+             ->dailyAt('06:00');
+             //->yearly($data_month,$data_notice_ago,'6:00');
+             //->everyMinute();
+             
         }else{
             //何もしない
         }
         
-        if(MY_event::where('start',$data)->where('category','anniversary')){
-            
-            $schedule->command('command:notice_my_event_anniversary')->yearly($data,'6:00');
-            
+        if(MY_event::where('start',$data_notice_later)->where('category','birthday'))
+        {
+            Log::info("成功：birthday");
+             $schedule->command('command:notice_my_event_birthday')
+             ->dailyAt('06:00');
+             //->yearly($data_month,$data_notice_ago,'6:00');
+             //->everyMinute();
+             
         }else{
-             //何もしない
+            //何もしない
         }
+        
+        if(MY_event::where('start',$data_notice_later)->where('category','others'))
+        {
+            Log::info("成功：others");
+             $schedule->command('command:notice_my_event_others')
+             ->dailyAt('06:00');
+             //->yearly($data_month,$data_notice_ago,'6:00');
+             //->everyMinute();
+             
+        }else{
+            //何もしない
+        }
+        }
+        
+        // if(MY_event::where('start',$data)->where('category','birthday')){
+            
+        //     $schedule->command('command:notice_my_event_anniversary')->yearly($data_month,$data_notice_ago,'6:00');
+            
+        // }else{
+        //      //何もしない
+        // }
         
         // if($data_my_events->start == $data && $data_my_events['category'] == 'others'){
             
-        //     $schedule->command('command:notice_my_event_others')->yearly($data,'6:00');
+        //      $schedule->command('command:notice_my_event_others')->yearly($data_month,$data_notice_ago,'6:00');
             
-        // }else{
-        //     //何もしない
-        // }
+        //  }else{
+        //      //何もしない
+        //  }
         
         
         
