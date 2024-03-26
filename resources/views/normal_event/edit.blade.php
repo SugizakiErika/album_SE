@@ -11,7 +11,12 @@
             </head>
         </x-slot>
         <body>
+            <button type = "submit">[変更]</button>
             @foreach($users->normal_events as $normal_event)
+            <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                 <p>{{ $normal_event->title }}</p>
                 <p>{{ $normal_event->start }}</p>
                 
@@ -19,13 +24,16 @@
                 
                 <select  name="n_notice">
                     <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
-                    <option value="1" @if($normal_event->pivot->notice == "0") selected @endif>ON</option>
+                    <option value="1" @if($normal_event->pivot->notice == "1") selected @endif>ON</option>
                 </select>
             
                 <input type="number" inputmode="numeric" name="n_day_num" value = "{{ $normal_event->pivot->day_num }}"/>
-                
+                </div>
+            </div>
+        </div>
+    </div>
             @endforeach
-                <button type = "submit">[変更]</button>
+                
             <script>
                 $(function(){
                     $(":submit").on('click', function(){
@@ -39,7 +47,7 @@
                             $.ajax({
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  // CSRFトークンの設定
                                 type: "put",
-                                url: "/normalevent/update",
+                                url: "{{ route('update.normalevent') }}",
                                 dataType: "text",
                                 scriptCharset: "utf-8",
                                 data: {

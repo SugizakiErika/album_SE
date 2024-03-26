@@ -16,14 +16,6 @@
             <textarea name="diary[comment]" placeholder="コメントを入力してください"></textarea>
             <button type = "submit">登録</button>
             </form>
-            
-            <!--画像確認用-->
-            @foreach($diary_images as $diary_image)
-                        
-            <img src = "{{ asset($diary_image->path) }}" width="200" height="150">
-                        
-            @endforeach
-                        
         </body>
     </x-app-layout>
 </html>

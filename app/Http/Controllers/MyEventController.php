@@ -14,16 +14,6 @@ use Illuminate\Support\Facades\Auth;
 class MyEventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -45,6 +35,7 @@ class MyEventController extends Controller
     {
         $input = $request['myevent'];
         $my_event->start = Carbon::parse($input["start"])->format('m-d');
+        $my_event->f_end = Carbon::parse($input["start"])->format('m-d');
         $my_event->title = $input["title"];
         $my_event->category = $input["category"];
         $my_event->day = $input["day"];
@@ -56,7 +47,7 @@ class MyEventController extends Controller
         $my_event->url = '/myevent/show/' .$my_event->id;
         $my_event->save();
         
-        return redirect('/myevent/create');
+        return redirect()->route('create.myevent');
     }
 
     /**
@@ -76,17 +67,6 @@ class MyEventController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -101,6 +81,7 @@ class MyEventController extends Controller
         $title = json_encode($result["ajax_input_title"],JSON_UNESCAPED_UNICODE);
     
         $my_event->start = Carbon::parse($result["ajax_input_start"])->format('m-d');
+        $my_event->f_end = Carbon::parse($result["ajax_input_start"])->format('m-d');
         $my_event->title = json_decode($title); //""が付いてしまうのでdecodeする
         $my_event->category = $result["ajax_input_category"];
         $my_event->day = $result["ajax_input_day"];
@@ -118,8 +99,9 @@ class MyEventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(My_event $my_event)
     {
-        //
+       $my_event->delete();
+       return redirect()->route('create.myevent');
     }
 }

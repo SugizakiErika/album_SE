@@ -13,23 +13,12 @@ use Illuminate\Support\Facades\Auth;
 class NormalEventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Normal_event $normal_event)
     {
-        
         $id = Auth::user()->id;
         $user = User::find($id);
         return view('normal_event.edit')->with(['users' => $user]);
@@ -54,7 +43,7 @@ class NormalEventController extends Controller
         //$normal_event->url = '/myevent/edit/' .$my_event->id;
         
         
-        return redirect('/normalevent/create');
+        return redirect()->route('create.normalevent', ['id' => 1]);
     }
 
     // /**
@@ -67,17 +56,6 @@ class NormalEventController extends Controller
      {
          return view('normal_event.show')->with(['normal_event' => $normal_event]);
      }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -96,18 +74,7 @@ class NormalEventController extends Controller
              ->syncWithPivotValues($result["ajax_input_id"],
                                   ['notice'=>$result["ajax_input_notice"],
                                   'day_num'=>$result["ajax_input_day_num"]],false);
-        
+                                  
         return $result;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

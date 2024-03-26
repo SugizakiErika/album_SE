@@ -14,7 +14,7 @@
         <body>
         
             @foreach($users->normal_events as $normal_event)
-            <form action = "/normalevent/create" enctype = "multipart/form-data" method = "POST" >
+            <form action = "{{ route('normalevent.create') }}" enctype = "multipart/form-data" method = "POST" >
                 @csrf
                 @method('PUT')
                 <p>{{ $normal_event->title }}</p>

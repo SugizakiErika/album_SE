@@ -11,6 +11,7 @@
             </head>
         </x-slot>
         <body>
+            <!--登録-->
             <form method = "POST" action = "{{ route('store.myevent') }}" enctype = "multipart/form-data">
                 @csrf
                 <input type = "text" name = "myevent[title]" placeholder = "タイトル"/>
@@ -26,6 +27,7 @@
                 <button id="submit_post" type = "submit">[登録]</button>
             </form>
             
+            <!--変更-->
             @foreach($my_events as $my_event)
             
             <?php $my_event->start ="2024-".$my_event->start; ?>
@@ -40,6 +42,20 @@
             
                 <input name="m_start" type="date" value="{{ $my_event->start }}"/>
                 <input type="text" inputmode="numeric" name="m_day" value ="{{ $my_event->day }}"日前/>
+                
+                <form method="post" action="{{ route('delete.myevent', ['my_event' => $my_event->id]) }}" id="form_{{ $my_event->id }}" >
+                @csrf
+                @method('DELETE')
+                <button type="button" onclick="deleteMyevent({{ $my_event->id }})">削除する</button> 
+                </form>
+                <script>
+                function deleteMyevent(id) {
+                    'use strict'
+                    if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                        document.getElementById(`form_${id}`).submit();
+                    }
+                }
+                </script>
             @endforeach
             <button id="submit_put" type = "submit">[変更]</button>
         
@@ -58,7 +74,7 @@
                             $.ajax({
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  // CSRFトークンの設定
                                 type: "put",
-                                url: "/myevent/update",
+                                url: "{{ route('update.myevent')}}",
                                 dataType: "text",
                                 scriptCharset: "utf-8",
                                 data: {

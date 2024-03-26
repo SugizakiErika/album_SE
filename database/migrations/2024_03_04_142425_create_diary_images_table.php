@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('path');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('diaries_id')->constrained();
+            $table->foreignId('diaries_id')->constrained()->onDelete('cascade');
         });
     }
 

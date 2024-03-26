@@ -10,7 +10,8 @@
         <body>
             {{ $normal_event->start }}
             {{ $normal_event->title }}
-            {{ $normal_event->comment }}
+            {{ $normal_event->explanation }}
+            {{ $normal_event->todo }}
             
         </body>
     </x-app-layout>

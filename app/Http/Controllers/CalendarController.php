@@ -25,22 +25,7 @@ class CalendarController extends Controller
     $data_diary = $diary->where('users_id',$id)->get();
     $data_normal_events = $normal_event->get();
     $data_my_events = $my_event->where('users_id',$id)->get();
-    
-    //通常行事(normal_event)に現在の年を結合する
-    $data_normal_events_vals = [];
-    
-    $data_normal_events_vals = collect($data_normal_events)->map(function ($data_normal_events) {
-      //○○年の取得きっとあんまりよくない取り方
-      $now = Carbon::now();
-      $now_year = $now->year;
-      //○○年を結合する
-      $data_normal_events['start'] = $now_year."-".$data_normal_events->start;
-        
-      return $data_normal_events;
-    });
-    
-    
-    
+
     //個人行事(my_event)に現在の年を結合する
     $data_my_events_vals = [];
     
@@ -50,6 +35,7 @@ class CalendarController extends Controller
       $now_year = $now->year;
       //○○年を結合する
       $data_my_events['start'] = $now_year."-".$data_my_events->start;
+      $data_my_events['f_end'] = $now_year."-".$data_my_events->f_end;
       
       if($data_my_events->category == "birthday"){
       
@@ -65,12 +51,10 @@ class CalendarController extends Controller
       
       return $data_my_events;
     });
-      
     
-    //dd($data_my_events_vals);
     //concatにて各テーブルの配列を結合する
-    $data = $data_diary->concat($data_normal_events_vals)->concat($data_my_events_vals);
-    //dd($data);
+    $data = $data_diary->concat($data_normal_events)->concat($data_my_events_vals);
+    
     return view('calendar.index')->with(['data'=> $data]);
   }
   

@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Diary extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+    use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
     
     public function diary_image()
     {
@@ -26,6 +30,8 @@ class Diary extends Model
         'comment',
         'color',
         ];
-        
+    
+    //  追記 (一緒に削除したいリレーション名を配列で指定)
+    protected $softCascade = ['diary_image'];
         
 }

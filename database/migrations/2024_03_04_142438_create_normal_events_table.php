@@ -17,9 +17,11 @@ return new class extends Migration
             $table->bigIncrements('id');//自動増分カラムで0か正の数しか生成できない主キー
             $table->string('title',30);
             $table->string('start');
+            $table->string('f_end');
             $table->string('color');
             $table->String('url');
-            $table->string('comment',500);
+            $table->string('explanation',500);
+            $table->string('todo',500);
             $table->timestamps();
         });
     }

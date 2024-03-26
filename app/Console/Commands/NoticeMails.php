@@ -62,9 +62,10 @@ class NoticeMails extends Command
             $name = $user->name;
             $email = $user->email;
             $subject = "もうすぐ".json_encode($normal_event->title,JSON_UNESCAPED_UNICODE)."です！";
-            $comment = json_encode($normal_event->comment,JSON_UNESCAPED_UNICODE);
+            $explanation = json_encode($normal_event->explanation,JSON_UNESCAPED_UNICODE);
+            $todo = json_encode($normal_event->todo,JSON_UNESCAPED_UNICODE);
         
-            Mail::send(new MailNormal($name,$email,$subject,$comment));
+            Mail::send(new MailNormal($name,$email,$subject,$explanation,$todo));
          
         }else{
             Log::info("失敗");

@@ -25,6 +25,7 @@
           event_vals.push({
             title: event['title'],
             start: event['start'],
+            end: event['f_end'],
             color: event['color'],
             url: event['url'],
           });
@@ -41,7 +42,6 @@
           locale: 'ja',
           editable: true,
           events: event_vals,
-          
           //日を消去
           dayCellContent: function(arg){
 		        return arg.date.getDate();
