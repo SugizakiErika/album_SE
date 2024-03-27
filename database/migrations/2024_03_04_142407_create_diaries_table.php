@@ -19,6 +19,7 @@ return new class extends Migration
             //$table->boolean('is_keep')->default(0);
             $table->string('title',30);
             $table->string('start');
+            $table->string('f_end');
             $table->string('comment',200);
             $table->string('color');
             $table->string('url');

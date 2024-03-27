@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\Storage;
 class DiaryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -46,6 +36,7 @@ class DiaryController extends Controller
         //title,date,comment,color,users_idの保存
         $input = $request['diary'];
         $diary->start = $input["start"];
+        $diary->f_end = $input["start"];
         $diary->title = $input["title"];
         $diary->comment = $input["comment"];
         $diary->color = "#FFCCFF";
@@ -69,7 +60,7 @@ class DiaryController extends Controller
             $diary_image->save();
         }
         
-        return redirect('/create');
+        return redirect()->route('show.diary', ['diary' => $diary->id]);
     }
 
     /**
@@ -107,6 +98,7 @@ class DiaryController extends Controller
         //title,date,comment,color,users_idの保存
         $input = $request['diary'];
         $diary->start = $input["start"];
+        $diary->f_end = $input["start"];
         $diary->title = $input["title"];
         $diary->comment = $input["comment"];
         $diary->color = "#FFCCFF";
@@ -135,25 +127,13 @@ class DiaryController extends Controller
         }else{
             //何もしない
             }
-        return redirect('/edit/'.$diary->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('edit.diary', ['diary' => $diary->id]);
     }
     
     //削除
-    public function delete(Diary $diary,Diary_image $diary_image)
+    public function delete(Diary $diary)
    {
        $diary->delete();
-       $diary_image->delete();
-       return redirect('/Calendar/edit/' . $user->id);
- }
+       return redirect()->route('calendar');
+   }
 }

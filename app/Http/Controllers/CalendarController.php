@@ -44,12 +44,13 @@ class CalendarController extends Controller
     //個人行事(my_event)に現在の年を結合する
     $data_my_events_vals = [];
     
-    $data_my_events_vals = collect($data_my_events)->map(function ($data_my_events) {
+    $data_my_events_vals = collect($data_my_events_vals)->map(function ($data_my_events) {
       //○○年の取得きっとあんまりよくない取り方
       $now = Carbon::now();
       $now_year = $now->year;
       //○○年を結合する
       $data_my_events['start'] = $now_year."-".$data_my_events->start;
+      $data_my_events['f_end'] = $now_year."-".$data_my_events->f_end;
       
       if($data_my_events->category == "birthday"){
       
@@ -69,7 +70,7 @@ class CalendarController extends Controller
     
     //dd($data_my_events_vals);
     //concatにて各テーブルの配列を結合する
-    $data = $data_diary->concat($data_normal_events_vals)->concat($data_my_events_vals);
+    $data = $data_diary->concat($data_normal_events)->concat($data_my_events_vals);
     //dd($data);
     return view('calendar.index')->with(['data'=> $data]);
   }

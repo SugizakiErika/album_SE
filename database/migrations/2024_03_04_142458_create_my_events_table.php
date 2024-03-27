@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title',30);
             $table->string('start');
+            $table->string('f_end');
             $table->string('category');
             $table->integer('day');
             $table->string('color');

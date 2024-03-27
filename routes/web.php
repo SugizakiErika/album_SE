@@ -50,10 +50,16 @@ Route::controller(DiaryController::class)->middleware(['auth'])->group(function(
     //日記編集
     Route::get('/edit/{diary}', 'edit')->name('edit.diary');
     Route::put('/edit/{diary}', 'update')->name('update.diary');
+    //削除
+    Route::delete('/show/{diary}','delete')->name('delete.diary');
 });
 
 //MyEventController
 Route::controller(MyEventController::class)->middleware(['auth'])->group(function(){
+    //削除
+    Route::get('/myevent/create/{my_event}', 'create')->name('create.myevent');
+    Route::delete('/myevent/create/{my_event}','delete')->name('delete.myevent');
+    
     Route::get('/myevent/create', 'create')->name('create.myevent');
     Route::post('/myevent/create', 'store')->name('store.myevent');
     Route::put('/myevent/update', 'update')->name('update.myevent');
@@ -66,6 +72,7 @@ Route::controller(NormalEventController::class)->middleware(['auth'])->group(fun
     //Route::put('/normalevent/create', 'store')->name('store.normalevent');
     Route::put('/normalevent/update', 'update')->name('update.normalevent');
     Route::get('/normalevent/show/{normal_event}', 'show')->name('show.normalevent');
+    Route::get('/normalevent/day_update', 'index')->name('day_update.normalevent');
 });
 
 
@@ -75,7 +82,6 @@ Route::controller(InquiryMailController::class)->middleware(['auth'])->group(fun
     Route::post('/mail/create', 'store')->name('inquiry.store');
 });
 
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -83,6 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+});
 require __DIR__.'/auth.php';
 
 

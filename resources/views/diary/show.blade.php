@@ -14,6 +14,20 @@
             <img src = "{{ asset($diary->diary_image->path) }}" width="200" height="150">
             
             <a href="/edit/{{ $diary->id }}">編集する</a>
+            
+            <form action="{{ route('delete.diary', ['diary' => $diary->id]) }}" id="form_{{ $diary->id }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="button" onclick="deleteDiary({{ $diary->id }})">削除する</button> 
+            </form>
+            <script>
+            function deleteDiary(id) {
+                'use strict'
+                if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+            </script>
         </body>
     </x-app-layout>
 </html>
