@@ -15,12 +15,12 @@ class Normal_eventSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run() :void
     {
         //年を取得する
         $now = Carbon::now();
         $now_year = now()->year;
-        
+        $color = '#ff0000';
         /**
         * 日付を取得する関数
         * 
@@ -31,8 +31,8 @@ class Normal_eventSeeder extends Seeder
         * 
         * @return int 日にち
         */
-        function getDay($year,$month,$dayOfWeek,$week){
-            
+        function getDay($year,$month,$dayOfWeek,$week)
+        {
             //月初めの日付を取得
             $date = new DateTime("{$year}-{$month}-01");
          
@@ -52,18 +52,18 @@ class Normal_eventSeeder extends Seeder
                 return -1; 
             }
             
-            return $date->format('Y-m-d');
+            return $date->format('m-d');
         }
         
         $params = 
         [
             [
-                'id' => $now_year.'1',
+                'id' => 1,
                 'title' => '元旦',
-                'start' => $now_year.'-01-01',
-                'f_end' => $now_year.'-01-01',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'1',
+                'start' => '01-01',
+                'f_end' => '01-01',
+                'color' => $color,
+                'url' =>'/normalevent/show/1',
                 
                 'explanation' =>
                 '元旦は年の最初の日「元日（1月1日）の朝」のことを言いますが、
@@ -78,12 +78,12 @@ class Normal_eventSeeder extends Seeder
                 玄関には門松を、リビングには鏡餅を飾ります。'
             ],
             [
-                'id' => $now_year.'2',
+                'id' => 2,
                 'title' => '寒中見舞い',
-                'start' => $now_year.'-01-07',
-                'f_end' => $now_year.'-01-07',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'2',
+                'start' => '01-07',
+                'f_end' => '01-07',
+                'color' => $color,
+                'url' =>'/normalevent/show/2',
                 
                 'explanation' =>
                 'お互いの近況を報告し合う季節の挨拶状としての意味だけではありません
@@ -95,12 +95,12 @@ class Normal_eventSeeder extends Seeder
                 そのため、松の内が明ける日である1月7日および15日に投函すれば問題はありません。'
             ],
             [
-                'id' => $now_year.'3',
+                'id' => 3,
                 'title' => '松の内',
-                'start' => $now_year.'-01-1',
-                'f_end' => $now_year.'-01-7',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'3',
+                'start' => '01-1',
+                'f_end' => '01-7',
+                'color' => $color,
+                'url' =>'/normalevent/show/3',
                 
                 'explanation' =>
                 '正月に飾る松飾り(門松)を立てておく期間のことを松の内といいます。
@@ -113,12 +113,12 @@ class Normal_eventSeeder extends Seeder
                 地方によって異なります。※新年に入って初めて出合った人に、新年の挨拶を交わすのも松の内までです。'
             ],
             [
-                'id' => $now_year.'4',
+                'id' => 4,
                 'title' => '七草',
-                'start' => $now_year.'-01-07',
-                'f_end' => $now_year.'-01-07',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'4',
+                'start' => '01-07',
+                'f_end' => '01-07',
+                'color' => $color,
+                'url' =>'/normalevent/show/4',
                 
                  'explanation' =>
                 '1月7日を過去1年の厄払いとこれからの1年の無病息災と招福を祈願する「人日の日」とされています。
@@ -132,12 +132,12 @@ class Normal_eventSeeder extends Seeder
                 蕪（かぶ）、大根（だいこん）を入れた七草がゆを食べます。'
             ],
             [
-                'id' => $now_year.'5',
+                'id' => 5,
                 'title' => '鏡開き',
-                'start' => $now_year.'-01-11',
-                'f_end' => $now_year.'-01-11',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'5',
+                'start' => '01-11',
+                'f_end' => '01-11',
+                'color' => $color,
+                'url' =>'/normalevent/show/5',
                 
                  'explanation' =>
                 '1月11日に正月の間に供えていた鏡餅を下げて、割り砕いて無病息災と延命を祈願して食べる習慣を「鏡開き」といいます。
@@ -151,12 +151,12 @@ class Normal_eventSeeder extends Seeder
                 '1月11日に正月の間に供えていた鏡餅を下げて、割り砕いて無病息災と延命を祈願して食べます。'
             ],
             [
-                'id' => $now_year.'6',
+                'id' => 6,
                 'title' => '成人式',
                 'start' => getDay($now_year,1,'Mon',2),
                 'f_end' => getDay($now_year,1,'Mon',2),
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'6',
+                'color' => $color,
+                'url' =>'/normalevent/show/6',
                 
                  'explanation' =>
                 '成人の日には、日本各地で年度内に成人する人を祝う成人式が行われます。
@@ -166,12 +166,12 @@ class Normal_eventSeeder extends Seeder
                 '講演会を開いたり、記念品を贈ったりします。'
             ],
             [
-                'id' => $now_year.'7',
+                'id' => 7,
                 'title' => '小正月・どんど焼き',
-                'start' => $now_year.'-01-15',
-                'f_end' => $now_year.'-01-15',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'7',
+                'start' => '01-15',
+                'f_end' => '01-15',
+                'color' => $color,
+                'url' =>'/normalevent/show/7',
                 
                  'explanation' =>
                 'どんど焼きとは、小正月と呼ばれる1月15日前後に行われる行事です。
@@ -182,12 +182,12 @@ class Normal_eventSeeder extends Seeder
                 'お正月の門松や注連縄などを持ち寄って燃やします。'
             ],
             [
-                'id' => $now_year.'8',
+                'id' => 8,
                 'title' => '節分',
-                'start' => $now_year.'-02-03',
-                'f_end' => $now_year.'-02-03',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'8',
+                'start' => '02-03',
+                'f_end' => '02-03',
+                'color' => $color,
+                'url' =>'/normalevent/show/8',
                 
                  'explanation' =>
                 '立春、立夏、立秋、立冬の前日を節分といい、四季の分かれ目に行われていた四回の節分の内、
@@ -203,12 +203,12 @@ class Normal_eventSeeder extends Seeder
                 近づけないようにする風習があります。'
             ],
             [
-                'id' => $now_year.'9',
+                'id' => 9,
                 'title' => '立春',
-                'start' => $now_year.'-02-04',
-                'f_end' => $now_year.'-02-04',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'9',
+                'start' => '02-04',
+                'f_end' => '02-04',
+                'color' => $color,
+                'url' =>'/normalevent/show/9',
                 
                  'explanation' =>
                 '立春とは、二十四節気と呼ばれるもののひとつで、
@@ -219,12 +219,12 @@ class Normal_eventSeeder extends Seeder
                 お酒を飲むなどして新年を祝うこともあります。'
             ],
             [
-                'id' => $now_year.'10',
+                'id' => 10,
                 'title' => 'バレンタインデー',
-                'start' => $now_year.'-02-14',
-                'f_end' => $now_year.'-02-14',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'10',
+                'start' => '02-14',
+                'f_end' => '02-14',
+                'color' => $color,
+                'url' =>'/normalevent/show/10',
                 
                  'explanation' =>
                 '日本では女性から男性にチョコレートを贈る行事として1970年代頃から一般に定着しました。',
@@ -235,12 +235,12 @@ class Normal_eventSeeder extends Seeder
                 買う自分チョコなど、バレンタインデーにチョコレートを贈る習慣は多様化しています。'
             ],
             [
-                'id' => $now_year.'11',
+                'id' => 11,
                 'title' => '針供養',
-                'start' => $now_year.'-02-08',
-                'f_end' => $now_year.'-02-08',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'11',
+                'start' => '02-08',
+                'f_end' => '02-08',
+                'color' => $color,
+                'url' =>'/normalevent/show/11',
                 
                  'explanation' =>
                 '2月8日を事始め、12月8日を事納めといって、この日は針仕事を休み折れたり曲がったりして
@@ -257,12 +257,12 @@ class Normal_eventSeeder extends Seeder
                 近くの寺社に持参し裁縫の上達を願って供養してもらいます。'
             ],
             [
-                'id' => $now_year.'12',
+                'id' => 12,
                 'title' => 'ひな祭り（上巳の節句）',
-                'start' => $now_year.'-03-03',
-                'f_end' => $now_year.'-03-03',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'12',
+                'start' => '03-03',
+                'f_end' => '03-03',
+                'color' => $color,
+                'url' =>'/normalevent/show/12',
                 
                  'explanation' =>
                 '中国が起源で中国では川で身を清めて不浄払いをする風習であったものが、
@@ -275,12 +275,12 @@ class Normal_eventSeeder extends Seeder
                 食べたりして各家庭において祝い事をします。'
             ],
             [
-                'id' => $now_year.'13',
+                'id' => 13,
                 'title' => 'ホワイトデー',
-                'start' => $now_year.'-03-14',
-                'f_end' => $now_year.'-03-14',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'13',
+                'start' => '03-14',
+                'f_end' => '03-14',
+                'color' => $color,
+                'url' =>'/normalevent/show/13',
                 
                  'explanation' =>
                 'ホワイトデーでは、バレンタインデーにプレゼントを受け取った人がお返しをする日です。
@@ -293,12 +293,12 @@ class Normal_eventSeeder extends Seeder
                 'バレンタインデーにプレゼントを受け取った人がお返しをします。'
             ],
             [
-                'id' => $now_year.'14',
+                'id' => 14,
                 'title' => 'イースター',
-                'start' => $now_year.'-03-31',
-                'f_end' => $now_year.'-03-31',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'14',
+                'start' => '03-31',
+                'f_end' => '03-31',
+                'color' => $color,
+                'url' =>'/normalevent/show/14',
                 
                  'explanation' =>
                 '十字架にかけられて亡くなったキリストが、その3日目に復活したことを祝う「復活祭」のことです。',
@@ -309,12 +309,12 @@ class Normal_eventSeeder extends Seeder
                 子どもたちがそれを探す“Easter egg hunt”（イースター・エッグハント）というゲームも行われます。'
             ],
             [
-                'id' => $now_year.'15',
+                'id' => 15,
                 'title' => 'エイプリルフール',
-                'start' => $now_year.'-04-01',
-                'f_end' => $now_year.'-04-01',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'15',
+                'start' => '04-01',
+                'f_end' => '04-01',
+                'color' => $color,
+                'url' =>'/normalevent/show/15',
                 
                  'explanation' =>
                 'エイプリルフールは、嘘をついてもいいとされている日なので日本人は友人同士で様々な嘘や冗談を言い合います。
@@ -324,12 +324,12 @@ class Normal_eventSeeder extends Seeder
                 '嘘をついてもいいとされている日なので日本人は友人同士で様々な嘘や冗談を言い合います。'
             ],
             [
-                'id' => $now_year.'16',
+                'id' => 16,
                 'title' => '花まつり',
-                'start' => $now_year.'-04-08',
-                'f_end' => $now_year.'-04-08',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'16',
+                'start' => '04-08',
+                'f_end' => '04-08',
+                'color' => $color,
+                'url' =>'/normalevent/show/16',
                 
                  'explanation' =>
                 'お釈迦様の誕生を祝うと同時に、子どもたちの健康を祈る行事です。',
@@ -340,12 +340,12 @@ class Normal_eventSeeder extends Seeder
                 平安装束を模した衣装を着せて稚児行列を行うところもあります。'
             ],
             [
-                'id' => $now_year.'17',
+                'id' => 17,
                 'title' => '端午の節句',
-                'start' => $now_year.'-05-05',
-                'f_end' => $now_year.'-05-05',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'17',
+                'start' => '05-05',
+                'f_end' => '05-05',
+                'color' => $color,
+                'url' =>'/normalevent/show/17',
                 
                  'explanation' =>
                 '中国が起源で、端午とは午の月である5月の5日のこと。
@@ -360,12 +360,12 @@ class Normal_eventSeeder extends Seeder
                 菖蒲湯（しょうぶゆ）に入ります。（沸かしたお風呂に菖蒲を浮かべるだけ）'
             ],
             [
-                'id' => $now_year.'18',
+                'id' => 18,
                 'title' => '母の日',
                 'start' => getDay($now_year,5,'Sun',2),
                 'f_end' => getDay($now_year,5,'Sun',2),
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'18',
+                'color' => $color,
+                'url' =>'/normalevent/show/18',
                 
                  'explanation' =>
                 '5月の第2日曜日が母の日です。日頃の感謝の気持ちを込めてカーネーションを贈るのが定番ですが、最近では品物を贈ることが
@@ -377,12 +377,12 @@ class Normal_eventSeeder extends Seeder
                 '日頃の感謝の気持ちを込めてカーネーションを贈ります。品物を贈ることもあります。'
             ],
             [
-                'id' => $now_year.'19',
+                'id' => 19,
                 'title' => '父の日',
                 'start' => getDay($now_year,6,'Sun',3),
                 'f_end' => getDay($now_year,6,'Sun',3),
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'19',
+                'color' => $color,
+                'url' =>'/normalevent/show/19',
                 
                  'explanation' =>
                 '6月の第3日曜日が父の日です。日本では父の日に黄色の花を贈るといわれています。
@@ -393,12 +393,12 @@ class Normal_eventSeeder extends Seeder
                 '父の日に黄色の花を贈ります。'
             ],
             [
-                'id' => $now_year.'20',
+                'id' => 20,
                 'title' => 'お中元を贈る時期',
-                'start' => $now_year.'-07-01',
-                'f_end' => $now_year.'-07-01',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'20',
+                'start' => '07-01',
+                'f_end' => '07-01',
+                'color' => $color,
+                'url' =>'/normalevent/show/20',
                 
                  'explanation' =>
                 'そもそも「中元」とは旧暦の7月15日のことで、中国では中元を司る神がいると考えられ、
@@ -409,12 +409,12 @@ class Normal_eventSeeder extends Seeder
                 '東日本なら7月初旬〜7月15日、西日本なら7月下旬〜8月15日に贈るのが一般的です。'
             ],
             [
-                'id' => $now_year.'21',
+                'id' => 21,
                 'title' => '七夕祭',
-                'start' => $now_year.'-07-07',
-                'f_end' => $now_year.'-07-07',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'21',
+                'start' => '07-07',
+                'f_end' => '07-07',
+                'color' => $color,
+                'url' =>'/normalevent/show/21',
                 
                  'explanation' =>
                 '七夕と言えば、天の川を隔てて会うことができなくなった織姫と彦星が、
@@ -429,12 +429,12 @@ class Normal_eventSeeder extends Seeder
                 現在の新暦である７月７日に行う地域と、１ヶ月遅れの８月７日に行う地域に分かれている。'
             ],
             [
-                'id' => $now_year.'22',
+                'id' => 22,
                 'title' => 'お盆',
-                'start' => $now_year.'-08-13',
-                'f_end' => $now_year.'-08-13',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'22',
+                'start' => '08-13',
+                'f_end' => '08-13',
+                'color' => $color,
+                'url' =>'/normalevent/show/22',
                 
                  'explanation' =>
                 '故人が逝去後初めて迎えるお盆を初盆(新盆)と言いますが、忌明け法要前や忌明け後幾日も
@@ -450,12 +450,12 @@ class Normal_eventSeeder extends Seeder
                 関西を初め西日本の地方では月遅れの8月13日から16日の間に行われます。'
             ],
             [
-                'id' => $now_year.'23',
+                'id' => 23,
                 'title' => 'お月見（中秋の名月）',
-                'start' => $now_year.'-08-15',
-                'f_end' => $now_year.'-08-15',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'23',
+                'start' => '08-15',
+                'f_end' => '08-15',
+                'color' => $color,
+                'url' =>'/normalevent/show/23',
                 
                  'explanation' =>
                 '太陰暦（旧暦）では7月を初秋・8月を仲秋・9月を晩秋といい、8月15日の満月を十五夜といって、
@@ -471,12 +471,12 @@ class Normal_eventSeeder extends Seeder
                 藤袴（ふじばかま）、朝貌（ききょう）'
             ],
             [
-                'id' => $now_year.'24',
+                'id' => 24,
                 'title' => '菊の節句（重陽の節句）',
-                'start' => $now_year.'-09-09',
-                'f_end' => $now_year.'-09-09',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'24',
+                'start' => '09-09',
+                'f_end' => '09-09',
+                'color' => $color,
+                'url' =>'/normalevent/show/24',
                 
                  'explanation' =>
                 '陰陽説（おんみょうせつ）では9は目出度い数字の陽の中ででも最も良い数字といわれ、
@@ -492,12 +492,12 @@ class Normal_eventSeeder extends Seeder
                 また、重陽の節句は作物の収穫時期と重なるため、庶民の間では「栗の節句」として「栗ごはん」を食べて祝っていました。'
             ],
             [
-                'id' => $now_year.'25',
+                'id' => 25,
                 'title' => '敬老の日',
                 'start' => getDay($now_year,9,'Mon',3),
                 'f_end' => getDay($now_year,9,'Mon',3),
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'25',
+                'color' => $color,
+                'url' =>'/normalevent/show/25',
                 
                  'explanation' =>
                 '敬老の日の起源は、兵庫県の一村長が「お年寄りを敬い、お年寄りの経験と知恵を生かした農村作り」を
@@ -513,12 +513,12 @@ class Normal_eventSeeder extends Seeder
                 プレゼントを渡したりすることが多いようです。'
             ],
             [
-                'id' => $now_year.'26',
+                'id' => 26,
                 'title' => 'ハロウィン',
-                'start' => $now_year.'-10-31',
-                'f_end' => $now_year.'-10-31',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'26',
+                'start' => '10-31',
+                'f_end' => '10-31',
+                'color' => $color,
+                'url' =>'/normalevent/show/26',
                 
                  'explanation' =>
                 '本来は収穫を祝い、悪霊を追い払う行事ですが、日本では近年仮装をすることがメインになりつつ
@@ -531,12 +531,12 @@ class Normal_eventSeeder extends Seeder
                 '日本では近年仮装をすることがメインになりつつあります。'
             ],
             [
-                'id' => $now_year.'27',
+                'id' => 27,
                 'title' => '七五三',
-                'start' => $now_year.'-11-15',
-                'f_end' => $now_year.'-11-15',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'27',
+                'start' => '11-15',
+                'f_end' => '11-15',
+                'color' => $color,
+                'url' =>'/normalevent/show/27',
                 
                  'explanation' =>
                 '中国の古い学説である陰陽説（おんみょうせつ）の「三・五・七などの奇数は目出度い数字」とされる
@@ -549,12 +549,12 @@ class Normal_eventSeeder extends Seeder
                 参拝後に千歳飴と呼ばれる、細長い飴を受け取ります。'
             ],
             [
-                'id' => $now_year.'28',
+                'id' => 28,
                 'title' => '七五三',
-                'start' => $now_year.'-12-24',
-                'f_end' => $now_year.'-12-24',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'28',
+                'start' => '12-24',
+                'f_end' => '12-24',
+                'color' => $color,
+                'url' =>'/normalevent/show/28',
                 
                  'explanation' =>
                 '日本では24日の夜にサンタさんが子供にプレゼントを持ってきてくれ、
@@ -565,12 +565,12 @@ class Normal_eventSeeder extends Seeder
                 25日にケーキやチキンを食べることが一般的となっています。'
             ],
             [
-                'id' => $now_year.'29',
+                'id' => 29,
                 'title' => '大晦日',
-                'start' => $now_year.'-12-31',
-                'f_end' => $now_year.'-12-31',
-                'color' => '#ff0000',
-                'url' =>'/normalevent/show/'.$now_year.'29',
+                'start' => '12-31',
+                'f_end' => '12-31',
+                'color' => $color,
+                'url' =>'/normalevent/show/29',
                 
                  'explanation' =>
                 '月の終わりを晦日（30日＝みそか）といい、1年の終わりの日を大晦日（おおみそか）といいます。
