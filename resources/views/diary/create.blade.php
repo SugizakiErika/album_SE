@@ -11,9 +11,17 @@
             <form method = "POST" action = "{{ route('store.diary') }}" enctype = "multipart/form-data">
             @csrf
             <input type = "text" name = "diary[start]" value = "{{ $date }}" readonly>
-            <input type = "text" name = "diary[title]" placeholder = "タイトルを入力してください"/>
-            <input type = "file" name = "file[]" class = "form-control" multiple>
-            <textarea name="diary[comment]" placeholder="コメントを入力してください"></textarea>
+            <p class="start__error" style="color:red">{{ $errors->first('diary.start') }}</p>
+            
+            <input type = "text" name = "diary[title]" placeholder = "タイトルを入力してください" value = "{{ old('diary.title') }}"/>
+            <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
+            
+            <input type = "file" name = "files[]" multiple accept=".gif, .jpg, .jpeg, .png" class = "form-control" >
+            <p class="file__error" style="color:red">{{ $errors->first('file') }}</p>
+            
+            <textarea name="diary[comment]" placeholder="コメントを入力してください">{{ old('diary.comment') }}</textarea>
+            <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
+            
             <button type = "submit">登録</button>
             </form>
         </body>
