@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\MyEventRequest;
 use App\Models\My_event;
 
 use Carbon\Carbon;
@@ -10,6 +11,8 @@ use App\Models\User;
 use App\Models\Diary;
 use App\Models\Diary_image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class MyEventController extends Controller
 {
@@ -31,7 +34,7 @@ class MyEventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(My_event $my_event,Request $request)
+    public function store(My_event $my_event,MyEventRequest $request)
     {
         $input = $request['myevent'];
         $my_event->start = Carbon::parse($input["start"])->format('m-d');

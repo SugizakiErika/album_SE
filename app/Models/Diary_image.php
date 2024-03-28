@@ -12,13 +12,12 @@ class Diary_image extends Model
     use HasFactory;
     use SoftDeletes;
     
-    public function diaries()
+    public function diary()
     {
         return $this->belongsTo(Diary::class);
     }
     
-    protected $fillable =[
-        'name',
-        'path',
+    protected $casts = [
+        'files' => array()
         ];
 }

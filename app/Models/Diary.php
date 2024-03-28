@@ -13,9 +13,9 @@ class Diary extends Model
     use SoftDeletes;
     use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
     
-    public function diary_image()
+    public function diary_images()
     {
-        return $this->hasOne(Diary_image::class,'diaries_id');
+        return $this->hasMany(Diary_image::class,'diaries_id');
     }
     
     // public function user()

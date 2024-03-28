@@ -11,7 +11,9 @@
             {{ $diary->title }}
             {{ $diary->comment }}
             
-            <img src = "{{ asset($diary->diary_image->path) }}" width="200" height="150">
+            @foreach($diary->diary_images as $diary_image)
+            <img src = "{{ asset($diary_image->path) }}" width="200" height="150">
+            @endforeach
             
             <a href="/edit/{{ $diary->id }}">編集する</a>
             

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\InquiryMailRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InquiryMail;
 use App\Models\Inquiry_list;
@@ -17,7 +18,7 @@ class InquiryMailController extends Controller
         return view('inquiry.create');
     }
     
-    public function store(Inquiry_list $inquiry_list,Request $request)
+    public function store(Inquiry_list $inquiry_list,InquiryMailRequest $request)
     {
         //title,date,comment,color,users_idの保存
         $input = $request['inquiry'];

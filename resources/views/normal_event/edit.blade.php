@@ -11,9 +11,6 @@
             </head>
         </x-slot>
         <body>
-            
-            <a href="{{ route('day_update.normalevent') }}">日付変更</a>
-            
             <button type = "submit">[変更]</button>
             @foreach($users->normal_events as $normal_event)
             <div class="py-12">

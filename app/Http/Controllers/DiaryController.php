@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DiaryRequest;
 use App\Models\Diary_image;
 use App\Models\Diary;
 use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class DiaryController extends Controller
 {
@@ -31,7 +34,7 @@ class DiaryController extends Controller
      * @return \Illuminate\Http\Response
      */
      //日記の登録
-    public function store(Diary $diary,Diary_image $diary_image,Request $request)
+    public function store(Diary $diary,Diary_image $diary_image,DiaryRequest $request)
     {
         //title,date,comment,color,users_idの保存
         $input = $request['diary'];
@@ -46,14 +49,18 @@ class DiaryController extends Controller
         $diary->url = '/show/' .$diary->id;
         $diary->save();
         
-        $files = $request->file('file');
-        
-        foreach($files as $file){
+        //$imagefiles = $request->file('files');
+        //dd($request->file('files'));
+        foreach($request->file('files') as $file){
             //ファイル名の取得
+            //dd($file);
             $file_name = $file->getClientOriginalName();
+            Log::info($file_name);
+            
             //ファイルの保存
             $file->storeAS('public/',$file_name);
             //DBへのファイル名とパスの保存
+            $diary_image = new Diary_image();
             $diary_image->path = 'storage/' .$file_name;
             $diary_image->name = $file_name;
             $diary_image->diaries_id = $diary->id;
@@ -93,7 +100,7 @@ class DiaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Diary $diary,Diary_image $diary_image)
+    public function update(DiaryRequest $request,Diary $diary,Diary_image $diary_image)
     {
         //title,date,comment,color,users_idの保存
         $input = $request['diary'];
@@ -119,6 +126,7 @@ class DiaryController extends Controller
                 //ファイルの保存
                 $file->storeAS('public/',$file_name);
                 //DBへのファイル名とパスの保存
+                $diary_image = new Diary_image();
                 $diary_image->path = 'storage/' .$file_name;
                 $diary_image->name = $file_name;
                 $diary_image->diaries_id = $diary->id;

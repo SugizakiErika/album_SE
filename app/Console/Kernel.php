@@ -54,6 +54,9 @@ class Kernel extends ConsoleKernel
         $normalevent_users = NormaleventUser::all();
         $my_events = MY_event::all();
          
+         //1月1日の0：00に通常行事の日付の中で毎年変わるものを変更する
+         $schedule->command('command:normal_event_day_update')->yearlyOn(1,1,'00:00');
+         
         //通常行事で今日当てはまるものがあれば実行する
         foreach($normalevent_users as $normalevent_user)
         {
