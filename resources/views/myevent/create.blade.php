@@ -26,10 +26,10 @@
                 </select>
                 <p class="category__error" style="color:red">{{ $errors->first('myevent.category') }}</p>
             
-                <input name="myevent[start]" type="date"/>
+                <input name="myevent[start]" type="date" value = "{{ old('myevent.start') }}"/>
                 <p class="start__error" style="color:red">{{ $errors->first('myevent.start') }}</p>
                 
-                <input type="number" inputmode="numeric" name="myevent[day]" value = "5">
+                <input type="number" inputmode="numeric" name="myevent[day]" value = "{{ old(('myevent.day'),5) }}">
                 <p class="day__error" style="color:red">{{ $errors->first('myevent.day') }}</p>
                 
                 <button id="submit_post" type = "submit">[登録]</button>

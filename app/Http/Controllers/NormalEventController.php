@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\MyEventRequest;
 
 use App\Models\Normal_event;
 use App\Models\User;
@@ -32,7 +33,7 @@ class NormalEventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NormalEventRequest $request)
     {
         $input = $request["n_event"];
         //dd($input);

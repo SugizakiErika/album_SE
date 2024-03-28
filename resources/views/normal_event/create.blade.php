@@ -22,12 +22,13 @@
                 <input type="hidden" id="ajax_input_id" name="n_event[id]" value="{{ $normal_event->id }}"/>
                 
                 <select id="ajax_input_notice" name="n_event[notice]">
-                    <option value="0">OFF</option>
-                    <option value="1">ON</option>
+                    <option value="0" @if(old('n_event.notice')=="0") selected @endif>OFF</option>
+                    <option value="1" @if(old('n_event.notice')=="1") selected @endif>ON</option>
                 </select>
+                <p class="notice__error" style="color:red">{{ $errors->first('n_event.notice') }}</p>
             
-                <input type="number" id="ajax_input_day_num" inputmode="numeric" name="n_event[day_num]" value = "{{ $normal_event->pivot->day_num }}"/>
-                
+                <input type="number" id="ajax_input_day_num" inputmode="numeric" name="n_event[day_num]" value = "{{ old(('n_event.day_num'),$normal_event->pivot->day_num) }}"/>
+                <p class="day_num__error" style="color:red">{{ $errors->first('n_event.day_num') }}</p>
                 
                 <button id="ajax_submit" type = "submit">[登録]</button>
                 </form>
