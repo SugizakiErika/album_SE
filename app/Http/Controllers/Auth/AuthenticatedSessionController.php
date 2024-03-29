@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+ use App\Models\User;
+// use Illuminate\Support\Facades\Gate;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -28,8 +31,17 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        
+        $user = Auth::user();
+        if($user->role == 'administrator'){
+            return redirect(RouteServiceProvider::ADMIN);
+        
+        } else{
+            
         return redirect()->intended(RouteServiceProvider::HOME);
+  
+        }
+            
     }
 
     /**

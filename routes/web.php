@@ -8,6 +8,7 @@ use App\Http\Controllers\MyEventController;
 use App\Http\Controllers\NormalEventController;
 use App\Http\Controllers\InquiryMailController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +27,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+ 
 
 //ログインしないと見れない
 Route::middleware(['auth', 'verified'])->group(function (){
@@ -33,8 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         return view('dashboard');
 })->name('dashboard');
 
-//ここに上のやつ全部いれる
-//ログインしないと見れないところに後でいれる
+});
 //カレンダー表示：FullCalendar採用
 Route::controller(CalendarController::class)->middleware(['auth'])->group(function(){
     Route::get('/calendar', 'index')->name('calendar');
@@ -81,6 +82,11 @@ Route::controller(InquiryMailController::class)->middleware(['auth'])->group(fun
     Route::post('/mail/create', 'store')->name('inquiry.store');
 });
 
+//管理者画面
+//can:isAdminで管理者のみ入ること可能にする
+Route::controller(AdminController::class)->middleware(['auth', 'can:isAdmin'])->group(function(){
+    
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -88,7 +94,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-});
 require __DIR__.'/auth.php';
 
 

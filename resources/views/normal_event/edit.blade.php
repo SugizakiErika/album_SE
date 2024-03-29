@@ -7,36 +7,68 @@
                 <meta name="csrf-token" content="{{ csrf_token() }}">
                 <!--jQuery:ajax通信用CDN-->
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+                <!--jQuery:バリデーション用だがあくまでフロント部分-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
                 <title>通常行事登録画面</title>
             </head>
         </x-slot>
         <body>
-            <button type = "submit">[変更]</button>
+            <button id="submit_put" type = "submit">[変更]</button>
+            <form method = "POST" action = "" id = "postForm" enctype = "multipart/form-data">
             @foreach($users->normal_events as $normal_event)
             <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                <p>{{ $normal_event->title }}</p>
-                <p>{{ $normal_event->start }}</p>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <p>{{ $normal_event->title }}</p>
+                        <p>{{ $normal_event->start }}</p>
                 
-                <input type="hidden" name="n_id" value="{{ $normal_event->id }}"/>
+                        <input type="hidden" name="n_id" value="{{ $normal_event->id }}"/>
                 
-                <select  name="n_notice">
-                    <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
-                    <option value="1" @if($normal_event->pivot->notice == "1") selected @endif>ON</option>
-                </select>
+                        <select  name="n_notice">
+                         <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
+                        <option value="1" @if($normal_event->pivot->notice == "1") selected @endif>ON</option>
+                        </select>
             
-                <input type="number" inputmode="numeric" name="n_day_num" value = "{{ $normal_event->pivot->day_num }}"/>
+                        <input type="number" inputmode="numeric" name="n_day_num" value = "{{ $normal_event->pivot->day_num }}"/>
+                    </div>
+                </div>
                 </div>
             </div>
-        </div>
-    </div>
             @endforeach
-                
+            </form>
             <script>
+                var nromaleventValid = {
+                    rules:{
+                        n_notice:{
+                            required:true,
+                        },
+                        n_day_num:{
+                            required:true,
+                            digits:true,
+                        }
+                    },
+                    messages:{
+                        n_notice:{
+                            required:'通知を選択してください。',
+                        },
+                        n_day_num:{
+                            required:'タイトルを入力してください。',
+                            digits:'0以上の整数を入力してください。'
+                        }
+                    },
+                }
+                
+                
                 $(function(){
-                    $(":submit").on('click', function(){
+                    $("#submit_put").on('click', function(){
+                        $("#postForm").validate(nromaleventValid);
+                            //失敗で戻る
+                        if (!$("#postForm").valid()) {
+                            return false;
+                        };
+                    
                         // 入力する値の取得
                         var input_id = document.getElementsByName('n_id');
                         var input_notice = document.getElementsByName('n_notice');

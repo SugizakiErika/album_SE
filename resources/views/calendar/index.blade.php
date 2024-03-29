@@ -75,6 +75,11 @@
       });
   </script>
       <div id='calendar'></div>
+      @can('isAdmin')
+      <p>管理者の見られる。</p>
+      @else
+      <p>利用者</p>
+      @endcan
     </body>
     </x-app-layout>
 </html>
