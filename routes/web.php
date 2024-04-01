@@ -93,8 +93,8 @@ Route::controller(AdminController::class)->middleware(['auth', 'can:isAdmin'])->
     //日記一覧
     Route::get('/admin/diary/show','d_show')->name('admin.d_show');
     Route::get('/admin/diary/create/{diary}','d_edit')->name('admin.d_edit');
-    Route::put('/admin/diary/create/{diary}','d_update')->name('admin.d_update');
-    Route::delete('/admin/diary/show/{diary}','d_delete')->name('admin.d_delete');
+    // Route::put('/admin/diary/create/{diary}','d_update')->name('admin.d_update');
+     Route::delete('/admin/diary/show/{diary}','d_delete')->name('admin.d_delete');
 });
 
 Route::middleware('auth')->group(function () {

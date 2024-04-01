@@ -1,3 +1,4 @@
+<!--使ってない-->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <x-app-layout>
@@ -31,6 +32,9 @@
                 
                 <textarea name="diary[comment]" >{{ old(('diary.comment'),$diary->comment) }}</textarea>
                 <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
+                
+                <input type = "text" name = "diary[deleted_at]" value = "{{ $diary->deleted_at }}">
+                
                 <button type = "submit">保存</button>
             </form>
             <a href="{{ route('admin.d_show') }}">戻る</a>
