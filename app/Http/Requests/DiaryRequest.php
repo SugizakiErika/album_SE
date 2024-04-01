@@ -27,7 +27,9 @@ class DiaryRequest extends FormRequest
             'diary.title' => 'required|string|max:30',
             'diary.comment' => 'required|string|max:200',
             'diary.start' => 'required|date|date_format:Y-m-d',
-            'file.*' => 'required|file|image|mimes:gif,jpg,jpeg,png',
+            'files.*' => 'required|file|image|mimes:gif,jpg,jpeg,png',
+            //'files.image' => 'required|array|min:1',
+            'files' => 'required|array|min:1',
         ];
     }
 }

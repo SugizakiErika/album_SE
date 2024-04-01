@@ -61,11 +61,25 @@ class MyEventController extends Controller
      */
     public function show(My_event $my_event)
     {
+        $this->authorize('view', $my_event);
         $id = Auth::user()->id;
-        $diaries = Diary::with('diary_image')->where('users_id',$id)->get();
+        $now = Carbon::now();
+        $now_year = $now->year;
         
-        //dd($diaries);
-        return view('myevent.show')->with(['my_event' => $my_event])->with(['diaries' => $diaries]);
+        $sum_last_date = [];
+        for($i=2022; $i<$now_year; $i++ ){
+        
+        $last_year = $i;
+        $last_date = $last_year.'-'.$my_event->start;
+        
+        array_push($sum_last_date, $last_date);
+        }
+        $diary =Diary::where('users_id',$id)->whereIn('start',$sum_last_date)->with(['diary_images'])->get();
+        //$diary->concat($date);
+        Log::info($diary);
+        
+    //dd($diary);
+        return view('myevent.show')->with(['my_event' => $my_event])->with(['diary' => $diary]);
         
     }
 
@@ -104,7 +118,11 @@ class MyEventController extends Controller
      */
     public function delete(My_event $my_event)
     {
-       $my_event->delete();
-       return redirect()->route('create.myevent');
+        $this->authorize('delete', $my_event);
+        $my_event->delete();
+        
+        //$my_events = MY_event::all();
+        
+        return $my_event;
     }
 }

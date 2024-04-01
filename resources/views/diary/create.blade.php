@@ -16,8 +16,13 @@
             <input type = "text" name = "diary[title]" placeholder = "タイトルを入力してください" value = "{{ old('diary.title') }}"/>
             <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
             
+            
+            
             <input type = "file" name = "files[]" multiple accept=".gif, .jpg, .jpeg, .png" class = "form-control" >
-            <p class="file__error" style="color:red">{{ $errors->first('file') }}</p>
+            @foreach($errors->get('files') as $message)
+            <p class="file__error" style="color:red">{{ $message }}</p>
+            @endforeach
+            <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
             
             <textarea name="diary[comment]" placeholder="コメントを入力してください">{{ old('diary.comment') }}</textarea>
             <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>

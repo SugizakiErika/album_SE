@@ -13,11 +13,13 @@
             <p>{{ $my_event->start }}</p>
             <p>{{ $my_event->category }}</p>
             
-            @foreach($diaries as $diary_my_event)
-            <p>{{ $diary_my_event->title }}</p>
-            <p>{{ $diary_my_event->start}}</p>
-            <p>{{ $diary_my_event->comment }}</p>
-            <img src = "{{ asset($diary_my_event->diary_image->path) }}" width="200" height="150">
+            @foreach($diary as $diary_my_events)
+            <p>{{ $diary_my_events->title }}</p>
+            <p>{{ $diary_my_events->start}}</p>
+            <p>{{ $diary_my_events->comment }}</p>
+            @foreach($diary_my_events->diary_images as $diary)
+            <img src = "{{ asset($diary->path) }}" width="200" height="150">
+            @endforeach
             @endforeach
         </body>
     </x-app-layout>
