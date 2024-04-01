@@ -17,7 +17,7 @@ class Diary_image extends Model
         return $this->belongsTo(Diary::class);
     }
     
-    protected $casts = [
-        'files' => array()
-        ];
+    // protected $casts = [
+    //     'files' => array()
+    //     ];
 }

@@ -37,6 +37,7 @@ class DiaryController extends Controller
     public function store(Diary $diary,Diary_image $diary_image,DiaryRequest $request)
     {
         //title,date,comment,color,users_idの保存
+        
         $input = $request['diary'];
         $diary->start = $input["start"];
         $diary->f_end = $input["start"];
@@ -51,6 +52,7 @@ class DiaryController extends Controller
         
         //$imagefiles = $request->file('files');
         //dd($request->file('files'));
+        if($request->has('files')) {
         foreach($request->file('files') as $file){
             //ファイル名の取得
             //dd($file);
@@ -66,7 +68,7 @@ class DiaryController extends Controller
             $diary_image->diaries_id = $diary->id;
             $diary_image->save();
         }
-        
+        }
         return redirect()->route('show.diary', ['diary' => $diary->id]);
     }
 
@@ -78,7 +80,8 @@ class DiaryController extends Controller
      */
     public function show(Diary $diary)
     {
-    
+        $this->authorize('view', $diary);
+        
         return view('diary.show')->with(['diary' => $diary]);
     }
 
@@ -90,6 +93,8 @@ class DiaryController extends Controller
      */
     public function edit(Diary $diary)
     {
+        $this->authorize('view', $diary);
+        
         return view('diary.edit')->with(['diary' => $diary]);
     }
 
@@ -114,12 +119,12 @@ class DiaryController extends Controller
         $diary->save();
         
         //画像の更新をする場合は一度削除してから更新する
-        if($request->hasFile('file'))
+        if($request->hasFile('files'))
         {
             //削除処理
             $diary_image->where('diaries_id',$diary->id)->delete();
             //更新処理
-            $files = $request->file('file');
+            $files = $request->file('files');
             foreach($files as $file){
                 //ファイル名の取得
                 $file_name = $file->getClientOriginalName();
@@ -141,7 +146,10 @@ class DiaryController extends Controller
     //削除
     public function delete(Diary $diary)
    {
+       $this->authorize('delete', $diary);
+       
        $diary->delete();
+       
        return redirect()->route('calendar');
    }
 }

@@ -15,8 +15,10 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         
-        //他の人の日記とか見れないようにする設定
-        'App\Diary' => 'App\Policies\DiaryPolicy',
+        //他の人に見られないようにする設定
+        'App\Models\Diary' => 'App\Policies\DiaryPolicy',
+        'App\Models\My_event' => 'App\Policies\MyEventPolicy',
+        'App\Models\Normal_event' => 'App\Policies\NormalEventPolicy',
     ];
 
     /**

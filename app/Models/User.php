@@ -26,10 +26,10 @@ class User extends Authenticatable
     }
     
     
-    public function my_event()
-    {
-        return $this->belongsTo(my_event::class);
-    }
+    // public function my_event()
+    // {
+    //     return $this->belongsTo(my_event::class);
+    // }
     /**
      * The attributes that are mass assignable.
      *

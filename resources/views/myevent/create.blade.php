@@ -4,6 +4,7 @@
         <x-slot name="header">
             <head>
                 <meta charset = "UTF-8">
+                <meta name="csrf-token" content="{{ csrf_token() }}">
                  <!--jQuery:ajax通信用CDN-->
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
                 <!--jQuery:バリデーション用だがあくまでフロント部分-->
@@ -37,8 +38,9 @@
             
             <!--変更-->
             <form method = "POST" action = "" id = "postForm" enctype = "multipart/form-data">
+                @csrf
             @foreach($my_events as $my_event)
-            
+        
             <?php $my_event->start ="2024-".$my_event->start;?>
                 <input type="hidden" name="m_id" value="{{ $my_event->id }}"/>
                 <input type = "text" class = "form-control" name = "m_title" value = "{{ $my_event->title }}" />
@@ -52,24 +54,15 @@
                 <input name="m_start" type="date" value="{{ $my_event->start }}"/>
                 <input type="number" inputmode="numeric" name="m_day" value ="{{ $my_event->day }}"日前 />
                 
+                <button type="button" id="delete_button">削除する</button>
+
                 
-                <form method="post" action="{{ route('delete.myevent', ['my_event' => $my_event->id]) }}" id="form_{{ $my_event->id }}" >
-                @csrf
-                @method('DELETE')
-                <button type="button" onclick="deleteMyevent({{ $my_event->id }})">削除する</button> 
-                </form>
-                <script>
-                function deleteMyevent(id) {
-                    'use strict'
-                    if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
-                        document.getElementById(`form_${id}`).submit();
-                    }
-                }
-                </script>
             @endforeach
-            <button id="submit_put" type = "submit">[変更]</button>
+            <button id="sub_put" type = "button">[変更]</button>
             </form>
             <script>
+
+                
                 var myeventValid = {
                     rules:{
                         m_title:{
@@ -110,8 +103,37 @@
                 
                     
                 //ajax通信を行う
-                $(function(){
-                    $("#submit_put").on('click', function(){
+                $(function a(){
+                    $("#delete_button").on('click', function(){
+                    
+                        let input_id = document.getElementsByName('m_id');
+                        var url = "/myevent/create/"+input_id[0].value;
+                    
+                            $.ajax({
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  // CSRFトークンの設定
+                                type: "post",
+                                url: url,
+                                dataType: "text",
+                                scriptCharset: "utf-8",
+                                data: {'_method': 'DELETE'} 
+                            }).done(function () {
+                                // 通信成功時の処理(formの2重になる解決策がこれしか思い浮かばなかった...)
+                                location.href = "{{ route('create.myevent') }}";
+                                alert('個人行事の登録内容を削除しました');
+                            }).fail(function (jqXHR, textStatus, errorThrown) {
+                                // 通信失敗時の処理
+                                alert('ファイルの取得に失敗しました。');
+                                console.log("ajax通信に失敗しました");
+                                console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
+                                console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
+                                console.log("errorThrown    : " + errorThrown.message); // 例外情報
+                                
+                            });
+                        
+                    });
+                    })
+                    $(function b(){
+                    $("#sub_put").on('click', function(){
                     
                         $("#postForm").validate(myeventValid);
                         //失敗で戻る

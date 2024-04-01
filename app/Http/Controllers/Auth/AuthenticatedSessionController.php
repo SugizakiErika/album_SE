@@ -32,12 +32,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         
+        //ログインするユーザーの情報を取得
         $user = Auth::user();
+        
+        //ログインしたら管理者画面に飛ぶ
         if($user->role == 'administrator'){
             return redirect(RouteServiceProvider::ADMIN);
         
-        } else{
-            
+        }elseif($user->role == null){ //ログインしたら会員画面に飛ぶ
+        
         return redirect()->intended(RouteServiceProvider::HOME);
   
         }

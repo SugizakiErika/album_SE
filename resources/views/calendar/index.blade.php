@@ -80,6 +80,7 @@
       @else
       <p>利用者</p>
       @endcan
+      
     </body>
     </x-app-layout>
 </html>

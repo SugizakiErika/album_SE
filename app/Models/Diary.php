@@ -23,15 +23,17 @@ class Diary extends Model
     //     return $this->belongsTo(User::class);
     // }
     
-    protected $casts = [
-        //'is_keep' => 'boolean',
-        'start',
-        'title',
-        'comment',
-        'color',
-        ];
+    /**
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::deleting(function ($diary) {
+            $diary->diary_images()->delete();
+        });
+    }
     
-    //  追記 (一緒に削除したいリレーション名を配列で指定)
-    protected $softCascade = ['diary_image'];
+    // //  追記 (一緒に削除したいリレーション名を配列で指定)
+    // protected $softCascade = ['diary_image'];
         
 }

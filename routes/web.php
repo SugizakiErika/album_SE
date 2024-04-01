@@ -7,6 +7,7 @@ use App\Http\Controllers\DiaryController;
 use App\Http\Controllers\MyEventController;
 use App\Http\Controllers\NormalEventController;
 use App\Http\Controllers\InquiryMailController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -85,7 +86,7 @@ Route::controller(InquiryMailController::class)->middleware(['auth'])->group(fun
 //管理者画面
 //can:isAdminで管理者のみ入ること可能にする
 Route::controller(AdminController::class)->middleware(['auth', 'can:isAdmin'])->group(function(){
-    
+    Route::get('/admin','index')->name('admin.index');
 });
 
 Route::middleware('auth')->group(function () {
