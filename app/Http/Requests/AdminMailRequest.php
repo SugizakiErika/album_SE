@@ -4,9 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Support\Facades\Log;
-
-class MyEventRequest extends FormRequest
+class AdminMailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +24,8 @@ class MyEventRequest extends FormRequest
     public function rules()
     {
         return [
-            'myevent.title' => 'required|string|max:30',
-            'myevent.category' => 'required',
-            'myevent.start' => 'required|date|date_format:Y-m-d',
-            'myevent.day' => 'required|integer',
+            'admin.title' => 'required|string|max:30',
+            'admin.comment' => 'required|string|max:400',
         ];
     }
-    
-    
 }

@@ -86,7 +86,15 @@ Route::controller(InquiryMailController::class)->middleware(['auth'])->group(fun
 //管理者画面
 //can:isAdminで管理者のみ入ること可能にする
 Route::controller(AdminController::class)->middleware(['auth', 'can:isAdmin'])->group(function(){
-    Route::get('/admin','index')->name('admin.index');
+    Route::get('/admin','index')->name('admin.index');//目次
+    //メール送信
+    Route::get('/admin/mail/create','create')->name('admin.create');
+    Route::post('/admin/mail/create','store')->name('admin.store');
+    //日記一覧
+    Route::get('/admin/diary/show','d_show')->name('admin.d_show');
+    Route::get('/admin/diary/create/{diary}','d_edit')->name('admin.d_edit');
+    Route::put('/admin/diary/create/{diary}','d_update')->name('admin.d_update');
+    Route::delete('/admin/diary/show/{diary}','d_delete')->name('admin.d_delete');
 });
 
 Route::middleware('auth')->group(function () {
