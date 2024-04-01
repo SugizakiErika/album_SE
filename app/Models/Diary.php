@@ -15,7 +15,7 @@ class Diary extends Model
     
     public function diary_images()
     {
-        return $this->hasMany(Diary_image::class,'diaries_id');
+        return $this->hasMany(Diary_image::class,'diaries_id')->withTrashed();
     }
     
     // public function user()
