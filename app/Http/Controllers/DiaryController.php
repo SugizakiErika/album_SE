@@ -24,7 +24,7 @@ class DiaryController extends Controller
     {
         $date = $request->input('date');
         
-        return view('diary.create')->with(['diary_images' => $diary_image->get()])->with(['date' => $date]);
+        return view('diary.create')->with(['date' => $date]);
     }
 
     /**

@@ -7,6 +7,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Log;
+
 class RedirectIfAuthenticated
 {
     /**
@@ -20,10 +22,22 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
-
+        
+        Log::info(Auth::user());
+        
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            if (Auth::guard($guard)->check()) { //こいつが良く分かってないからわんちゃんエラー起きる
+                
+                //ログインするユーザーの情報を取得
+                $user = Auth::user();
+                //ログインしたら管理者画面に飛ぶ
+                if($user->role == 'administrator'){
+                    Log::info("管理者");
+                    return redirect(RouteServiceProvider::ADMIN);
+        
+                }elseif($user->role == null){ //ログインしたら会員画面に飛ぶ
+                    return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
 

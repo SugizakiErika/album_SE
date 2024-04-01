@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
  use App\Models\User;
+use Illuminate\Support\Facades\Log;
 // use Illuminate\Support\Facades\Gate;
 
 class AuthenticatedSessionController extends Controller
@@ -28,20 +29,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        Log::info($request->session());
         $request->authenticate();
-
-        $request->session()->regenerate();
         
+        $request->session()->regenerate();
         //ログインするユーザーの情報を取得
         $user = Auth::user();
         
         //ログインしたら管理者画面に飛ぶ
         if($user->role == 'administrator'){
+            Log::info("管理者");
             return redirect(RouteServiceProvider::ADMIN);
         
         }elseif($user->role == null){ //ログインしたら会員画面に飛ぶ
         
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME);
   
         }
             
