@@ -28,7 +28,7 @@ class InquiryMailRequest extends FormRequest
             'inquiry.title' => 'required|string|max:30',
             'inquiry.comment' => 'required|string|max:400',
             'inquiry.user_id' => 'required|string|max:100',
-            'inquiry.email' => 'required|email:filter,dns,strict,spoof',
+            'inquiry.email' => 'required|email:filter,dns,strict',
         ];
     }
 }

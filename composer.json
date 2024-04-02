@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "arcanedev/laravel-lang": "*",
         "askedio/laravel-soft-cascade": "^10.0",
         "barryvdh/laravel-debugbar": "^3.10",
         "guzzlehttp/guzzle": "^7.2",
