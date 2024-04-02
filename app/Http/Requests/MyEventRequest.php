@@ -29,7 +29,7 @@ class MyEventRequest extends FormRequest
             'myevent.title' => 'required|string|max:30',
             'myevent.category' => 'required',
             'myevent.start' => 'required|date|date_format:Y-m-d',
-            'myevent.day' => 'required|integer',
+            'myevent.day' => 'required|regex:/^[0-9]+$/i',
         ];
     }
     
