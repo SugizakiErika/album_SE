@@ -1,39 +1,37 @@
-<!DOCTYPE html>
-<html lang = "{{ str_replace('_', '-', app()->getLocale()) }}">
-    <x-app-layout>
-        <x-slot name="header">
-            <head>
-                <meta charset = "UTF-8">
-                <meta name="csrf-token" content="{{ csrf_token() }}">
-                 <!--jQuery:ajax通信用CDN-->
-                <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+@extends('adminlte::page')
+    @section('title', '日記登録画面')
+    @section('content_header')
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!--jQuery:ajax通信用CDN-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
                 
-                <title>日記登録画面</title>
-            </head>
-        </x-slot>
-        <body>
+    @stop
+        @section('content')
             <form method = "POST" action = "{{ route('store.diary') }}" enctype = "multipart/form-data">
             @csrf
+            <label>日付</label>
             <input type = "text" name = "diary[start]" value = "{{ $date }}" readonly>
             <p class="start__error" style="color:red">{{ $errors->first('diary.start') }}</p>
             
-            <input type = "text" name = "diary[title]" placeholder = "タイトルを入力してください" value = "{{ old('diary.title') }}"/>
+            <label>タイトル</label>
+            <input type = "text" name = "diary[title]" size="30" placeholder = "タイトルを入力してください" value = "{{ old('diary.title') }}"/>
             <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
             
             
-            
+            <label>画像を選択してください。(最低1つ最大5つまで可能です。)</label>
             <input type = "file" name = "files[]" id = "upload_images" accept=".gif, .jpg, .jpeg, .png" class = "form-control" multiple>
             
             @foreach($errors->get('files') as $message)
             <p class="file__error" style="color:red">{{ $message }}</p>
             @endforeach
             <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
-            <p>選択した画像</p>
+            <label>選択した画像</label>
             <div class="file_path">
+            
             </div>
             
-            
-            <textarea name="diary[comment]" placeholder="コメントを入力してください">{{ old('diary.comment') }}</textarea>
+            <label>内容</label>
+            <textarea name="diary[comment]" rows="5" cols="45" placeholder="内容を入力してください">{{ old('diary.comment') }}</textarea>
             <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
             
             <button type = "submit">登録</button>
@@ -84,7 +82,17 @@
                         
                     });
                 })
-            </script>
-        </body>
-    </x-app-layout>
-</html>
+        </script>
+        
+        @push('css')
+        <style type="text/css">
+
+            .file_path {
+                display: flex;
+            }
+            label, input {
+                display: block;
+            }
+        </style>
+        @endpush
+        @stop
