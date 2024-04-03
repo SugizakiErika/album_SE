@@ -133,7 +133,7 @@
                     })
                     $(function b(){
                     $("#sub_put").on('click', function(){
-                    
+                        //バリデーションを行う
                         $("#postForm").validate(myeventValid);
                         //失敗で戻る
                         if (!$("#postForm").valid()) {
@@ -167,8 +167,6 @@
                                 console.log(results);
                                 if(i == input_id.length-1){
                                 alert('個人行事の登録内容を変更しました');
-                                }else{
-                                console.log(i);
                                 }
                             }).fail(function (jqXHR, textStatus, errorThrown) {
                                 // 通信失敗時の処理

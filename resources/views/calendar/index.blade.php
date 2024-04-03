@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-  <x-app-layout>
-  <x-slot name="header">
-  <head>
-    <meta charset='utf-8' />
+@extends('adminlte::page')
+  @section('title', 'カレンダー')
+  @section('content_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--jQuery:ajax通信用CDN-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  </head>
-  </x-slot>
-    <body>
-      <p class="date__error" style="color:red">{{ $errors->first('info.dateStr') }}</p>
+    @stop
+      @section('content')
+    <p class="date__error" style="color:red">{{ $errors->first('info.dateStr') }}</p>
       <!--fullCalendar用CDN-->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
@@ -80,7 +76,4 @@
       @else
       <p>利用者</p>
       @endcan
-      
-    </body>
-    </x-app-layout>
-</html>
+@stop
