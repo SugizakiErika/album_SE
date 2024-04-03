@@ -9,12 +9,47 @@ use App\Models\Diary;
 use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class DiaryController extends Controller
 {
+    public function a_create()
+    {
+        
+    }
+    public function a_store(Request $request)
+    {
+        $file_path = [];
+        //Log::info($request->file('files'));
+        // $files = json_decode($request['files']);
+        //Log::info($files);
+         if($request->has('files')) {
+         foreach($request->file('files') as $file){
+            //ファイル名の取得
+            $file_name = $file->getClientOriginalName();
+            //Log::info($file_name);
+            //ファイルの保存
+            $file->storeAS('public/',$file_name);
+            // セッションへのファイル名とパスの保存用に配列に入れる
+            array_push($file_path, 'storage/' .$file_name);
+            // $diary_image = new Diary_image();
+            // $diary_image->path = 'storage/' .$file_name;
+            // $diary_image->name = $file_name;
+            // $diary_image->diaries_id = $diary->id;
+            // $diary_image->save();
+         }
+         $result = "upload_fin";
+         }else{
+             Log::info("ファイルがありません");
+         }
+         
+        $result = $file_path;
+            //Session::put('file_name', $file_name);
+        return $result;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -71,6 +106,7 @@ class DiaryController extends Controller
         }
         return redirect()->route('show.diary', ['diary' => $diary->id]);
     }
+    
 
     /**
      * Display the specified resource.
