@@ -7,9 +7,7 @@
                 <meta name="csrf-token" content="{{ csrf_token() }}">
                  <!--jQuery:ajax通信用CDN-->
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-                <!--jQuery:バリデーション用だがあくまでフロント部分-->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
+                
                 <title>日記登録画面</title>
             </head>
         </x-slot>
@@ -30,17 +28,10 @@
             <p class="file__error" style="color:red">{{ $message }}</p>
             @endforeach
             <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
+            <p>選択した画像</p>
+            <div class="file_path">
+            </div>
             
-            @if (Session::has('file_path'))
-            <?php
-                $file_path = Session::get('file_path');
-                Log::info("blade側".$file_path);
-            ?>
-            @foreach($file_path as $path)
-            <img src="{{asset($path) }}" alt="" width = "200" height = "150">
-            @endforeach
-            @endif
-            <button type="button" id="file_upload_btn" class="">アップロード</button>
             
             <textarea name="diary[comment]" placeholder="コメントを入力してください">{{ old('diary.comment') }}</textarea>
             <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
@@ -50,14 +41,7 @@
             
             <script>
                 $(function () {
-                    $('#file_upload_btn').on('click', function() {
-
-                        //ajaxでのcsrfトークン送信
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
+                    $('#upload_images').on('change', function() {
                         
                         //フォームデータを作成する
                         var form = new FormData();
@@ -70,15 +54,24 @@
                         }
                         console.log(form.getAll('files'));
                         $.ajax({
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  // CSRFトークンの設定
                             type: "POST",
                             url: "{{ route('create.diary_ajax') }}",
                             data: form,
                             processData: false,
                             contentType: false,
                         }).done(function (result) {
-                            alert('画像をuploadしました');
-                            console.log(result);
-                            
+                            //前のアップロードデータを削除
+                            $(".img_path").remove();
+                            //画像の選択が完了したら画像を表示する
+                            $.each(result, function (index, result) {
+                                 html = `
+                                    <div class="img_path">
+                                    <img src="{{ asset('${result}') }}" alt="" width = "200" height = "150">
+                                    </div>
+                                     `;
+                                    $(".file_path").append(html);
+                            });
                         }).fail(function (jqXHR, textStatus, errorThrown) {
                                 // 通信失敗時の処理
                                 alert('ファイルの取得に失敗しました。');

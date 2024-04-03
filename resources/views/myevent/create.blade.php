@@ -133,7 +133,7 @@
                     })
                     $(function b(){
                     $("#sub_put").on('click', function(){
-                    
+                        //バリデーションを行う
                         $("#postForm").validate(myeventValid);
                         //失敗で戻る
                         if (!$("#postForm").valid()) {
