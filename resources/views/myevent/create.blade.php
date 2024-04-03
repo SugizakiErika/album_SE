@@ -61,8 +61,7 @@
             <button id="sub_put" type = "button">[変更]</button>
             </form>
             <script>
-
-                
+                //バリデーションルール設定
                 var myeventValid = {
                     rules:{
                         m_title:{

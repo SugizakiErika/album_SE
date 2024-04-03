@@ -54,6 +54,9 @@ Route::controller(DiaryController::class)->middleware(['auth'])->group(function(
     Route::put('/edit/{diary}', 'update')->name('update.diary');
     //削除
     Route::delete('/show/{diary}','delete')->name('delete.diary');
+    //画像のajax通信
+    Route::get('/ajax', 'a_create')->name('create.diary_ajax');
+    Route::post('/ajax', 'a_store')->name('store.diary_ajax');
 });
 
 //MyEventController
