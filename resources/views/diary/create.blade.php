@@ -18,16 +18,16 @@
             <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
             
             
-            <label>画像を選択してください。(最低1つ最大5つまで可能です。)</label>
+            <label>画像を選択してください。(最低1つ最大5つまで拡張子は.gif .jpg .jpeg .pngのみとなります。)</label>
             <input type = "file" name = "files[]" id = "upload_images" accept=".gif, .jpg, .jpeg, .png" class = "form-control" multiple>
             
             @foreach($errors->get('files') as $message)
             <p class="file__error" style="color:red">{{ $message }}</p>
             @endforeach
             <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
+            
             <label>選択した画像</label>
             <div class="file_path">
-            
             </div>
             
             <label>内容</label>

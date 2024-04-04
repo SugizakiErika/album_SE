@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Memory</b>Support',
-    'logo_img' => 'vendor/adminlte/dist/img/20231130_113703.jpg',
+    'logo_img' => 'vendor/adminlte/dist/img/nekocafe.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/20231130_113703.jpg',
+            'path' => 'vendor/adminlte/dist/img/nekocafe.jpg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/20231130_113703.jpg',
+            'path' => 'vendor/adminlte/dist/img/nekocafe.jpg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -309,12 +309,12 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
+            'url' => '/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url' => 'admin/settings',
+            'url' => 'forgot-password',
             'icon' => 'fas fa-fw fa-lock',
         ],
         ['header' => '項目'],
@@ -338,6 +338,7 @@ return [
                     'icon' => 'fas fa-solid fa-envelope',
                     'url' => '/mail/create',
                 ],
+        
         ['header' => '管理者項目'],
                 // [
                 //     'text' => '管理者画面',
@@ -474,6 +475,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'jqueryValidate' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js',
                 ],
             ],
         ],
