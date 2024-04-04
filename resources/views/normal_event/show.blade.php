@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <x-app-layout>
-        <x-slot name="header">
-            <head>
-                <meta charset = "utf-8">
-                <title>日記閲覧画面</title>
-            </head>
-        </x-slot>
-        <body>
-            {{ $normal_event->start }}
-            {{ $normal_event->title }}
-            {{ $normal_event->explanation }}
-            {{ $normal_event->todo }}
+@extends('adminlte::page')
+    @section('title', '日記閲覧画面')
+        @section('content_header')
+            <h1>日記閲覧</h1>
+        @stop
+        @section('content')
+            <label>タイトル : {{ $normal_event->title }}</label>
+            <label>日付 : {{ $normal_event->start }}</label>
             
-        </body>
-    </x-app-layout>
-</html>
+            
+            <label>説明</label>
+            <p>{{ $normal_event->explanation }}</p>
+            <label>すること</label>
+            <p>{{ $normal_event->todo }}</p>
+            <style type="text/css">
+
+            label, p {
+                display: block;
+            }
+            
+        </style>
+        @stop

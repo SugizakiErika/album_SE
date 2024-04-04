@@ -1,36 +1,34 @@
-<!DOCTYPE html>
-<html lang = "{{ str_replace('_', '-', app()->getLocale()) }}">
-    <x-app-layout>
-        <x-slot name="header">
-            <head>
-                <meta charset = "UTF-8">
+@extends('adminlte::page')
+    @section('title', '通常行事登録画面')
+        @section('content_header')
+            <h1>通常行事</h1>
+            
                 <meta name="csrf-token" content="{{ csrf_token() }}">
                 <!--jQuery:ajax通信用CDN-->
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
                 <!--jQuery:バリデーション用だがあくまでフロント部分-->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
-                <title>通常行事登録画面</title>
-            </head>
-        </x-slot>
-        <body>
-            <button id="submit_put" type = "submit">[変更]</button>
+                @section('plugins.jqueryValidate', true)
+                
+        @stop
+        @section('content')
+            <button id="submit_put" type = "submit">変更</button>
             <form method = "POST" action = "" id = "postForm" enctype = "multipart/form-data">
             @foreach($users->normal_events as $normal_event)
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <p>{{ $normal_event->title }}</p>
-                        <p>{{ $normal_event->start }}</p>
+                        <label>行事名 : {{ $normal_event->title }}</label>
+                        <label>日付 : {{ $normal_event->start }}</label>
                 
                         <input type="hidden" name="n_id" value="{{ $normal_event->id }}"/>
-                
+                        
+                        <label>通知設定</label>
                         <select  name="n_notice">
                          <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
                         <option value="1" @if($normal_event->pivot->notice == "1") selected @endif>ON</option>
                         </select>
-            
+                        <label>何日前に通知しますか？</label>
                         <input type="number" inputmode="numeric" name="n_day_num" value = "{{ $normal_event->pivot->day_num }}"/>
                     </div>
                 </div>
@@ -39,7 +37,7 @@
             @endforeach
             </form>
             <script>
-                var nromaleventValid = {
+                var normaleventValid = {
                     rules:{
                         n_notice:{
                             required:true,
@@ -63,7 +61,7 @@
                 
                 $(function(){
                     $("#submit_put").on('click', function(){
-                        $("#postForm").validate(nromaleventValid);
+                        $("#postForm").validate(normaleventValid);
                             //失敗で戻る
                         if (!$("#postForm").valid()) {
                             return false;
@@ -93,7 +91,7 @@
                                 if(i == input_id.length-1){
                                 alert('通常行事の登録内容を変更しました');
                                 }else{
-                                console.log(i);
+                                //console.log(i);
                                 }
                             }).fail(function (jqXHR, textStatus, errorThrown) {
                                 // 通信失敗時の処理
@@ -107,6 +105,15 @@
                     });
                 })
         </script>
-        </body>
-    </x-app-layout>
-</html>
+        @push('css')
+            <style type="text/css">
+
+                .py-12 {
+                    display: block;
+                }
+                label, input {
+                    display: block;
+                }
+            </style>
+        @endpush
+        @stop

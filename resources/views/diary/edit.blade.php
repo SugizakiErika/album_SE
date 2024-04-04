@@ -1,40 +1,44 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <x-app-layout>
-        <x-slot name="header">
-            <head>
-                <meta charset = "utf-8">
+@extends('adminlte::page')
+    @section('title', '日記編集画面')
+        @section('content_header')
+            <h1>日記編集</h1>
                  <!--jQuery:ajax通信用CDN-->
                 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-                
-                <title>日記閲覧画面</title>
-            </head>
-        </x-slot>
-        <body>
+                <!--jQuery:バリデーション用だがあくまでフロント部分-->
+                @section('plugins.jqueryValidate', true)
+        @stop
+        @section('content')
             <form method = "POST" action = "{{ route('update.diary', ['diary' => $diary->id]) }}" enctype = "multipart/form-data">
                 @csrf
                 @method('PUT')
+                <label>日付</label>
                 <input type = "text" name = "diary[start]" value = "{{ old(('diary.start'),$diary->start) }}" readonly>
                 <p class="start__error" style="color:red">{{ $errors->first('diary.start') }}</p>
                 
-                <input type = "text" name = "diary[title]" value = "{{ old(('diary.title'),$diary->title) }}">
+                <label>タイトル</label>
+                <input type = "text" name = "diary[title]" size="30" value = "{{ old(('diary.title'),$diary->title) }}">
                 <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
                 
+                <label>画像を選択してください。(最低1つ最大5つまで拡張子は.gif .jpg .jpeg .pngのみとなります。)</label>
                 <input type = "file" name = "files[]" id = "upload_images" accept=".gif, .jpg, .jpeg, .png" class = "form-control" multiple>
                 @foreach($errors->get('files') as $message)
                 <p class="file__error" style="color:red">{{ $message }}</p>
                 @endforeach
                 <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
                 
-                <p>選択した画像</p>
+                <label>選択した画像</label>
                 <div class="file_path">
                 </div>
-                <p>日記の画像</p>
+                
+                <label>登録されている画像</label>
                 @foreach($diary->diary_images as $diary_image)
+                @if($diary_image->deleted_at == null)
                 <img src = "{{ asset($diary_image->path) }}" width = "200" height = "150">
+                @endif
                 @endforeach
                 
-                <textarea name="diary[comment]" >{{ old(('diary.comment'),$diary->comment) }}</textarea>
+                <label>内容</label>
+                <textarea name="diary[comment]" rows="5" cols="45">{{ old(('diary.comment'),$diary->comment) }}</textarea>
                 <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
                 <button type = "submit">保存</button>
             </form>
@@ -86,6 +90,15 @@
                     });
                 })
             </script>
-        </body>
-    </x-app-layout>
-</html>
+            @push('css')
+            <style type="text/css">
+
+                .file_path {
+                    display: flex;
+                }
+                label, input {
+                    display: block;
+                }
+            </style>
+            @endpush
+        @stop

@@ -76,7 +76,7 @@ class MyEventController extends Controller
         }
         $diary =Diary::where('users_id',$id)->whereIn('start',$sum_last_date)->with(['diary_images'])->get();
         //$diary->concat($date);
-        Log::info($diary);
+        //Log::info($diary);
         
     //dd($diary);
         return view('myevent.show')->with(['my_event' => $my_event])->with(['diary' => $diary]);
