@@ -18,8 +18,8 @@ return new class extends Migration
     {
         Schema::create('normal_event_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Normal_event::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Normal_event::class)->constrained()->onDelete('cascade');
             $table->boolean('notice')->default(false);
             $table->integer('day_num')->default(5);
         });

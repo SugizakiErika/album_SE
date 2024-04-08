@@ -1,29 +1,24 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+@extends('adminlte::page')
+    @section('title', '設定画面')
+    @section('content_header')
+    @stop
+    @section('content')
+    <div class="info-box">
+        <span class="info-box-icon bg-info"><i class="fas fa-fw fa-user"></i></span>
+            <div class="info-box-content">
+                @include('profile.partials.update-profile-information-form')
             </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
     </div>
-</x-app-layout>
+    <div class="info-box">
+        <span class="info-box-icon bg-success"><i class="fas fa-solid fa-dragon"></i></span>
+            <div class="info-box-content">
+                @include('profile.partials.update-password-form')
+            </div>
+    </div>
+    <div class="info-box">
+        <span class="info-box-icon bg-danger"><i class="fas fa-solid fa-cannabis"></i></span>
+            <div class="info-box-content">
+                @include('profile.partials.delete-user-form')
+            </div>
+    </div>
+    @stop
