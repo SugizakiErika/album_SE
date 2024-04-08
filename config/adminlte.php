@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'MemorySupport',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -171,11 +171,11 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
+    'classes_auth_card' => '',
+    'classes_auth_header' => 'bg-gradient-info',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
+    'classes_auth_footer' => 'text-center',
+    'classes_auth_icon' => 'fa-lg text-info',
     'classes_auth_btn' => 'btn-flat btn-primary',
 
     /*
@@ -256,14 +256,14 @@ return [
     |
     */
 
-    'use_route_url' => false,
-    'dashboard_url' => '/calendar',
+    'use_route_url' => true,
+    'dashboard_url' => '',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
-    'password_reset_url' => 'forgot-password',
-    'password_email_url' => 'password/email',
-    'profile_url' => '/profile',
+    'password_reset_url' => '',
+    'password_email_url' => '',
+    'profile_url' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -308,14 +308,9 @@ return [
         // Sidebar items:
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
+            'text' => '設定',
             'url' => '/profile',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'forgot-password',
-            'icon' => 'fas fa-fw fa-lock',
         ],
         ['header' => '項目'],
                 [
@@ -339,7 +334,9 @@ return [
                     'url' => '/mail/create',
                 ],
         
-        ['header' => '管理者項目'],
+        ['header' => '管理者項目',
+        'can' => ['isAdmin'],
+        ],
                 // [
                 //     'text' => '管理者画面',
                 //     'url' => '/admin',
@@ -347,11 +344,13 @@ return [
                 [
                     'text' => '日記削除取り消し',
                     'icon' => 'fas fa-wrench nav-icon',
+                    'can' => ['isAdmin'],
                     'url' => '/admin/diary/show',
                 ],
                 [
                     'text' => 'お知らせメール送信',
                     'icon' => 'fas fa-solid fa-envelope',
+                    'can' => ['isAdmin'],
                     'url' => '/admin/mail/create',
                 ],
                 

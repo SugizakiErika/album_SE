@@ -33,7 +33,8 @@
                 <input type="number" inputmode="numeric" name="myevent[day]" value = "{{ old(('myevent.day'),5) }}"日前>
                 <p class="day__error" style="color:red">{{ $errors->first('myevent.day') }}</p>
                 
-                <button id="submit_post" type = "submit">[登録]</button>
+                <button id="submit_post" type = "submit">登録</button>
+                
             </form>
             
             <!--変更-->
