@@ -261,7 +261,7 @@ return [
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
-    'password_reset_url' => '',
+    'password_reset_url' => 'password.request',
     'password_email_url' => '',
     'profile_url' => '',
 
