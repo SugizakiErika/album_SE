@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('comment',400);
             $table->string('user_id',100);
             $table->string('email',100);
+            $table->string('inquiry_code',100);
             $table->timestamps();
             $table->foreignId('users_id')->constrained()->onDelete('cascade');
         });

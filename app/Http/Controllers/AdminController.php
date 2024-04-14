@@ -8,6 +8,7 @@ use App\Mail\AdminMail;
 use App\Models\User;
 use App\Models\Diary_image;
 use App\Models\Diary;
+use App\Models\Inquiry_list;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,10 +23,11 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     //目次
-    public function index()
+     //問い合わせ一覧
+    public function index(Inquiry_list $inquiry_list)
     {
-        return view('admin.index');
+        //dd($inquiry_list->get());
+        return view('admin.index')->with(['inquiry_lists' => $inquiry_list->get()]);
     }
 
     /**

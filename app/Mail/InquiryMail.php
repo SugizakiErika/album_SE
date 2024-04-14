@@ -18,11 +18,12 @@ class InquiryMail extends Mailable
      *
      * @return void
      */
-    public function __construct($name,$email,$comment)
+    public function __construct($name,$email,$comment,$inquiry_code)
     {
         $this->name = $name;
         $this->email = $email;
         $this->comment = $comment;
+        $this->inquiry_code = $inquiry_code;
     }
     
     /**
@@ -39,6 +40,7 @@ class InquiryMail extends Mailable
                     ->with([
                         'name' => $this->name,
                         'comment' => $this->comment,
+                        'inquiry_code' =>$this->inquiry_code,
                         ]);
     }
     

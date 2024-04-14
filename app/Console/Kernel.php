@@ -47,24 +47,33 @@ class Kernel extends ConsoleKernel
     {
         //今日の日付を取得する
         $data = Carbon::now(); //ex.03-20
-        //$data_date = Carbon::now()->format('m-d');
+        $data_date = Carbon::now()->format('m-d');
         //$data_month = Carbon::now()->format('m');
         //$data_day = Carbon::now()->format('d');
         
-        $normalevent_users = NormaleventUser::all();
+        $normalevent_users = NormaleventUser::where('notice','1');
         $my_events = MY_event::all();
          
          //1月1日の0：00に通常行事の日付の中で毎年変わるものを変更する
          $schedule->command('command:normal_event_day_update')->yearlyOn(1,1,'00:00');
          
+         
         //通常行事で今日当てはまるものがあれば実行する
         foreach($normalevent_users as $normalevent_user)
         {
-            //日付の調整
+            //通知用日付の調整
             $data_notice_later = $data->addDays((int)$normalevent_user->day)->format('m-d');
             
             $normal_event = Normal_event::find($normalevent_user->normal_event_id);
             
+            //当日の行事のお知らせ
+            if($normal_event->start == $data_date){
+                
+                $schedule->command('command:notice_normal_event')->dailyAt('06:00');
+            }else{
+                    Log::info('失敗:通常行事の当日メール送信');
+            }
+            //通知日付何日前のお知らせ
             if($normal_event->start == $data_notice_later)
             {
                 $schedule->command('command:notice_normal_event')
@@ -72,7 +81,7 @@ class Kernel extends ConsoleKernel
                 //->yearlyOn($data_month,$data_notice_later,'06:00');
                 //->everyMinute();
             }else{
-                    Log::info('失敗kernel');
+                    Log::info('失敗：通常行事の通知何日前メール送信');
             }
         }
         
@@ -81,62 +90,60 @@ class Kernel extends ConsoleKernel
             //日付調整
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
-        
-        if(MY_event::where('start',$data_notice_later)->where('category','anniversary'))
-        {
-            Log::info("成功：anniversary");
-             $schedule->command('command:notice_my_event_anniversary')
-             ->dailyAt('06:00');
-             //->yearly($data_month,$data_notice_ago,'6:00');
-             //->everyMinute();
+            if(MY_event::where('start',$data_date)->where('category','anniversary'))
+            {
+                Log::info("成功：当日anniversary");
+                $schedule->command('command:notice_my_event_anniversary')->dailyAt('06:00');
              
-        }else{
-            //何もしない
-        }
-        
-        if(MY_event::where('start',$data_notice_later)->where('category','birthday'))
-        {
-            Log::info("成功：birthday");
-             $schedule->command('command:notice_my_event_birthday')
-             ->dailyAt('06:00');
-             //->yearly($data_month,$data_notice_ago,'6:00');
-             //->everyMinute();
+            }elseif(MY_event::where('start',$data_notice_later)->where('category','anniversary'))
+            {
+                Log::info("成功：何日前anniversary");
+                $schedule->command('command:notice_my_event_anniversary')->dailyAt('06:00');
              
-        }else{
-            //何もしない
+            }else{
+                //何もしない
+            }
         }
         
-        if(MY_event::where('start',$data_notice_later)->where('category','others'))
+        foreach($my_events as $my_event)
         {
-            Log::info("成功：others");
-             $schedule->command('command:notice_my_event_others')
-             ->dailyAt('06:00');
-             //->yearly($data_month,$data_notice_ago,'6:00');
-             //->everyMinute();
-             
-        }else{
-            //何もしない
+            //日付調整
+            $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
+            
+            if(MY_event::where('start',$data_date)->where('category','birthday'))
+            {
+                Log::info("成功：当日birthday");
+                $schedule->command('command:notice_my_event_birthday')->dailyAt('06:00');
+        
+            }elseif(MY_event::where('start',$data_notice_later)->where('category','birthday'))
+            {
+                Log::info("成功：何日前birthday");
+                $schedule->command('command:notice_my_event_birthday')->dailyAt('06:00');
+        
+            }else{
+                //何もしない
+            }
         }
+        
+        foreach($my_events as $my_event)
+        {
+            //日付調整
+            $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
+            
+            if(MY_event::where('start',$data_date)->where('category','others'))
+            {
+                Log::info("成功：当日others");
+                $schedule->command('command:notice_my_event_others')->dailyAt('06:00');
+            
+            }elseif(MY_event::where('start',$data_notice_later)->where('category','others'))
+            {
+                Log::info("成功：何日前others");
+                $schedule->command('command:notice_my_event_others')->dailyAt('06:00');
+            }else{
+                //何もしない
+            }
         }
-        
-        // if(MY_event::where('start',$data)->where('category','birthday')){
             
-        //     $schedule->command('command:notice_my_event_anniversary')->yearly($data_month,$data_notice_ago,'6:00');
-            
-        // }else{
-        //      //何もしない
-        // }
-        
-        // if($data_my_events->start == $data && $data_my_events['category'] == 'others'){
-            
-        //      $schedule->command('command:notice_my_event_others')->yearly($data_month,$data_notice_ago,'6:00');
-            
-        //  }else{
-        //      //何もしない
-        //  }
-        
-        
-        
     }
 
     /**

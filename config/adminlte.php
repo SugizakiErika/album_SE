@@ -343,10 +343,12 @@ return [
         ['header' => '管理者項目',
         'can' => ['isAdmin'],
         ],
-                // [
-                //     'text' => '管理者画面',
-                //     'url' => '/admin',
-                // ],
+                [
+                    'text' => '問い合わせ一覧',
+                    'icon' => 'fas fa-solid fa-ghost',
+                    'can' => ['isAdmin'],
+                    'url' => '/admin',
+                ],
                 [
                     'text' => '日記削除取り消し',
                     'icon' => 'fas fa-wrench nav-icon',

@@ -43,7 +43,7 @@ class NoticeMails extends Command
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
-        $normalevent_users = NormaleventUser::all();
+        $normalevent_users = NormaleventUser::where('notice','1');
         
          
         //通常行事で今日当てはまるものがあれば実行する
@@ -56,20 +56,31 @@ class NoticeMails extends Command
             $user = User::find($normalevent_user->user_id);
             $normal_event = Normal_event::find($normalevent_user->normal_event_id);
         
-        if($normal_event->start == $data_notice_later)
-        {
-            Log::info("成功");
-            $name = $user->name;
-            $email = $user->email;
-            $subject = "もうすぐ".json_encode($normal_event->title,JSON_UNESCAPED_UNICODE)."です！";
-            $explanation = json_encode($normal_event->explanation,JSON_UNESCAPED_UNICODE);
-            $todo = json_encode($normal_event->todo,JSON_UNESCAPED_UNICODE);
+            //当日の行事のお知らせ
+            if($normal_event->start == $data_date){
+                
+                $name = $user->name;
+                $email = $user->email;
+                $subject = "もうすぐ".json_encode($normal_event->title,JSON_UNESCAPED_UNICODE)."です！";
+                $explanation = json_encode($normal_event->explanation,JSON_UNESCAPED_UNICODE);
+                $todo = json_encode($normal_event->todo,JSON_UNESCAPED_UNICODE);
         
-            Mail::send(new MailNormal($name,$email,$subject,$explanation,$todo));
+                Mail::send(new MailNormal($name,$email,$subject,$explanation,$todo));
+            
+            }elseif($normal_event->start == $data_notice_later)
+            {
+                //Log::info("成功");
+                $name = $user->name;
+                $email = $user->email;
+                $subject = "もうすぐ".json_encode($normal_event->title,JSON_UNESCAPED_UNICODE)."です！";
+                $explanation = json_encode($normal_event->explanation,JSON_UNESCAPED_UNICODE);
+                $todo = json_encode($normal_event->todo,JSON_UNESCAPED_UNICODE);
+        
+                Mail::send(new MailNormal($name,$email,$subject,$explanation,$todo));
          
-        }else{
-            Log::info("失敗");
-        }
+            }else{
+                Log::info("失敗");
+            }
         }
     }
 }

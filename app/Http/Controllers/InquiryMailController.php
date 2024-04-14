@@ -9,6 +9,7 @@ use App\Mail\InquiryMail;
 use App\Models\Inquiry_list;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class InquiryMailController extends Controller
@@ -29,13 +30,18 @@ class InquiryMailController extends Controller
         $inquiry_list->email = $input["email"];
         $inquiry_list->users_id = Auth::user()->id;
         
+        $inquiry_code = Str::random(20);
+        
+        $inquiry_list->inquiry_code = $inquiry_code;
+        
         $inquiry_list->save();
         
         $name = $input["user_id"];
         $email = $input["email"];
         $comment = $input["comment"];
         
-        Mail::send(new InquiryMail($name,$email,$comment));
-         return view('inquiry.send_fin')->with(['name' => $name])->with(['comment' => $comment]);
+        
+        Mail::send(new InquiryMail($name,$email,$comment,$inquiry_code));
+         return view('inquiry.send_fin')->with(['name' => $name])->with(['comment' => $comment])->with(['inquiry_code' => $inquiry_code]);
     }
 }
