@@ -97,12 +97,12 @@ class DiaryController extends Controller
             //dd($file);
             $file_name = $file->getClientOriginalName();
             //Log::info($file_name);
-            
+            $file_random = Str::random(15);
             //ファイルの保存
-            $file->storeAS('public/',$file_name.$day_now.'-'.Str::random(15));
+            $file->storeAS('public/',$day_now.$file_random.'_'.$file_name);
             //DBへのファイル名とパスの保存
             $diary_image = new Diary_image();
-            $diary_image->path = 'storage/' .$file_name;
+            $diary_image->path = 'storage/' .$day_now.$file_random.'_'.$file_name;
             $diary_image->name = $file_name;
             $diary_image->diaries_id = $diary->id;
             $diary_image->save();
@@ -170,11 +170,12 @@ class DiaryController extends Controller
             foreach($files as $file){
                 //ファイル名の取得
                 $file_name = $file->getClientOriginalName();
+                $file_random = Str::random(15);
                 //ファイルの保存
-                $file->storeAS('public/',$file_name.$day_now.'-'.Str::random(15));
+                $file->storeAS('public/',$day_now.$file_random.'_'.$file_name);
                 //DBへのファイル名とパスの保存
                 $diary_image = new Diary_image();
-                $diary_image->path = 'storage/' .$file_name;
+                $diary_image->path = 'storage/' .$day_now.$file_random.'_'.$file_name;
                 $diary_image->name = $file_name;
                 $diary_image->diaries_id = $diary->id;
                 $diary_image->save();
