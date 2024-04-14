@@ -8,14 +8,17 @@ use App\Models\Diary_image;
 use App\Models\Diary;
 use App\Models\User;
 
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Session;
+//use Session;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class DiaryController extends Controller
 {
+    //ajax通信用：日記の画像確認
     public function a_create()
     {
         
@@ -85,6 +88,7 @@ class DiaryController extends Controller
         $diary->url = '/show/' .$diary->id;
         $diary->save();
         
+        $day_now = Carbon::now();
         //$imagefiles = $request->file('files');
         //dd($request->file('files'));
         if($request->has('files')) {
@@ -92,10 +96,10 @@ class DiaryController extends Controller
             //ファイル名の取得
             //dd($file);
             $file_name = $file->getClientOriginalName();
-            Log::info($file_name);
+            //Log::info($file_name);
             
             //ファイルの保存
-            $file->storeAS('public/',$file_name);
+            $file->storeAS('public/',$file_name.$day_now.'-'.Str::random(15));
             //DBへのファイル名とパスの保存
             $diary_image = new Diary_image();
             $diary_image->path = 'storage/' .$file_name;
@@ -154,6 +158,8 @@ class DiaryController extends Controller
         $diary->users_id = Auth::user()->id;
         $diary->save();
         
+        $day_now = Carbon::now();
+        
         //画像の更新をする場合は一度削除してから更新する
         if($request->hasFile('files'))
         {
@@ -165,7 +171,7 @@ class DiaryController extends Controller
                 //ファイル名の取得
                 $file_name = $file->getClientOriginalName();
                 //ファイルの保存
-                $file->storeAS('public/',$file_name);
+                $file->storeAS('public/',$file_name.$day_now.'-'.Str::random(15));
                 //DBへのファイル名とパスの保存
                 $diary_image = new Diary_image();
                 $diary_image->path = 'storage/' .$file_name;
