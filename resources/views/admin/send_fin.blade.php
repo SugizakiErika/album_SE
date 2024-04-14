@@ -12,7 +12,9 @@
             <p>タイトル：{{ $title }}</p>
             <p>問い合わせ内容</p>
             <p>{{ $comment }}</p>
-        
+            
+            <p>問い合わせ内容</p>
+            <p>{{ $comment }}</p>
         </body>
     </x-app-layout>
 </html>

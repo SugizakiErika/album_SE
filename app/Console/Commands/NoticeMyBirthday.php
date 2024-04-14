@@ -38,7 +38,7 @@ class NoticeMyBirthday extends Command
     {
         //今日の日付を取得する
         $data = Carbon::now(); //ex.03-20
-        // $data_date = Carbon::now()->format('m-d');
+        $data_date = Carbon::now()->format('m-d');
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
@@ -49,20 +49,44 @@ class NoticeMyBirthday extends Command
             //日付調整
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
-            $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->get();
-            //dd($my_anniversaries);            
+            //当日
+            if(MY_event::where('start',$data_date)->where('category','birthday'))
+            {
+                $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->get();
+                //dd($my_anniversaries);            
             
-            foreach($my_birthdays as $my_birthday){
+                foreach($my_birthdays as $my_birthday){
 
-            //各テーブルの取得
-            $user = User::find($my_birthday->users_id);
+                //各テーブルの取得
+                $user = User::find($my_birthday->users_id);
             
-            $name = $user->name;
-            $email = $user->email;
-            $subject = "もうすぐ".json_encode($my_birthday->title,JSON_UNESCAPED_UNICODE)."です！";
-            $comment = json_encode($my_birthday->comment,JSON_UNESCAPED_UNICODE);
+                $name = $user->name;
+                $email = $user->email;
+                $subject = "もうすぐ".json_encode($my_birthday->title,JSON_UNESCAPED_UNICODE)."です！";
+                $comment = json_encode($my_birthday->comment,JSON_UNESCAPED_UNICODE);
             
-            Mail::send(new MailMyAnniversary($name,$email,$subject));
+                Mail::send(new MailMyAnniversary($name,$email,$subject));
+                }
+            }
+            
+            //通知何日前
+            if(MY_event::where('start',$data_notice_later)->where('category','birthday'))
+            {
+                $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->get();
+                //dd($my_anniversaries);            
+            
+                foreach($my_birthdays as $my_birthday){
+
+                //各テーブルの取得
+                $user = User::find($my_birthday->users_id);
+            
+                $name = $user->name;
+                $email = $user->email;
+                $subject = "もうすぐ".json_encode($my_birthday->title,JSON_UNESCAPED_UNICODE)."です！";
+                $comment = json_encode($my_birthday->comment,JSON_UNESCAPED_UNICODE);
+            
+                Mail::send(new MailMyAnniversary($name,$email,$subject));
+                }
             }
         }
     }

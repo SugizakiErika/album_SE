@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang = "{{ str_replace('_', '-', app()->getLocale()) }}">
-    <x-app-layout>
-        <x-slot name="header">
-            <head>
-                <meta charset = "UTF-8">
-                <title>問い合わせ</title>
-            </head>
-        </x-slot>
-        <body>
-            <p>{{ $name }}様</p>
-            <p>お問い合わせありがとうございます。</p>
-            <p>問い合わせ内容</p>
-            <p>{{ $comment }}</p>
+@extends('adminlte::page')
+@section('title', '問い合わせ')
+@section('content_header')
+    <h1>問い合わせ完了</h1>
+@stop
+@section('content')
         
-        </body>
-    </x-app-layout>
-</html>
+            <label>{{ $name }}様</label>
+            <p>お問い合わせありがとうございます。</p>
+            <label>問い合わせ内容</label>
+            <p>{{ $comment }}</p>
+            <label>問い合わせコード</label>
+            <p>{{ $inquiry_code }}</p>
+        
+@stop
