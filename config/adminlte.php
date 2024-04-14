@@ -312,25 +312,31 @@ return [
             'url' => '/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
-        ['header' => '項目'],
+        ['header' => '項目',
+        'can' => ['isUser'],
+        ],
                 [
                     'text' => 'カレンダー',
                     'icon' => 'fas fa-solid fa-calendar',
+                    'can' => ['isUser'],
                     'url' => '/calendar',
                 ],
                 [
                     'text' => '個人行事の通知登録',
                     'icon' => 'fas fa-solid fa-icons',
+                    'can' => ['isUser'],
                     'url' => '/myevent/create',
                 ],
                 [
                     'text' => '通常行事の通知登録',
                     'icon' => 'fas fa-solid fa-landmark',
+                    'can' => ['isUser'],
                     'url' => '/normalevent/create',
                 ],
                 [
                     'text' => '問い合わせ',
                     'icon' => 'fas fa-solid fa-envelope',
+                    'can' => ['isUser'],
                     'url' => '/mail/create',
                 ],
         
