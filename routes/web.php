@@ -20,7 +20,7 @@ use App\Http\Controllers\AdminController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//URL::forceScheme('http');
+URL::forceScheme('http');
 
 /**
 *ログイン画面へ遷移する
