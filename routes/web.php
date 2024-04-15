@@ -20,7 +20,8 @@ use App\Http\Controllers\AdminController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//URL::forceScheme('http');
+//Lightsail用
+URL::forceScheme('http');
 
 /**
 *ログイン画面へ遷移する
