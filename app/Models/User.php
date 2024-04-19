@@ -14,11 +14,6 @@ class User extends Authenticatable implements MustVerifyEmail //implementsの追
 {
     use HasApiTokens, HasFactory, Notifiable;
     
-    // public function diary()
-    // {
-    //     return $this->belongsTo(diary::class);
-    // }
-    
     public function normal_events()
     {
         return $this->belongsToMany(Normal_event::class,'normal_event_users')

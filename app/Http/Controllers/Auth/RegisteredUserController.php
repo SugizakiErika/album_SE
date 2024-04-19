@@ -39,6 +39,8 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        
+        
 
         $user = User::create([
             'name' => $request->name,
@@ -49,6 +51,12 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        
+        $watchword = "合言葉がまだ決まっていません";
+        $user = User::find(Auth::user()->id);
+        //$user->role = "member";
+        $user->watchword = $watchword;
+        $user->save();
         
         //通常行事登録
         $id = Auth::user()->id;
