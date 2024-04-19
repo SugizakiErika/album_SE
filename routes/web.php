@@ -22,7 +22,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 //Lightsail用
-//URL::forceScheme('http');
+URL::forceScheme('http');
 
 /**
 *ログイン画面へ遷移する
@@ -67,7 +67,6 @@ Route::controller(DiaryController::class)->middleware(['auth'])->group(function(
 Route::controller(ReleaseListController::class)->middleware(['auth'])->group(function(){
     Route::get('/release/watchword', 'index')->name('release');
     Route::post('/release/serach', 'serach')->name('release.serach');
-    //Route::get('/release/watchword', 'watchword')->name('release.watchword_get');
     Route::put('/release/watchword', 'create')->name('release.watchword');
     Route::post('/release/serach_save', 'serach_save')->name('release.serach_save');
     
@@ -89,7 +88,7 @@ Route::controller(MyEventController::class)->middleware(['auth'])->group(functio
 //NromalEventController
 Route::controller(NormalEventController::class)->middleware(['auth'])->group(function(){
     Route::get('/normalevent/create', 'create')->name('create.normalevent');
-    //Route::put('/normalevent/create', 'store')->name('store.normalevent');
+    Route::patch('/normalevent/create', 'store')->name('store.normalevent');
     Route::put('/normalevent/update', 'update')->name('update.normalevent');
     Route::get('/normalevent/show/{normal_event}', 'show')->name('show.normalevent');
 });

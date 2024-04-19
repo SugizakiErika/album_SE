@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('follow_name',100);
             $table->string('request')->default(false);//申請中か
             $table->boolean('notice')->default(false); //許可済みか
+            $table->string('select_color')->default("#008b8b");
             $table->timestamps();
             $table->foreignId('users_id')->constrained()->onDelete('cascade');
         });

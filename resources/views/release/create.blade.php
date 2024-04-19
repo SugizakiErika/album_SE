@@ -17,7 +17,7 @@
                     @csrf
                     @method('PUT')
                     <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}">
-                    <button id="submit_put" type = "submit">登録</button>
+                    <button id="submit_put" type = "submit" name="watchword">登録</button>
                 </form>
             <!--検索-->
                 <label>ユーザー検索</label>
@@ -36,7 +36,8 @@
                 
             <!--申請中-->
                 <label>フォロー状況確認</label>
-                <button type="button" id="delete_button">取り消し</button>
+                @if($release_lists)
+                <button type="button" id="delete_button" name="follow">取り消し</button>
                 <div class="follow_user">
                     <div class="follow_user_update">
                         @foreach($release_lists as $release_list)
@@ -47,9 +48,9 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
                 
-            <!--フォロー申請-->
-            
+                @include('release.follow-request')
             <script>
             $(function delete_follow(){
                     $("#delete_button").on('click', function(){
@@ -204,7 +205,6 @@
                                  html = `
                                     <div class="follow_user_update">
                                     <input type="hidden" name="m_id" value="${release_lists[index].id}"/>
-                                    <button type="button" id="delete_button">取り消し</button>
                                     <p>ユーザー名： ${release_lists[index].follow_name} </p>
                                     <p>申請状況：申請済み</p>
                                     <p>許可状況：許可</p>

@@ -14,18 +14,42 @@ class ReleaseListController extends Controller
     // フォロー検索画面
     public function index(Release_list $release_list)
     {
-        return view('release.create')->with(['release_lists' => $release_list->where('users_id',Auth::user()->id)
-                                                                                ->where('request',1)->get()]);
+        $follow_lists = Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->get();
+    
+        $follow_lists_vals = [];
+        //本当はリレーションするべき...??
+        $follow_lists_vals = collect($follow_lists)->map(function ($follow_lists) {
+            
+        $user_watchword = User::where('id',$follow_lists->release_user_id)->value('watchword');
+        
+        $follow_lists['watchword'] = $user_watchword;
+        
+        return $follow_lists;
+        });
+        
+        return view('release.create')
+            ->with(['release_lists' => $release_list->where('users_id',Auth::user()->id)->where('request',1)->get()])
+            ->with(['follow_lists' => $follow_lists_vals]);
     }
     
-    //合言葉登録画面
-    public function create(Request $request, User $user)
+    //合言葉とフォロー申請保存画面
+    public function create(Request $request, User $user,Release_List $release_list)
     {
         $input = $request['release'];
-        $user = User::find(Auth::user()->id);
-        $user->watchword = $input["watchword"];
-        $user->save();
         
+        //合言葉登録
+        $user = User::find(Auth::user()->id);
+        if($request->has('watchword')){ //form:watchword
+            $user->watchword = $input["watchword"];
+            $user->save();
+        }
+        //フォロー申請内容保存
+        $release_list = Release_List::find($input["follow_id"]);
+        if($request->has('follow')){ //form:follow
+            $release_list->notice = $input["notice"];
+            $release_list->select_color  = $input["select_color"];
+            $release_list->save();
+        }
         return redirect()->route('release');
     }
     
@@ -93,5 +117,13 @@ class ReleaseListController extends Controller
         return response()->json($result);
     }
     
-    
+    //フォロー許可編集
+    public function follow_save(Request $request,Release_List $release_list)
+    {
+        $input = $request['release'];
+        $release_list = Release_List::find($input["id"]);
+        $release_list->notice = $input["notice"];
+        $release_list->select_color  = $input["select_color"];
+        $release_list->save();
+    }
 }
