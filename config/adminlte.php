@@ -322,6 +322,12 @@ return [
                     'url' => '/calendar',
                 ],
                 [
+                    'text' => 'フォロー',
+                    'icon' => 'fas fa-solid fa-envelope',
+                    'can' => ['isUser'],
+                    'url' => '/release/watchword',
+                ],
+                [
                     'text' => '個人行事の通知登録',
                     'icon' => 'fas fa-solid fa-icons',
                     'can' => ['isUser'],

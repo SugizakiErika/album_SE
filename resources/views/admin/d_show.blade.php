@@ -1,7 +1,7 @@
 @extends('adminlte::page')
     @section('title', '日記閲覧画面')
         @section('content_header')
-            <h1>個人イベント</h1>
+            <h1>日記編集</h1>
         @stop
             @section('content')
             @foreach($diary as $data_diary)

@@ -87,52 +87,6 @@ class AdminController extends Controller
         return redirect()->route('admin.d_show');
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function d_update(DiaryRequest $request,Diary $diary,Diary_image $diary_image)
-    // {
-    //     //title,date,comment,color,users_idの保存
-    //     $input = $request['diary'];
-    //     $diary->start = $input["start"];
-    //     $diary->f_end = $input["start"];
-    //     $diary->title = $input["title"];
-    //     $diary->comment = $input["comment"];
-    //     $diary->deleted_at = $input["deleted_at"];
-    //     $diary->color = "#FFCCFF";
-    //     $diary->url = '/show/' .$diary->id;
-    //     $diary->users_id = $input['id'];
-    //     $diary->save();
-        
-    //     //画像の更新をする場合は一度削除してから更新する
-    //     if($request->hasFile('files'))
-    //     {
-    //         //削除処理
-    //         $diary_image->where('diaries_id',$diary->id)->delete();
-    //         //更新処理
-    //         $files = $request->file('files');
-    //         foreach($files as $file){
-    //             //ファイル名の取得
-    //             $file_name = $file->getClientOriginalName();
-    //             //ファイルの保存
-    //             $file->storeAS('public/',$file_name);
-    //             //DBへのファイル名とパスの保存
-    //             $diary_image = new Diary_image();
-    //             $diary_image->path = 'storage/' .$file_name;
-    //             $diary_image->name = $file_name;
-    //             $diary_image->diaries_id = $diary->id;
-    //             $diary_image->save();
-    //         }
-    //     }else{
-    //         //何もしない
-    //         }
-    //     return redirect()->route('admin.d_show');
-    // }
-
     //削除
     public function d_delete(Diary $diary)
   {

@@ -550,7 +550,7 @@ class Normal_eventSeeder extends Seeder
             ],
             [
                 'id' => 28,
-                'title' => '七五三',
+                'title' => 'クリスマス',
                 'start' => '12-24',
                 'f_end' => '12-24',
                 'color' => $color,

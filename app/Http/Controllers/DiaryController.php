@@ -108,7 +108,8 @@ class DiaryController extends Controller
             $diary_image->save();
         }
         }
-        return redirect()->route('show.diary', ['diary' => $diary->id]);
+        return redirect()->route('calendar');
+        //return redirect()->route('show.diary', ['diary' => $diary->id]);
     }
     
 

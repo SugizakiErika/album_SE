@@ -49,26 +49,6 @@ class NoticeMyBirthday extends Command
             //日付調整
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
-            //当日
-            if(MY_event::where('start',$data_date)->where('category','birthday'))
-            {
-                $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->get();
-                //dd($my_anniversaries);            
-            
-                foreach($my_birthdays as $my_birthday){
-
-                //各テーブルの取得
-                $user = User::find($my_birthday->users_id);
-            
-                $name = $user->name;
-                $email = $user->email;
-                $subject = "もうすぐ".json_encode($my_birthday->title,JSON_UNESCAPED_UNICODE)."です！";
-                $comment = json_encode($my_birthday->comment,JSON_UNESCAPED_UNICODE);
-            
-                Mail::send(new MailMyAnniversary($name,$email,$subject));
-                }
-            }
-            
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','birthday'))
             {

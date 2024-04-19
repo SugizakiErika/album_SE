@@ -40,26 +40,6 @@ class NoticeMyOthers extends Command
             //日付調整
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
-            //当日
-            if(MY_event::where('start',$data_date)->where('category','others'))
-            {
-                $my_others = MY_event::where('start',$data_notice_later)->where('category','others')->get();
-                //dd($my_anniversaries);            
-            
-                foreach($my_others as $my_other){
-
-                //各テーブルの取得
-                $user = User::find($my_other->users_id);
-            
-                $name = $user->name;
-                $email = $user->email;
-                $subject = "もうすぐ".json_encode($my_other->title,JSON_UNESCAPED_UNICODE)."です！";
-                $comment = json_encode($my_other->comment,JSON_UNESCAPED_UNICODE);
-            
-                Mail::send(new MailMyAnniversary($name,$email,$subject));
-                }
-            }
-            
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','others'))
             {
