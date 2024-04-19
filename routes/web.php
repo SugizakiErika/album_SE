@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DiaryController;
+use App\Http\Controllers\ReleaseListController;
 use App\Http\Controllers\MyEventController;
 use App\Http\Controllers\NormalEventController;
 use App\Http\Controllers\InquiryMailController;
@@ -21,7 +22,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 //Lightsail用
-URL::forceScheme('http');
+//URL::forceScheme('http');
 
 /**
 *ログイン画面へ遷移する
@@ -59,6 +60,18 @@ Route::controller(DiaryController::class)->middleware(['auth'])->group(function(
     //画像のajax通信
     Route::get('/ajax', 'a_create')->name('create.diary_ajax');
     Route::post('/ajax', 'a_store')->name('store.diary_ajax');
+});
+
+//フォロー
+//ReleaseListController
+Route::controller(ReleaseListController::class)->middleware(['auth'])->group(function(){
+    Route::get('/release/watchword', 'index')->name('release');
+    Route::post('/release/serach', 'serach')->name('release.serach');
+    //Route::get('/release/watchword', 'watchword')->name('release.watchword_get');
+    Route::put('/release/watchword', 'create')->name('release.watchword');
+    Route::post('/release/serach_save', 'serach_save')->name('release.serach_save');
+    
+    Route::delete('/release/watchword/{release_list}','delete')->name('delete.release');
 });
 
 //MyEventController

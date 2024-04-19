@@ -49,26 +49,6 @@ class NoticeMyAnniversary extends Command
             //日付調整
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
-            //当日
-            if(MY_event::where('start',$data_date)->where('category','anniversary'))
-            {
-                $my_anniversaries = MY_event::where('start',$data_notice_later)->where('category','anniversary')->get();
-                //dd($my_anniversaries);            
-            
-                foreach($my_anniversaries as $my_anniversary)
-                {
-                    //各テーブルの取得
-                    $user = User::find($my_anniversary->users_id);
-            
-                    $name = $user->name;
-                    $email = $user->email;
-                    $subject = "もうすぐ".json_encode($my_anniversary->title,JSON_UNESCAPED_UNICODE)."です！";
-                    $comment = json_encode($my_anniversary->comment,JSON_UNESCAPED_UNICODE);
-                    
-                    Mail::send(new MailMyAnniversary($name,$email,$subject));
-                }
-            }
-            
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','anniversary'))
             {
