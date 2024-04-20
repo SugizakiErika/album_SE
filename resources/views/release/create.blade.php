@@ -164,7 +164,7 @@
                             $(".result_name").remove();
                             console.log(result);
                             //検索結果を表示する
-                            if(result){
+                            if(result.length){
                                 $.each(result,function(index,value){
                                     html = `
                                         <div class="result_name">
@@ -175,9 +175,8 @@
                                         `;
                                         $(".result_username").append(html);
                                 });
-                                console.log("結果有");
+                            
                             }else{
-                            console.log("けっかなし");
                                     html = `
                                     <div class="result_name">
                                     <p>検索しましたが対象のユーザーは見つかりませんでした</p>
