@@ -15,8 +15,8 @@
                 <label>許可する</label>
                 <input type="radio" name="release[notice]" id="0" value="0" @if($follow_list->notice == 0) checked @endif/>
                 <label>許可しない</label>
-                <label>日記に反映された際の色を選択してください</label>
-                <input type="color" name="release[select_color]" value="{{ $follow_list->select_color }}">
+                <!--<label>日記に反映された際の色を選択してください</label>-->
+                <!--<input type="color" name="release[select_color]" value="{{ $follow_list->select_color }}">-->
             @endforeach
             </div>
             @endif

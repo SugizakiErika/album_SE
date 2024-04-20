@@ -12,6 +12,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
+    
+    <form method = "POST" action = "{{ route('follow_color') }}">
+      @csrf
+      @method('PUT')
+      @foreach($data_release_follows as $data_release_follow)
+        <label>{{ $data_release_follow->follow_name }}</label>
+        <input type="hidden" name="release[follow_id]" value="{{  $data_release_follow->id  }}">
+        <input type="color" name="release[select_color]" value="{{ $data_release_follow->select_color }}">
+        <button type = "submit">color変更</button>
+      @endforeach
+    </form>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
       

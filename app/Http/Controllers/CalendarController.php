@@ -31,23 +31,21 @@ class CalendarController extends Controller
     $data_diary_follows = [];
     $data_diary_follows_vals = [];
     //フォローテーブルの中の
-    $data_release_follows = $release_list->where('users_id',$id)->get();
-    dd($data_release_follows);
+    $data_release_follows = $release_list->where('users_id',$id)->where('notice',1)->get();
     
     foreach($data_release_follows as $data_release_follow)
     {
-      $data_diary_follows = $diary->where('users_id',$data_release_follow->release_user_id);
+      $data_diary_follows = Diary::where('users_id',$data_release_follow->release_user_id)->get();
     }
     
       $data_diary_follows_vals = collect($data_diary_follows)->map(function ($data_diary_follows){
       
-      
-      $data_diary_follows['color'] = $release_list->where('users_id',Auth::user()->id)->value('select_color');
-      
+      $data_diary_follows['color'] = Release_list::where('users_id',Auth::user()->id)->value('select_color');
+      $data_diary_follows['url'] = '/show_follow/' .$data_diary_follows->id;
+        
       return $data_diary_follows;
       
     });
-    
     
     
     //通常行事(normal_event)に現在の年を結合する
@@ -94,7 +92,16 @@ class CalendarController extends Controller
     //concatにて各テーブルの配列を結合する
     $data = $data_diary->concat($data_normal_events)->concat($data_my_events_vals)->concat($data_diary_follows_vals);
     
-    return view('calendar.index')->with(['data'=> $data]);
+    return view('calendar.index')->with(['data'=> $data])->with(['data_release_follows' => $data_release_follows]);
   }
   
+  //フォローカラー変更
+  public function create(Request $request)
+  {
+    $input = $request['release'];
+    $release_list = Release_List::find($input["follow_id"]);
+    $release_list->select_color  = $input["select_color"];
+    $release_list->save();
+    return redirect()->route('calendar');
+  }
 }

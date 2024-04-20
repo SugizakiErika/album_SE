@@ -38,17 +38,22 @@ class ReleaseListController extends Controller
         $input = $request['release'];
         
         //合言葉登録
-        $user = User::find(Auth::user()->id);
         if($request->has('watchword')){ //form:watchword
+        
+            $user = User::find(Auth::user()->id);
             $user->watchword = $input["watchword"];
             $user->save();
+        
         }
+        
         //フォロー申請内容保存
-        $release_list = Release_List::find($input["follow_id"]);
         if($request->has('follow')){ //form:follow
+        
+            $release_list = Release_List::find($input["follow_id"]);
             $release_list->notice = $input["notice"];
-            $release_list->select_color  = $input["select_color"];
+            //$release_list->select_color  = $input["select_color"];
             $release_list->save();
+            
         }
         return redirect()->route('release');
     }

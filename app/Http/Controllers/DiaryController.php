@@ -7,6 +7,7 @@ use App\Http\Requests\DiaryRequest;
 use App\Models\Diary_image;
 use App\Models\Diary;
 use App\Models\User;
+use App\Models\Release_list;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -125,6 +126,20 @@ class DiaryController extends Controller
         
         return view('diary.show')->with(['diary' => $diary]);
     }
+    
+    public function show_follow(Diary $diary)
+    {
+        $follow_name = User::where('id',$diary->users_id)->value('name');
+        Log::info($follow_name);
+        if(Release_List::where('follow_name',$follow_name)->where('users_id',Auth::user()->id)->where('notice',1)->exists())
+        {
+            return view('diary.show_follow')->with(['diary' => $diary])->with(['follow_name' => $follow_name]);
+        }else{
+            //フォロー許可されていない場合
+            return view('diary.show_nofollow');
+        }
+            
+        }
 
     /**
      * Show the form for editing the specified resource.
