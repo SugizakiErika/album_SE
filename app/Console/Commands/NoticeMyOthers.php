@@ -3,6 +3,13 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailMyAnniversary;
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Models\My_event;
+use App\Models\User;
 
 class NoticeMyOthers extends Command
 {
@@ -29,7 +36,7 @@ class NoticeMyOthers extends Command
     {
         //今日の日付を取得する
         $data = Carbon::now(); //ex.03-20
-        $data_date = Carbon::now()->format('m-d');
+        //$data_date = Carbon::now()->format('m-d');
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
@@ -38,13 +45,13 @@ class NoticeMyOthers extends Command
         foreach($my_events as $my_event)
         {
             //日付調整
+            $data = Carbon::now();
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','others')->exists())
             {
-                $my_others = MY_event::where('start',$data_notice_later)->where('category','others')->get();
-                //dd($my_anniversaries);            
+                $my_others = MY_event::where('start',$data_notice_later)->where('category','others')->get();      
             
                 foreach($my_others as $my_other){
 

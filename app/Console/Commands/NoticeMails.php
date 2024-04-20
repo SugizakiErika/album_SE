@@ -43,14 +43,15 @@ class NoticeMails extends Command
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
-        $normalevent_users = NormaleventUser::where('notice','1');
+        $normalevent_users = NormaleventUser::where('notice','1')->get();
         
          
         //通常行事で今日当てはまるものがあれば実行する
         foreach($normalevent_users as $normalevent_user)
         {
+            $data = Carbon::now();
             //日付の調整
-            $data_notice_later = $data->addDays((int)$normalevent_user->day)->format('m-d');
+            $data_notice_later = $data->addDays($normalevent_user->day_num)->format('m-d');
             
             //各テーブルの取得
             $user = User::find($normalevent_user->user_id);

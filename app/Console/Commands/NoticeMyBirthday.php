@@ -38,7 +38,7 @@ class NoticeMyBirthday extends Command
     {
         //今日の日付を取得する
         $data = Carbon::now(); //ex.03-20
-        $data_date = Carbon::now()->format('m-d');
+        //$data_date = Carbon::now()->format('m-d');
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
@@ -47,13 +47,14 @@ class NoticeMyBirthday extends Command
         foreach($my_events as $my_event)
         {
             //日付調整
+            $data = Carbon::now();
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','birthday')->exists())
             {
                 $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->get();
-                //dd($my_anniversaries);            
+                Log::info($my_birthdays);            
             
                 foreach($my_birthdays as $my_birthday){
 
@@ -67,6 +68,8 @@ class NoticeMyBirthday extends Command
             
                 Mail::send(new MailMyAnniversary($name,$email,$subject));
                 }
+            }else{
+                //
             }
         }
     }

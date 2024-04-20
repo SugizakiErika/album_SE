@@ -18,12 +18,13 @@ class MailNormal extends Mailable
      *
      * @return void
      */
-    public function __construct($name,$email,$subject,$comment)
+    public function __construct($name,$email,$subject,$explanation,$todo)
     {
         $this->name = $name;
         $this->email = $email;
         $this->subject = $subject;
-        $this->comment = $comment;
+        $this->explanation = $explanation;
+        $this->todo = $todo;
     }
     
     /**
@@ -39,7 +40,8 @@ class MailNormal extends Mailable
                     ->with([
                         'name' => $this->name,
                         'subject' => $this->subject,
-                        'comment' => $this->comment,
+                        'explanation' => $this->explanation,
+                        'todo' => $this->todo,
                         ]);
     }
 

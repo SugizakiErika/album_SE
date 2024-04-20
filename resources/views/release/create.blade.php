@@ -43,7 +43,7 @@
                         @foreach($release_lists as $release_list)
                         <input type="radio" name="m_id" value="{{ $release_list->id }}"/>
                         <p>ユーザー名： {{ $release_list->follow_name }} </p>
-                        <p>申請状況：@if( $release_list->request == 1)申請中 @else 未申請 @endif</p>
+                        <p>申請状況：@if( $release_list->request == 1)申請済み @else 未申請 @endif</p>
                         <p>許可状況：@if($release_list->notice == 1)許可済み @else 許可待ち @endif </p>
                         @endforeach
                     </div>
