@@ -22,7 +22,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 //Lightsail用
-URL::forceScheme('http');
+//URL::forceScheme('http');
 
 
 /**
