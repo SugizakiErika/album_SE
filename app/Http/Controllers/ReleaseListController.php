@@ -75,22 +75,31 @@ class ReleaseListController extends Controller
             array_push($duplications_data,$duplications);
             array_push($duplications_data2,User::pluck('id'));
             $data = array_intersect($duplications_data,$duplications_data2);
-        
+            dd($data);
             
-            if($data == 0)
+            if($data->exists())
             {
                 $result = User::where('name',$input["name"])
                                 ->whereNotIn('id',[Auth::user()->id,$duplications])
                                 ->get();
             }else{
                 $result = NULL;
+                Log:info("result:NULL");
             }
             
         }else{
+            
+            if(User::where('name',$input["name"])->where('id','<>',Auth::user()->id)->exists())
+            {
             $result = User::where('name',$input["name"])
                             ->where('id','<>',Auth::user()->id)
                             ->get();
-        }
+            }else{
+                $result = NULL;
+                Log::info("else側");
+            }
+                
+            }
         
         return response()->json($result);
     }

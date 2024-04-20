@@ -21,18 +21,22 @@
                 </form>
             <!--検索-->
                 <label>ユーザー検索</label>
-                
+                <form method = "POST" action = "" id = "postForm" >
+                @csrf
                 <input type = "text" name = "username" size="20" placeholder = "ユーザー名"/>
                 
                 <button id="submit_post" type = "button">検索</button>
-                
+                </fomr>
             
             <!--結果-->
                 <label>検索結果</label>
+                <form method = "POST" action = "" id = "serachForm" >
+                @csrf
                     <button id ="submit_serach" type = "button">フォロー申請</button>
                 
                 <div class="result_username">
                 </div>
+                </form>
                 
             <!--申請中-->
                 <label>フォロー状況確認</label>
@@ -52,6 +56,22 @@
                 
                 @include('release.follow-request')
             <script>
+            //バリデーションルール設定
+                var serachValid = {
+                    rules:{
+                        username:{
+                            required:true,
+                            maxlength:100, 
+                        }
+                    },
+                    messages:{
+                        username:{
+                            required:'ユーザー名を入力してください。',
+                            maxlength:'50文字以内で入力してください。',
+                        }
+                    },
+                }
+            
             $(function delete_follow(){
                     $("#delete_button").on('click', function(){
                         
@@ -119,6 +139,13 @@
                 $(function a() {
                     $("#submit_post").on('click', function() {
                         
+                        //バリデーションを行う
+                        $("#postForm").validate(serachValid);
+                        //失敗で戻る
+                        if (!$("#postForm").valid()) {
+                            return false;
+                        };
+                        
                         // 入力する値の取得
                         var input_name = document.getElementsByName('username');
                         //console.log(input_name[0].value);
@@ -148,7 +175,9 @@
                                         `;
                                         $(".result_username").append(html);
                                 });
+                                console.log("結果有");
                             }else{
+                            console.log("けっかなし");
                                     html = `
                                     <div class="result_name">
                                     <p>検索しましたが対象のユーザーは見つかりませんでした</p>

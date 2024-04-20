@@ -82,7 +82,7 @@ class CalendarController extends Controller
       $data_my_events['title'] =$data_my_events->title."記念日";
         
       }else{
-        Log::info("カレンダー通常行事のタイトル失敗");
+      //
       }
       
       return $data_my_events;
@@ -102,6 +102,7 @@ class CalendarController extends Controller
     $release_list = Release_List::find($input["follow_id"]);
     $release_list->select_color  = $input["select_color"];
     $release_list->save();
+    
     return redirect()->route('calendar');
   }
 }
