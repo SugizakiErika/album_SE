@@ -22,7 +22,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 //Lightsail用
-//URL::forceScheme('http');
+URL::forceScheme('http');
 
 /**
 *ログイン画面へ遷移する
@@ -44,6 +44,7 @@ Route::get('/', function () {
 //カレンダー表示：FullCalendar採用
 Route::controller(CalendarController::class)->middleware(['auth'])->group(function(){
     Route::get('/calendar', 'index')->name('calendar');
+    Route::put('/calendar','create')->name('follow_color');
 });
 
 //DiaryController
@@ -53,6 +54,7 @@ Route::controller(DiaryController::class)->middleware(['auth'])->group(function(
     Route::post('/create', 'store')->name('store.diary');
     //日記内容閲覧
     Route::get('/show/{diary}','show')->name('show.diary');
+    Route::get('/show_follow/{diary}','show_follow')->name('show_follow.diary');
     //日記編集
     Route::get('/edit/{diary}', 'edit')->name('edit.diary');
     Route::put('/edit/{diary}', 'update')->name('update.diary');
