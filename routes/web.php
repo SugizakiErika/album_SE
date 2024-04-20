@@ -22,24 +22,25 @@ use App\Http\Controllers\AdminController;
 |
 */
 //Lightsail用
-URL::forceScheme('http');
+//URL::forceScheme('http');
 
 /**
 *ログイン画面へ遷移する
 */
+
 Route::get('/', function () {
     return redirect('/login');
 });
 
  
 
-//ログインしないと見れない
-Route::middleware(['auth', 'verified'])->group(function (){
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-})->name('dashboard');
+// //ログインしないと見れない
+// Route::middleware(['auth', 'verified','basicauth'])->group(function (){
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+// })->name('dashboard');
+// });
 
-});
 //カレンダー表示：FullCalendar採用
 Route::controller(CalendarController::class)->middleware(['auth'])->group(function(){
     Route::get('/calendar', 'index')->name('calendar');
@@ -102,7 +103,7 @@ Route::controller(InquiryMailController::class)->middleware(['auth'])->group(fun
 
 //管理者画面
 //can:isAdminで管理者のみ入ること可能にする
-Route::controller(AdminController::class)->middleware(['auth', 'can:isAdmin'])->group(function(){
+Route::controller(AdminController::class)->middleware(['auth','can:isAdmin'])->group(function(){
     Route::get('/admin','index')->name('admin.index');//目次
     //メール送信
     Route::get('/admin/mail/create','create')->name('admin.create');
@@ -114,7 +115,7 @@ Route::controller(AdminController::class)->middleware(['auth', 'can:isAdmin'])->
      Route::delete('/admin/diary/show/{diary}','d_delete')->name('admin.d_delete');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

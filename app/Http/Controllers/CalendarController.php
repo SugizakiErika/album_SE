@@ -7,6 +7,7 @@ use App\Models\Normal_event;
 use App\Models\Diary;
 use App\Models\My_event;
 use App\Models\NormaleventUser;
+use App\Models\Release_list;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,15 +19,37 @@ class CalendarController extends Controller
 {
   // メイン画面を表示するために各テーブルデータを持ってくる
   //各タイトルと日付を持ってきたい
-  public function index(Normal_event $normal_event,Diary $diary,My_event $my_event,NormaleventUser $normaleventuser)
+  public function index(Normal_event $normal_event,Diary $diary,My_event $my_event,NormaleventUser $normaleventuser,Release_List $release_list)
   {
     $id = Auth::user()->id;
     
     $data_diary = $diary->where('users_id',$id)->get();
     $data_normal_events = $normal_event->get();
     $data_my_events = $my_event->where('users_id',$id)->get();
-    //dd($data_my_events);
-    Log::info($data_my_events);
+    
+    //フォロワー?に日記が見れるようにする
+    $data_diary_follows = [];
+    $data_diary_follows_vals = [];
+    //フォローテーブルの中の
+    $data_release_follows = $release_list->where('users_id',$id)->get();
+    dd($data_release_follows);
+    
+    foreach($data_release_follows as $data_release_follow)
+    {
+      $data_diary_follows = $diary->where('users_id',$data_release_follow->release_user_id);
+    }
+    
+      $data_diary_follows_vals = collect($data_diary_follows)->map(function ($data_diary_follows){
+      
+      
+      $data_diary_follows['color'] = $release_list->where('users_id',Auth::user()->id)->value('select_color');
+      
+      return $data_diary_follows;
+      
+    });
+    
+    
+    
     //通常行事(normal_event)に現在の年を結合する
     $data_normal_events_vals = [];
     
@@ -68,10 +91,9 @@ class CalendarController extends Controller
     });
       
     
-    Log::info("年結合後".$data_my_events_vals);
     //concatにて各テーブルの配列を結合する
-    $data = $data_diary->concat($data_normal_events)->concat($data_my_events_vals);
-    Log::info("concat".$data);
+    $data = $data_diary->concat($data_normal_events)->concat($data_my_events_vals)->concat($data_diary_follows_vals);
+    
     return view('calendar.index')->with(['data'=> $data]);
   }
   
