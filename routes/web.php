@@ -24,10 +24,10 @@ use App\Http\Controllers\AdminController;
 //Lightsail用
 URL::forceScheme('http');
 
+
 /**
 *ログイン画面へ遷移する
 */
-
 Route::get('/', function () {
     return redirect('/login');
 });

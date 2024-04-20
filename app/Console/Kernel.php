@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //今日の日付を取得する
-        $data = Carbon::now(); //ex.03-20
+        //$data = Carbon::now(); //ex.03-20
         //$data_date = Carbon::now()->format('m-d');
         //$data_month = Carbon::now()->format('m');
         //$data_day = Carbon::now()->format('d');
@@ -61,8 +61,8 @@ class Kernel extends ConsoleKernel
         //通常行事で今日当てはまるものがあれば実行する
         foreach($normalevent_users as $normalevent_user)
         {
-            $data = Carbon::now();
             //通知用日付の調整
+            $data = Carbon::now();
             $data_notice_later = $data->addDays($normalevent_user->day_num)->format('m-d');
             
             $normal_event = Normal_event::find($normalevent_user->normal_event_id);
@@ -83,11 +83,10 @@ class Kernel extends ConsoleKernel
         
         foreach($my_events as $my_event)
         {
-            $data = Carbon::now();
             //日付調整
+            $data = Carbon::now();
             $data_notice_myevent_later = $data->addDays($my_event->day)->format('m-d');
             
-            //Log::info("個人日付".$data_notice_myevent_later);
             if(MY_event::where('start',$data_notice_myevent_later)->where('category','birthday')->exists())
             {
                 Log::info("成功：何日前birthday");
