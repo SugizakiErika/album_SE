@@ -84,7 +84,7 @@ class Kernel extends ConsoleKernel
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
             
-            if(MY_event::where('start',$data_notice_later)->where('category','anniversary'))
+            if(MY_event::where('start',$data_notice_later)->where('category','anniversary')->exists())
             {
                 Log::info("成功：何日前anniversary");
                 $schedule->command('command:notice_my_event_anniversary')->dailyAt('06:00');
@@ -93,7 +93,7 @@ class Kernel extends ConsoleKernel
                 //何もしない
             }
             
-            if(MY_event::where('start',$data_notice_later)->where('category','birthday'))
+            if(MY_event::where('start',$data_notice_later)->where('category','birthday')->exists())
             {
                 Log::info("成功：何日前birthday");
                 $schedule->command('command:notice_my_event_birthday')->dailyAt('06:00');
@@ -102,7 +102,7 @@ class Kernel extends ConsoleKernel
                 //何もしない
             }
             
-            if(MY_event::where('start',$data_notice_later)->where('category','others'))
+            if(MY_event::where('start',$data_notice_later)->where('category','others')->exists())
             {
                 Log::info("成功：何日前others");
                 $schedule->command('command:notice_my_event_others')->dailyAt('06:00');

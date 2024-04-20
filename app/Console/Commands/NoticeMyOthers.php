@@ -41,7 +41,7 @@ class NoticeMyOthers extends Command
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
             //通知何日前
-            if(MY_event::where('start',$data_notice_later)->where('category','others'))
+            if(MY_event::where('start',$data_notice_later)->where('category','others')->exists())
             {
                 $my_others = MY_event::where('start',$data_notice_later)->where('category','others')->get();
                 //dd($my_anniversaries);            
