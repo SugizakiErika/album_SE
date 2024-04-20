@@ -50,7 +50,7 @@ class NoticeMyAnniversary extends Command
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
             
             //通知何日前
-            if(MY_event::where('start',$data_notice_later)->where('category','anniversary'))
+            if(MY_event::where('start',$data_notice_later)->where('category','anniversary')->exists())
             {
                 $my_anniversaries = MY_event::where('start',$data_notice_later)->where('category','anniversary')->get();
                 //dd($my_anniversaries);            
