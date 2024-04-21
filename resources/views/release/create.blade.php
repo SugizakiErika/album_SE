@@ -100,6 +100,7 @@
                                 //前のアップロードデータを削除
                             $(".result_name").remove();
                             $(".follow_user_update").remove();
+                            if(release_lists.length){
                             //検索結果を表示する
                             $.each(release_lists,function(index,value){
                              if(release_lists[index].request == 1 && release_lists[index].notice == 1){
@@ -122,10 +123,13 @@
                                     </div>
                                      `;
                             }
-                            
-                            
-                                    $(".follow_user").append(html);
+                            $(".follow_user").append(html);
                                     });
+                            }else{
+                            }
+                            
+                            
+                                    
                             }).fail(function (jqXHR, textStatus, errorThrown) {
                                 // 通信失敗時の処理
                                 alert('ファイルの取得に失敗しました。');
@@ -232,7 +236,7 @@
                              if(release_lists[index].request == 1 && release_lists[index].notice == 1){
                                  html = `
                                     <div class="follow_user_update">
-                                    <input type="hidden" name="m_id" value="${release_lists[index].id}"/>
+                                    <input type="radio" name="m_id" value="${release_lists[index].id}"/>
                                     <p>ユーザー名： ${release_lists[index].follow_name} </p>
                                     <p>申請状況：申請済み</p>
                                     <p>許可状況：許可</p>
@@ -242,10 +246,9 @@
                             {
                                 html = `
                                     <div class="follow_user_update">
-                                    <input type="hidden" name="m_id" value="${release_lists[index].id}"/>
-                                    <button type="button" id="delete_button">取り消し</button>
+                                    <input type="radio" name="m_id" value="${release_lists[index].id}"/>
                                     <p>ユーザー名： ${release_lists[index].follow_name} </p>
-                                    <p>申請状況：申請中</p>
+                                    <p>申請状況：申請済み</p>
                                     <p>許可状況：許可待ち</p>
                                     </div>
                                      `;
