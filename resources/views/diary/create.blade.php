@@ -7,36 +7,40 @@
                 
     @stop
         @section('content')
-            <form method = "POST" action = "{{ route('store.diary') }}" enctype = "multipart/form-data">
-            @csrf
-            <label>日付</label>
-            <input type = "text" name = "diary[start]" value = "{{ $date }}" readonly>
-            <p class="start__error" style="color:red">{{ $errors->first('diary.start') }}</p>
+        <div class="card card-outline card-info">
+            <div class="card-body">
+                <form method = "POST" action = "{{ route('store.diary') }}" enctype = "multipart/form-data">
+                    @csrf
+                    <label>日付</label>
+                    <input type = "text" name = "diary[start]" value = "{{ $date }}" readonly>
+                    <p class="start__error" style="color:red">{{ $errors->first('diary.start') }}</p>
             
-            <label>タイトル</label>
-            <input type = "text" name = "diary[title]" size="30" placeholder = "タイトルを入力してください" value = "{{ old('diary.title') }}"/>
-            <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
+                    <label>タイトル</label>
+                    <input type = "text" name = "diary[title]" size="30" placeholder = "タイトルを入力してください" value = "{{ old('diary.title') }}"/>
+                    <p class="title__error" style="color:red">{{ $errors->first('diary.title') }}</p>
+                    
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
+                        <div class="info-box-content">
+                            <label>画像を選択してください。(最低1つ最大5つまで拡張子は.gif .jpg .jpeg .pngのみとなります。)</label>
+                            <input type = "file" name = "files[]" id = "upload_images" accept=".gif, .jpg, .jpeg, .png" class = "form-control" multiple>
+                            
+                            @foreach($errors->get('files') as $message)
+                                <p class="file__error" style="color:red">{{ $message }}</p>
+                            @endforeach
+                                <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
+                                <label>選択した画像</label>
+                                <div class="file_path"></div>
+                        </div>
+                    </div>
+                    <label>内容</label>
+                    <textarea name="diary[comment]" rows="5" cols="45" placeholder="内容を入力してください">{{ old('diary.comment') }}</textarea>
+                    <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
             
-            
-            <label>画像を選択してください。(最低1つ最大5つまで拡張子は.gif .jpg .jpeg .pngのみとなります。)</label>
-            <input type = "file" name = "files[]" id = "upload_images" accept=".gif, .jpg, .jpeg, .png" class = "form-control" multiple>
-            
-            @foreach($errors->get('files') as $message)
-            <p class="file__error" style="color:red">{{ $message }}</p>
-            @endforeach
-            <p class="file__error" style="color:red">{{ $errors->first('files.*') }}</p>
-            
-            <label>選択した画像</label>
-            <div class="file_path">
+                    <button class="btn btn-info" type = "submit">登録</button>
+                </form>
             </div>
-            
-            <label>内容</label>
-            <textarea name="diary[comment]" rows="5" cols="45" placeholder="内容を入力してください">{{ old('diary.comment') }}</textarea>
-            <p class="comment__error" style="color:red">{{ $errors->first('diary.comment') }}</p>
-            
-            <button type = "submit">登録</button>
-            </form>
-            
+        </div>
             <script>
                 $(function () {
                     $('#upload_images').on('change', function() {

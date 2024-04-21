@@ -28,7 +28,8 @@
             </div>
 
             <div class="mt-6 flex justify-end">
-                <button class="ml-3">
+                <br />
+                <button class="btn btn-danger">
                     {{ __('Delete Account') }}
                 </button>
             </div>

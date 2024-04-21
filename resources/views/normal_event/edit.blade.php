@@ -11,30 +11,26 @@
                 
         @stop
         @section('content')
-            <button id="submit_put" type = "submit">変更</button>
+            <button class="btn btn-info" id="submit_put" type = "submit">変更</button>
+            <h3></h3>
             <form method = "POST" action = "" id = "postForm" enctype = "multipart/form-data">
-            @foreach($users->normal_events as $normal_event)
-            <div class="py-12">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
+                @foreach($users->normal_events as $normal_event)
+                    <div class="card card-outline card-info">
+                        <div class="card-body">
                         <label>行事名 : {{ $normal_event->title }}</label>
                         <label>日付 : {{ $normal_event->start }}</label>
-                
                         <input type="hidden" name="n_id" value="{{ $normal_event->id }}"/>
-                        
-                        <label>通知設定</label>
+                        <label>通知設定：
                         <select  name="n_notice">
-                         <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
-                        <option value="1" @if($normal_event->pivot->notice == "1") selected @endif>ON</option>
+                            <option value="0" @if($normal_event->pivot->notice == "0") selected @endif>OFF</option>
+                            <option value="1" @if($normal_event->pivot->notice == "1") selected @endif>ON</option>
                         </select>
+                        </label>
                         <label>何日前に通知しますか？</label>
                         <input type="number" inputmode="numeric" name="n_day_num" value = "{{ $normal_event->pivot->day_num }}"/>
+                        </div>
                     </div>
-                </div>
-                </div>
-            </div>
-            @endforeach
+                @endforeach
             </form>
             <script>
                 var normaleventValid = {
