@@ -11,50 +11,69 @@
         @stop
             @section('content')
             <!--自分の合言葉-->
-                <label>合言葉</label>
-                <p>自分の合言葉を設定してください</p>
-                <form method = "POST" action = "{{ route('release.watchword') }}" >
-                    @csrf
-                    @method('PUT')
-                    <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}">
-                    <button id="submit_put" type = "submit" name="watchword">登録</button>
-                </form>
+            <div class="card card-outline card-info">
+                <div class="card-body">
+                    <label>合言葉</label>
+                    <p>自分の合言葉を設定してください</p>
+                    <form method = "POST" action = "{{ route('release.watchword') }}" >
+                        @csrf
+                        @method('PUT')
+                        <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}">
+                        <h3></h3>
+                        <button class="btn btn-info" id="submit_put" type = "submit" name="watchword">登録</button>
+                    </form>
+                </div>
+            </div>
             <!--検索-->
-                <label>ユーザー検索</label>
-                <form method = "POST" action = "" id = "postForm" >
-                @csrf
-                <input type = "text" name = "username" size="20" placeholder = "ユーザー名"/>
+            <div class="card card-outline card-info">
+                <div class="card-body">
+                    <label>ユーザー検索</label>
+                    <form method = "POST" action = "" id = "postForm" >
+                        @csrf
+                        <input type = "text" name = "username" size="20" placeholder = "ユーザー名"/>&emsp;<button class="btn btn-info" id="submit_post" type = "button">検索</button>
+                    </fomr>
+                </div>
+            </div>
                 
-                <button id="submit_post" type = "button">検索</button>
-                </fomr>
             
             <!--結果-->
-                <label>検索結果</label>
-                <form method = "POST" action = "" id = "serachForm" >
-                @csrf
-                    <button id ="submit_serach" type = "button">フォロー申請</button>
+            <div class="card card-outline card-info">
+                <div class="card-body">
+                    <label>検索結果</label>
+                    <form method = "POST" action = "" id = "serachForm" >
+                        @csrf
+                        <br />
+                        <button class="btn btn-info" id ="submit_serach" type = "button">フォロー申請</button>
                 
-                <div class="result_username">
+                        <div class="result_username"></div>
+                    </form>
                 </div>
-                </form>
+            </div>
                 
             <!--申請中-->
-                <label>フォロー状況確認</label>
-                @if($release_lists)
-                <button type="button" id="delete_button" name="follow">取り消し</button>
-                <div class="follow_user">
-                    <div class="follow_user_update">
-                        @foreach($release_lists as $release_list)
-                        <input type="radio" name="m_id" value="{{ $release_list->id }}"/>
-                        <p>ユーザー名： {{ $release_list->follow_name }} </p>
-                        <p>申請状況：@if( $release_list->request == 1)申請済み @else 未申請 @endif</p>
-                        <p>許可状況：@if($release_list->notice == 1)許可済み @else 許可待ち @endif </p>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
+            <div class="card card-outline card-info">
+                <div class="card-body">
+                  <label>フォロー状況確認</label>
+                    @if($release_lists)
+                        <br />
+                        <button class="btn btn-info" type="button" id="delete_button" name="follow">申請取り消し</button>
+                        <div class="follow_user">
+                            <div class="follow_user_update">
+                                @foreach($release_lists as $release_list)
+                                    <p></p><input type="radio" name="m_id" value="{{ $release_list->id }}"/>
+                                    <label>ユーザー名： {{ $release_list->follow_name }} &emsp;
+                                    申請状況：@if( $release_list->request == 1)申請済み @else 未申請 @endif &emsp;
+                                    許可状況：@if($release_list->notice == 1)許可済み @else 許可待ち @endif </label></p>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 
+                </div>
+            </div>
+            
                 @include('release.follow-request')
+            
             <script>
             //バリデーションルール設定
                 var serachValid = {
@@ -106,20 +125,20 @@
                              if(release_lists[index].request == 1 && release_lists[index].notice == 1){
                                  html = `
                                     <div class="follow_user_update">
-                                    <input type="radio" name="m_id" value="${release_lists[index].id}"/>
-                                    <p>ユーザー名： ${release_lists[index].follow_name} </p>
-                                    <p>申請状況：申請済み</p>
-                                    <p>許可状況：許可</p>
+                                    <p><input type="radio" name="m_id" value="${release_lists[index].id}"/>
+                                    <label>ユーザー名： ${release_lists[index].follow_name}
+                                    申請状況：申請済み&emsp;
+                                    許可状況：許可</label></p>
                                     </div>
                                      `;
                             }else if(release_lists[index].request == 1 && release_lists[index].notice == 0)
                             {
                                 html = `
                                     <div class="follow_user_update">
-                                    <input type="radio" name="m_id" value="${release_lists[index].id}"/>
-                                    <p>ユーザー名： ${release_lists[index].follow_name} </p>
-                                    <p>申請状況：申請中</p>
-                                    <p>許可状況：許可待ち</p>
+                                    <p><input type="radio" name="m_id" value="${release_lists[index].id}"/>
+                                    <label>ユーザー名： ${release_lists[index].follow_name} &emsp;
+                                    申請状況：申請中 &emsp;
+                                    許可状況：許可待ち</label></p>
                                     </div>
                                      `;
                             }
@@ -172,9 +191,9 @@
                                 $.each(result,function(index,value){
                                     html = `
                                         <div class="result_name">
-                                        <input type="radio" name ="serach" value = "${result[index].id}">
-                                        <p>ユーザー名： ${result[index].name} </p>
-                                        <p>合言葉：${result[index].watchword} </p>
+                                        <p><input type="radio" name ="serach" value = "${result[index].id}">
+                                        <label>ユーザー名： ${result[index].name} &emsp;
+                                        合言葉：${result[index].watchword} </label></p>
                                         </div>
                                         `;
                                         $(".result_username").append(html);
@@ -236,25 +255,23 @@
                              if(release_lists[index].request == 1 && release_lists[index].notice == 1){
                                  html = `
                                     <div class="follow_user_update">
-                                    <input type="radio" name="m_id" value="${release_lists[index].id}"/>
-                                    <p>ユーザー名： ${release_lists[index].follow_name} </p>
-                                    <p>申請状況：申請済み</p>
-                                    <p>許可状況：許可</p>
+                                    <p><input type="radio" name="m_id" value="${release_lists[index].id}"/>
+                                    <label>ユーザー名： ${release_lists[index].follow_name} &emsp;
+                                    申請状況：申請済み &emsp;
+                                    許可状況：許可</label></p>
                                     </div>
                                      `;
                             }else if(release_lists[index].request == 1 && release_lists[index].notice == 0)
                             {
                                 html = `
                                     <div class="follow_user_update">
-                                    <input type="radio" name="m_id" value="${release_lists[index].id}"/>
-                                    <p>ユーザー名： ${release_lists[index].follow_name} </p>
-                                    <p>申請状況：申請済み</p>
-                                    <p>許可状況：許可待ち</p>
+                                    <p><input type="radio" name="m_id" value="${release_lists[index].id}"/>
+                                    <label>ユーザー名： ${release_lists[index].follow_name} &emsp;
+                                    申請状況：申請済み &emsp;
+                                    許可状況：許可待ち</label></p>
                                     </div>
                                      `;
                             }
-                            
-                            
                                     $(".follow_user").append(html);
                                     });
                         }).fail(function (jqXHR, textStatus, errorThrown){
@@ -269,11 +286,11 @@
                     });
                 })
         </script>
-            <style type="text/css">
-
-            label, input {
-                display: block;
+        <style type="text/css">
+            input[type="radio"]{
+            position: relative;
+            top: 2px;
             }
-            
         </style>
+
         @stop

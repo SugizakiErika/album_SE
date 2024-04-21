@@ -4,6 +4,8 @@
             <h1>問い合わせ</h1>
         @stop
         @section('content')
+        <div class="card card-outline card-info">
+            <div class="card-body">
             <form method = "POST" action = "{{ route('inquiry.store') }}" enctype = "multipart/form-data">
                 @csrf
                 <label>タイトル</label>
@@ -23,8 +25,10 @@
                 <input type="email" name = "inquiry[email]" size="30" value = {{ old(('inquiry.email'),Auth::user()->email) }}>
                 <p class="email__error" style="color:red">{{ $errors->first('inquiry.email') }}</p>
                 
-                <button type = "submit">送信</button>
+                <button class="btn btn-info" type = "submit">送信</button>
             </form>
+            </div>
+                    </div>
             @push('css')
             <style type="text/css">
 

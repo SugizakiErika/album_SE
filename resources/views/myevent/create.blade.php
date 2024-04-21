@@ -10,70 +10,79 @@
                 @section('plugins.jqueryValidate', true)
         @stop
             @section('content')
-            <!--登録-->
-            <form method = "POST" action = "{{ route('store.myevent') }}" enctype = "multipart/form-data">
-                @csrf
-                <label>タイトル</label>
-                <input type = "text" name = "myevent[title]" size="20" placeholder = "タイトル" value = "{{ old('myevent.title') }}"/>
-                <p class="title__error" style="color:red">{{ $errors->first('myevent.title') }}</p>
+            <div class="card card-outline card-info">
+                <div class="card-body">
+                    <!--登録-->
+                    <br />
+                    <form method = "POST" action = "{{ route('store.myevent') }}" enctype = "multipart/form-data">
+                        @csrf
+                        <label>タイトル</label>
+                        <input type = "text" name = "myevent[title]" size="20" placeholder = "タイトル" value = "{{ old('myevent.title') }}"/>
+                        <p class="title__error" style="color:red">{{ $errors->first('myevent.title') }}</p>
                 
-                <label>カテゴリー</label>
-                <select name="myevent[category]">
-                    <option value="birthday" @if(old('myevent.category')=="birthday") selected @endif>の誕生日</option>
-                    <option value="anniversary" @if(old('myevent.category')=="anniversary") selected @endif>記念日</option>
-                    <option value="others" @if(old('myevent.category')=="others") selected @endif>その他</option>
-                </select>
-                <p class="category__error" style="color:red">{{ $errors->first('myevent.category') }}</p>
+                        <label>カテゴリー</label>
+                        <select name="myevent[category]">
+                            <option value="birthday" @if(old('myevent.category')=="birthday") selected @endif>の誕生日</option>
+                            <option value="anniversary" @if(old('myevent.category')=="anniversary") selected @endif>記念日</option>
+                            <option value="others" @if(old('myevent.category')=="others") selected @endif>その他</option>
+                        </select>
+                        <p class="category__error" style="color:red">{{ $errors->first('myevent.category') }}</p>
                 
-                <label>年月日</label>
-                <input name="myevent[start]" type="date" value = "{{ old('myevent.start') }}"/>
-                <p class="start__error" style="color:red">{{ $errors->first('myevent.start') }}</p>
+                        <label>年月日</label>
+                        <input name="myevent[start]" type="date" value = "{{ old('myevent.start') }}"/>
+                        <p class="start__error" style="color:red">{{ $errors->first('myevent.start') }}</p>
                 
-                <label>何日前に通知しますか？</label>
-                <input type="number" inputmode="numeric" name="myevent[day]" value = "{{ old(('myevent.day'),5) }}"日前>
-                <p class="day__error" style="color:red">{{ $errors->first('myevent.day') }}</p>
-                
-                <button id="submit_post" type = "submit">登録</button>
-                
-            </form>
+                        <label>何日前に通知しますか？</label>
+                        <input type="number" inputmode="numeric" name="myevent[day]" value = "{{ old(('myevent.day'),5) }}"日前>
+                        <p class="day__error" style="color:red">{{ $errors->first('myevent.day') }}</p>
+                        <br />
+                        <button class="btn btn-info" id="submit_post" type = "submit">登録</button>
+                    </form>
+                </div>
+            </div>
             
             <!--変更-->
+            <br />
             <h3>登録内容</h3>
-            @if(!($my_events->isEmpty()))
-            <form method = "POST" action = "" id = "postForm" enctype = "multipart/form-data">
-                @csrf
-            @foreach($my_events as $my_event)
-            
-            <?php
-                //今年の何年
-                $now_year = \Carbon\Carbon::now()->format('Y');
-                $my_event->start =$now_year.'-'.$my_event->start;
-            ?>
-                <input type="hidden" name="m_id" value="{{ $my_event->id }}"/>
+                @if(!($my_events->isEmpty()))
+                <form method = "POST" action = "" id = "postForm" enctype = "multipart/form-data">
+                    @csrf
+                    <button class="btn btn-info" id="sub_put" type = "button">[変更]</button>
+                    <h3></h3>
+                    @foreach($my_events as $my_event)
+                        <div class="card card-outline card-info">
+                            <div class="card-body">
+                                <?php
+                                    //今年の何年
+                                    $now_year = \Carbon\Carbon::now()->format('Y');
+                                    $my_event->start =$now_year.'-'.$my_event->start;
+                                ?>
+                                <input type="hidden" name="m_id" value="{{ $my_event->id }}"/>
                 
-                <label>タイトル</label>
-                <input type = "text" name = "m_title" size="20" value = "{{ $my_event->title }}" />
+                                <label>タイトル</label>
+                                <input type = "text" name = "m_title" size="20" value = "{{ $my_event->title }}" />
                 
-                <label>カテゴリー</label>
-                <select name="m_category">
-                    <option value="birthday" @if($my_event->category == "birthday") selected @endif>の誕生日</option>
-                    <option value="anniversary" @if($my_event->category == "anniversary") selected @endif)>記念日</option>
-                    <option value="others" @if($my_event->category == "others") selected @endif>その他</option>
-                </select>
+                                <label>カテゴリー</label>
+                                <select name="m_category">
+                                    <option value="birthday" @if($my_event->category == "birthday") selected @endif>の誕生日</option>
+                                    <option value="anniversary" @if($my_event->category == "anniversary") selected @endif)>記念日</option>
+                                    <option value="others" @if($my_event->category == "others") selected @endif>その他</option>
+                                </select>
                 
-                <label>年月日</label>
-                <input name="m_start" type="date" value="{{ $my_event->start }}"/>
+                                <label>年月日</label>
+                                <input name="m_start" type="date" value="{{ $my_event->start }}"/>
                 
-                <label>何日前に通知しますか？</label>
-                <input type="number" inputmode="numeric" name="m_day" value ="{{ $my_event->day }}"日前 />
+                                <label>何日前に通知しますか？</label>
+                                <input type="number" inputmode="numeric" name="m_day" value ="{{ $my_event->day }}"日前 />
+                                <br />
+                                <button class="btn btn-info" type="button" id="delete_button">削除する</button>
+                            </div>
+                        </div>
+                    @endforeach
+                </form>
+                @endif
                 
-                <button type="button" id="delete_button">削除する</button>
-
-            @endforeach
-            <button id="sub_put" type = "button">[変更]</button>
-            </form>
-            @endif
-            <script>
+                <script>
                 //バリデーションルール設定
                 var myeventValid = {
                     rules:{
