@@ -40,7 +40,7 @@ class NoticeMyOthers extends Command
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
-        $my_events = MY_event::all();
+        $my_events = MY_event::where('category','others')->get();
         
         foreach($my_events as $my_event)
         {
@@ -51,7 +51,7 @@ class NoticeMyOthers extends Command
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','others')->exists())
             {
-                $my_others = MY_event::where('start',$data_notice_later)->where('category','others')->get();      
+                $my_others = MY_event::where('start',$data_notice_later)->where('category','others')->where('day',$my_event->day)->get();      
             
                 foreach($my_others as $my_other){
 
