@@ -42,22 +42,22 @@ class NoticeMyBirthday extends Command
         // $data_month = Carbon::now()->format('m');
         // $data_day = Carbon::now()->format('d');
         
-        $my_events = MY_event::all();
+        $my_events = MY_event::where('category','birthday')->get();
         
         foreach($my_events as $my_event)
         {
             //日付調整
             $data = Carbon::now();
             $data_notice_later = $data->addDays((int)$my_event->day)->format('m-d');
-            
+            Log::info("誕生日当日日付：".$data_notice_later);
             //通知何日前
             if(MY_event::where('start',$data_notice_later)->where('category','birthday')->exists())
             {
-                $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->get();
-                Log::info($my_birthdays);            
+                $my_birthdays = MY_event::where('start',$data_notice_later)->where('category','birthday')->where('day',$my_event->day)->get();
+                Log::info($my_birthdays);     
             
                 foreach($my_birthdays as $my_birthday){
-
+                
                 //各テーブルの取得
                 $user = User::find($my_birthday->users_id);
             
