@@ -18,7 +18,7 @@
                     <form method = "POST" action = "{{ route('release.watchword') }}" >
                         @csrf
                         @method('PUT')
-                        <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}">
+                        <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}" required>
                         <h3></h3>
                         <button class="btn btn-info" id="submit_put" type = "submit" name="watchword">登録</button>
                     </form>

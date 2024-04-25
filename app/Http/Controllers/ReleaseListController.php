@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Release_list;
 
@@ -33,13 +34,14 @@ class ReleaseListController extends Controller
     }
     
     //合言葉とフォロー申請保存画面
-    public function create(Request $request, User $user,Release_List $release_list)
+    public function create(User $user,Release_List $release_list,Request $request)
     {
         $input = $request['release'];
         
         //合言葉登録
         if($request->has('watchword')){ //form:watchword
         
+        Log::info($input);
             $user = User::find(Auth::user()->id);
             $user->watchword = $input["watchword"];
             $user->save();
@@ -48,7 +50,7 @@ class ReleaseListController extends Controller
         
         //フォロー申請内容保存
         if($request->has('follow')){ //form:follow
-        
+        Log::info($input["notice"]);
             $release_list = Release_List::find($input["follow_id"]);
             $release_list->notice = $input["notice"];
             //$release_list->select_color  = $input["select_color"];
@@ -142,7 +144,6 @@ class ReleaseListController extends Controller
         $input = $request['release'];
         $release_list = Release_List::find($input["id"]);
         $release_list->notice = $input["notice"];
-        $release_list->select_color  = $input["select_color"];
         $release_list->save();
     }
 }
