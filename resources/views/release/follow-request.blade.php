@@ -13,11 +13,11 @@
                                 <p class="start__error" style="color:red">{{ $errors->first('release.follow_id') }}</p>
                                 <label>ユーザー名： {{ $follow_list->follow_name }} &emsp;
                                 合言葉：{{ $follow_list->watchword}} </label></p>
-                                <input type="radio" name="release[notice]" id="1" value="1" @if($follow_list->notice == 1) checked @endif required/>
-                                <label>許可する</label>
-                                <input type="radio" name="release[notice]" id="0" value="0" @if($follow_list->notice == 0) checked @endif required/>
-                                <label>許可しない</label>
-                                <p class="start__error" style="color:red">{{ $errors->first('release.notice') }}</p>
+                                <select  name="release[notice]">
+                                    <option value="0" @if($follow_list->notice == "0") selected @endif>許可する</option>
+                                    <option value="1" @if($follow_list->notice == "1") selected @endif>許可しない</option>
+                                </select>
+                                
                             @endforeach
                         </div>
                     @endif
