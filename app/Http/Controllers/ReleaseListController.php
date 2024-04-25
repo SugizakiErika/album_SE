@@ -15,13 +15,13 @@ class ReleaseListController extends Controller
     // フォロー検索画面
     public function index(Release_list $release_list)
     {
-        $follow_lists = Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->get();
+        $follow_lists = Release_List::where('users_id',Auth::user()->id)->where('request',1)->get();
     
         $follow_lists_vals = [];
         //本当はリレーションするべき...??
         $follow_lists_vals = collect($follow_lists)->map(function ($follow_lists) {
             
-        $user_watchword = User::where('id',$follow_lists->release_user_id)->value('watchword');
+        $user_watchword = User::where('id',$follow_lists->users_id)->value('watchword');
         
         $follow_lists['watchword'] = $user_watchword;
         
@@ -37,7 +37,6 @@ class ReleaseListController extends Controller
     public function create(User $user,Release_List $release_list,Request $request)
     {
         $input = $request['release'];
-        
         //合言葉登録
         if($request->has('watchword')){ //form:watchword
         
