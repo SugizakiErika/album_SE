@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Release_list;
 
@@ -33,13 +34,14 @@ class ReleaseListController extends Controller
     }
     
     //合言葉とフォロー申請保存画面
-    public function create(Request $request, User $user,Release_List $release_list)
+    public function create(User $user,Release_List $release_list,Request $request)
     {
         $input = $request['release'];
         
         //合言葉登録
         if($request->has('watchword')){ //form:watchword
         
+        Log::info($input);
             $user = User::find(Auth::user()->id);
             $user->watchword = $input["watchword"];
             $user->save();
@@ -48,7 +50,7 @@ class ReleaseListController extends Controller
         
         //フォロー申請内容保存
         if($request->has('follow')){ //form:follow
-        
+        Log::info($input["notice"]);
             $release_list = Release_List::find($input["follow_id"]);
             $release_list->notice = $input["notice"];
             //$release_list->select_color  = $input["select_color"];
@@ -75,13 +77,17 @@ class ReleaseListController extends Controller
             array_push($duplications_data,$duplications);
             array_push($duplications_data2,User::pluck('id'));
             $data = array_intersect($duplications_data,$duplications_data2);
-            dd($data);
             
-            if($data->exists())
+            Log::info($data);
+            Log::info($duplications);
+            
+            
+            if($data)
             {
                 $result = User::where('name',$input["name"])
                                 ->whereNotIn('id',[Auth::user()->id,$duplications])
                                 ->get();
+                                Log::info("result:$data");
             }else{
                 $result = NULL;
                 Log:info("result:NULL");
@@ -94,6 +100,7 @@ class ReleaseListController extends Controller
             $result = User::where('name',$input["name"])
                             ->where('id','<>',Auth::user()->id)
                             ->get();
+                            Log::info("result:if最後");
             }else{
                 $result = NULL;
                 Log::info("else側");
@@ -137,7 +144,6 @@ class ReleaseListController extends Controller
         $input = $request['release'];
         $release_list = Release_List::find($input["id"]);
         $release_list->notice = $input["notice"];
-        $release_list->select_color  = $input["select_color"];
         $release_list->save();
     }
 }

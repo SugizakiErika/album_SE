@@ -18,7 +18,7 @@
                     <form method = "POST" action = "{{ route('release.watchword') }}" >
                         @csrf
                         @method('PUT')
-                        <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}">
+                        <input type = "text" name = "release[watchword]" size="50" placeholder = "合言葉を記載してください" value = "{{ Auth::user()->watchword }}" required>
                         <h3></h3>
                         <button class="btn btn-info" id="submit_put" type = "submit" name="watchword">登録</button>
                     </form>
@@ -151,7 +151,7 @@
                                     
                             }).fail(function (jqXHR, textStatus, errorThrown) {
                                 // 通信失敗時の処理
-                                alert('ファイルの取得に失敗しました。');
+                                alert('申請取り消しをする方を選択してください。');
                                 console.log("ajax通信に失敗しました");
                                 console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
                                 console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
@@ -276,7 +276,7 @@
                                     });
                         }).fail(function (jqXHR, textStatus, errorThrown){
                                 //通信失敗時の処理
-                                alert('ファイルの取得に失敗しました。');
+                                alert('申請する方を選択してください。');
                                 console.log("ajax通信に失敗しました");
                                 console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
                                 console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
