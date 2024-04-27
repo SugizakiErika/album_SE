@@ -21,7 +21,7 @@ class ReleaseListController extends Controller
         //本当はリレーションするべき...??
         $follow_lists_vals = collect($follow_lists)->map(function ($follow_lists) {
             
-        $user_watchword = User::where('id',$follow_lists->users_id)->value('watchword');
+        $user_watchword = User::where('id',$follow_lists->release_user_id)->value('watchword');
         
         $follow_lists['watchword'] = $user_watchword;
         
