@@ -60,7 +60,7 @@
                         <div class="follow_user">
                             <div class="follow_user_update">
                                 @foreach($release_lists as $release_list)
-                                    <p></p><input type="radio" name="m_id" value="{{ $release_list->id }}"/>
+                                    <p></p><input type="radio" name="m_id" value="{{ $release_list->id }}" required>
                                     <label>ユーザー名： {{ $release_list->follow_name }} &emsp;
                                     申請状況：@if( $release_list->request == 1)申請済み @else 未申請 @endif &emsp;
                                     許可状況：@if($release_list->notice == 1)許可済み @else 許可待ち @endif </label></p>
@@ -115,28 +115,28 @@
                                 dataType: "text",
                                 scriptCharset: "utf-8",
                                 data: {'_method': 'DELETE'} 
-                            }).done(function (release_lists) {
+                            }).done(function (result) {
                                 //前のアップロードデータを削除
                             $(".result_name").remove();
                             $(".follow_user_update").remove();
-                            if(release_lists.length){
+                            if(result.length){
                             //検索結果を表示する
-                            $.each(release_lists,function(index,value){
-                             if(release_lists[index].request == 1 && release_lists[index].notice == 1){
+                            $.each(result,function(index,value){
+                             if(result[index].request == 1 && result[index].notice == 1){
                                  html = `
                                     <div class="follow_user_update">
-                                    <p><input type="radio" name="m_id" value="${release_lists[index].id}"/>
-                                    <label>ユーザー名： ${release_lists[index].follow_name}
+                                    <p><input type="radio" name="m_id" value="${result[index].id}" required>
+                                    <label>ユーザー名： ${result[index].follow_name}
                                     申請状況：申請済み&emsp;
                                     許可状況：許可</label></p>
                                     </div>
                                      `;
-                            }else if(release_lists[index].request == 1 && release_lists[index].notice == 0)
+                            }else if(result[index].request == 1 && result[index].notice == 0)
                             {
                                 html = `
                                     <div class="follow_user_update">
-                                    <p><input type="radio" name="m_id" value="${release_lists[index].id}"/>
-                                    <label>ユーザー名： ${release_lists[index].follow_name} &emsp;
+                                    <p><input type="radio" name="m_id" value="${result[index].id}" required>
+                                    <label>ユーザー名： ${result[index].follow_name} &emsp;
                                     申請状況：申請中 &emsp;
                                     許可状況：許可待ち</label></p>
                                     </div>
