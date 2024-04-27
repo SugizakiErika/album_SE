@@ -15,13 +15,15 @@ class ReleaseListController extends Controller
     // フォロー検索画面
     public function index(Release_list $release_list)
     {
-        $request_ids = Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->value('users_id');
-        if(Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->count() > 1){
-        foreach($request_ids as $request_id){
-        $follow_lists = Release_List::where('release_user_id',$request_id)->where('request',1)->get();
-    
         $follow_lists_vals = [];
-        //本当はリレーションするべき...??
+        $request_ids = Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->value('users_id');
+        
+        if(Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->count() > 1){
+        
+        foreach($request_ids as $request_id){
+        
+        $follow_lists = Release_List::where('release_user_id',$request_id)->where('request',1)->get();
+        
         $follow_lists_vals = collect($follow_lists)->map(function ($follow_lists) {
             
         $user_watchword = User::where('id',$follow_lists->users_id)->value('watchword');
@@ -46,10 +48,8 @@ class ReleaseListController extends Controller
         return $follow_lists;
         }); 
         }else{
-            return view('release.create')
-            ->with(['release_lists' => $release_list->where('users_id',Auth::user()->id)->where('request',1)->get()]);
+            
         }
-        Log::info($follow_lists);
         
         return view('release.create')
             ->with(['release_lists' => $release_list->where('users_id',Auth::user()->id)->where('request',1)->get()])
