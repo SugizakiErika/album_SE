@@ -14,8 +14,8 @@
                                 <label>ユーザー名： {{ $follow_list->follow_name }} &emsp;
                                 合言葉：{{ $follow_list->watchword}} </label></p>
                                 <select  name="release[notice]">
-                                    <option value="0" @if($follow_list->notice == "0") selected @endif>許可する</option>
-                                    <option value="1" @if($follow_list->notice == "1") selected @endif>許可しない</option>
+                                    <option value="1" @if($follow_list->notice == "1") selected @endif>許可する</option>
+                                    <option value="0" @if($follow_list->notice == "0") selected @endif>許可しない</option>
                                 </select>
                                 
                             @endforeach

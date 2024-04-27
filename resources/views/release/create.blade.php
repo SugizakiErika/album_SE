@@ -104,6 +104,11 @@
                                 checkValue = followRadio.item(i).value;
                             }
                         }
+                        //失敗で戻る
+                        if (!checkValue) {
+                           alert('申請取り消しをする方を選択してください。'); 
+                            return false;
+                        };
                         
                         let input_id = document.getElementsByName('m_id');
                         var url = "/release/watchword/"+checkValue;

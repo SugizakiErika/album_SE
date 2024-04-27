@@ -15,18 +15,38 @@ class ReleaseListController extends Controller
     // フォロー検索画面
     public function index(Release_list $release_list)
     {
-        $follow_lists = Release_List::where('users_id',Auth::user()->id)->where('request',1)->get();
+        $request_ids = Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->value('users_id');
+        if(Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->count() > 1){
+        foreach($request_ids as $request_id){
+        $follow_lists = Release_List::where('release_user_id',$request_id)->where('request',1)->get();
     
         $follow_lists_vals = [];
         //本当はリレーションするべき...??
         $follow_lists_vals = collect($follow_lists)->map(function ($follow_lists) {
             
-        $user_watchword = User::where('id',$follow_lists->release_user_id)->value('watchword');
-        
+        $user_watchword = User::where('id',$follow_lists->users_id)->value('watchword');
+        $follow_name['follow_name'] = User::where('id',$follow_lists->users_id)->value('name');
+        Log::info($follow_name);
         $follow_lists['watchword'] = $user_watchword;
         
         return $follow_lists;
         });
+        }
+        }else{
+           $follow_lists = Release_List::where('users_id',$request_ids)->where('request',1)->get();
+    
+        $follow_lists_vals = [];
+        //本当はリレーションするべき...??
+        $follow_lists_vals = collect($follow_lists)->map(function ($follow_lists) {
+            
+        $user_watchword = User::where('id',$follow_lists->users_id)->value('watchword');
+        $follow_lists['follow_name'] = User::where('id',$follow_lists->users_id)->value('name');
+        $follow_lists['watchword'] = $user_watchword;
+        
+        return $follow_lists;
+        }); 
+        }
+        Log::info($follow_lists);
         
         return view('release.create')
             ->with(['release_lists' => $release_list->where('users_id',Auth::user()->id)->where('request',1)->get()])
@@ -49,7 +69,7 @@ class ReleaseListController extends Controller
         
         //フォロー申請内容保存
         if($request->has('follow')){ //form:follow
-        Log::info($input["notice"]);
+        Log::info($input);
             $release_list = Release_List::find($input["follow_id"]);
             $release_list->notice = $input["notice"];
             //$release_list->select_color  = $input["select_color"];
@@ -118,6 +138,7 @@ class ReleaseListController extends Controller
         $release_list->request = 1;
         $release_list->release_user_id = $input["followuserid"];
         $release_list->follow_name = User::where('id',$input["followuserid"])->value('name');
+        
         $release_list->users_id = Auth::user()->id;
         $release_list->save();
         
