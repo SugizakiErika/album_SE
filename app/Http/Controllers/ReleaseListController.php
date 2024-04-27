@@ -32,7 +32,7 @@ class ReleaseListController extends Controller
         return $follow_lists;
         });
         }
-        }else{
+        }elseif(Release_List::where('release_user_id',Auth::user()->id)->where('request',1)->count() == 1){
            $follow_lists = Release_List::where('users_id',$request_ids)->where('request',1)->get();
     
         $follow_lists_vals = [];
@@ -45,6 +45,9 @@ class ReleaseListController extends Controller
         
         return $follow_lists;
         }); 
+        }else{
+            return view('release.create')
+            ->with(['release_lists' => $release_list->where('users_id',Auth::user()->id)->where('request',1)->get()]);
         }
         Log::info($follow_lists);
         
